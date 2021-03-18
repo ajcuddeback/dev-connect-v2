@@ -11,11 +11,6 @@ const helpers = require("./utils/helper");
 
 const session = require("express-session");
 require("dotenv").config();
-
-// const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-// const stripePublicKey = process.env.STRIPE_PUBLIC_KEY;
-// const stripe = require("stripe")(stripeSecretKey);
-
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
@@ -36,9 +31,6 @@ const exphbs = require("express-handlebars");
 const hbs = exphbs.create({ helpers });
 
 const PORT = process.env.PORT || 3002;
-
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
