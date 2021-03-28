@@ -7,9 +7,9 @@ const storeRoutes = require("./store-api-routes/");
 const questionRoutes = require('./question-api-routes/question-routes');
 const answerRoutes = require('./question-api-routes/answer-routes');
 const tagRoutes = require('./question-api-routes/tag-routes');
-const socialUserRoutes = require('./social-user-routes');
-const postRoutes = require('./post-routes');
-const commentRoutes = require('./comment-routes');
+const socialUserRoutes = require('./home-api-routes/social-user-routes');
+const postRoutes = require('./home-api-routes/post-routes');
+const commentRoutes = require('./home-api-routes/comment-routes');
 
 router.use('/users', userRoutes);
 router.use('/groups', groupRoutes);
