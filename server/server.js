@@ -17,9 +17,6 @@ const server = new ApolloServer({
 // integrate our Apollo server with the Express application as middleware
 server.applyMiddleware({ app });
 
-// We will probably not be using Express session. We will most likely use Passport.js for auth and creating sessions!
-const session = require("express-session");
-
 const PORT = process.env.PORT || 3002;
 
 app.use(express.json());
