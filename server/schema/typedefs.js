@@ -65,8 +65,8 @@ const typeDefs = gql`
     }
 
     type Query {
-        me: User 
-        users: User
+        me: User #done
+        users: [User]
         groups: Group 
         events: Event 
         group(group_id: Int!): Group 
@@ -76,8 +76,8 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        login(username: String!, password: String!): Auth 
-        addUser(username: String!, email: String!, first_name: String!, last_name: String!, password: String!): Auth
+        login(username: String!, password: String!): Auth #done
+        addUser(username: String!, email: String!, first_name: String!, last_name: String!, password: String!): Auth #done
         deleteUser(userId: Int): User
         createGroup(input: GroupInput): Group 
         addUserGroup(group_id: Int!): Group 
