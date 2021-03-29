@@ -69,9 +69,9 @@ const typeDefs = gql`
         users: User
         groups: Group 
         events: Event 
-        group: Group 
-        event: Event
-        groupByZip(group_zip: Int): Group 
+        group(group_id: Int!): Group 
+        event(event_id: Int!): Event
+        groupByZip(group_zip: Int!): Group 
 
     }
 
