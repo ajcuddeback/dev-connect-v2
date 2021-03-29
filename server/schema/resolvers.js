@@ -12,6 +12,7 @@ const {
 const resolvers = {
     Query : {
         me: async (parent, args, context) => {
+            console.log(context.user)
             if(context.user) {
                 const userData = await User.findOne({
                     where: {
