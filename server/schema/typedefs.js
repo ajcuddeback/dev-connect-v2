@@ -1,6 +1,22 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql` 
+
+    input GroupInput {
+        group_title: String! 
+        group_text: String! 
+        group_zip: String! 
+        user_id: Int!
+    }
+
+    input EventInput {
+        event_title: String! 
+        event_text: String! 
+        event_location: String! 
+        event_time: String! 
+        group_id: Int!
+    }
+
     type User {
         id: ID 
         username: String
@@ -18,6 +34,7 @@ const typeDefs = gql`
         group_text: String 
         group_zip: Int 
         user_id: Int
+        users: Int
         event: [Event]
     }
 
@@ -40,6 +57,35 @@ const typeDefs = gql`
         id: ID
         user_id: Int 
         group_id: Int
+    }
+
+    type Auth {
+        token: ID! 
+        user: User
+    }
+
+    type Query {
+        me: User 
+        users: User
+        groups: Group 
+        events: Event 
+        group: Group 
+        event: Event
+        groupByZip(group_zip: Int): Group 
+
+    }
+
+    type Mutation {
+        login(username: String!, password: String!): Auth 
+        addUser(username: String!, email: String!, first_name: String!, last_name: String!, password: String!): Auth
+        deleteUser(userId: Int): User
+        createGroup(input: GroupInput): Group 
+        addUserGroup(group_id: Int!): Group 
+        updateGroup(group_id: Int!, group_title: String, group_text: String, group_zip: Int): Group 
+        deleteGroup(group_id: Int!): Group
+        createEvent(input: EventInput): Event 
+        updateEvent(event_id: Int!, event_title: String, event_text: String, event_location: String, event_time: String): Event 
+        deleteEvent(event_id: Int!): Event
     }
 `
 
