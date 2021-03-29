@@ -51,6 +51,29 @@ const resolvers = {
             const token = signToken(user);
 
             return { token, user }
+        }, 
+        login: async (paren, {username, password}) => {
+            const user = User.findOne({
+                where: {
+                    username: username
+                }
+            });
+
+            if(!user) {
+                throw new AuthenticationError('Incorrect Credentials!')
+            };
+
+            console.log(user)
+
+            const correctPw = (await user).checkPassword(password);
+
+            if(!correctPw) {
+                throw new AuthenticationError('Incorrect Credentials!')
+            }
+
+            const token = signToken(user);
+
+            return { token, user };
         }
     }
 }
