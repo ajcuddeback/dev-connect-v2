@@ -1,14 +1,17 @@
 // resolvers
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
-const sequelize = require('../config/connection')
+const sequelize = require('../config/connection');
+const Sequelize = require('sequelize');
+const axios = require('axios');
 const { 
     User,
     Group, 
     Event, 
     Event_Users, 
     Group_Users 
-} = require('../models')
+} = require('../models');
+const { response } = require('express');
 
 const resolvers = {
     Query : {
@@ -111,6 +114,39 @@ const resolvers = {
                 ]
             });
 
+            return groupData;
+        },
+        groupByZip: async (parent, { group_zip, miles }) => {
+            const apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;
+            const groupData = await axios.get(apiUrl).then((response) => {
+                const intData = response.data.zip_codes.map(zip_code => {
+                    console.log(zip_code)
+                })
+                const Op = Sequelize.Op;
+                Group.findAll({
+                    where: {
+                        group_zip: {
+                            [Op.or]: response.data.zip_codes
+                        }
+                    },
+                    attributes: [
+                        'id',
+                        'group_title',
+                        'group_text',
+                        'group_zip',
+                        [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
+                    ],
+                    include: [
+                        {
+                            model: Event,
+                            attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
+                        }
+                    ]
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+            console.log(groupData)
             return groupData;
         }
     }, 

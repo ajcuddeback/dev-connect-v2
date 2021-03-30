@@ -60,9 +60,9 @@ const typeDefs = gql`
         myGroups: [Group] #done
         groups: [Group] #done
         events: Event 
-        group(group_id: Int!): Group 
+        group(group_id: Int!): Group #done
         event(event_id: Int!): Event
-        groupByZip(group_zip: Int!): Group 
+        groupByZip(group_zip: Int!, miles: Int!): [Group] 
     }
 
     type Mutation {
