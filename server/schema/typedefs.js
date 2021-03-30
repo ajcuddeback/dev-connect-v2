@@ -1,14 +1,6 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql` 
-
-    input GroupInput {
-        group_title: String! 
-        group_text: String! 
-        group_zip: String! 
-        user_id: Int!
-    }
-
     input EventInput {
         event_title: String! 
         event_text: String! 
@@ -33,7 +25,7 @@ const typeDefs = gql`
         group_text: String 
         group_zip: Int 
         user_id: Int
-        users: Int
+        users_count: Int
         event: [Event]
     }
 
@@ -62,12 +54,11 @@ const typeDefs = gql`
         token: ID! 
         user: User
     }
-
     type Query {
         me: User #done
         users: [User] #done
         myGroups: [Group] #done
-        groups: Group 
+        groups: [Group] 
         events: Event 
         group(group_id: Int!): Group 
         event(event_id: Int!): Event
