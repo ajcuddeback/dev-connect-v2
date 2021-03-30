@@ -89,7 +89,27 @@ const resolvers = {
                 ]
             });
 
-            console.log(groupData)
+            return groupData;
+        },
+        group: async (parent, { group_id }) => {
+            const groupData =  await Group.findOne({
+                where: {
+                    id: group_id
+                },
+                attributes: [
+                    'id',
+                    'group_title',
+                    'group_text',
+                    'group_zip',
+                    [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
+                ],
+                include: [
+                    {
+                        model: Event,
+                        attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
+                    }
+                ]
+            });
 
             return groupData;
         }

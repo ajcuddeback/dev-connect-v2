@@ -58,7 +58,7 @@ const typeDefs = gql`
         me: User #done
         users: [User] #done
         myGroups: [Group] #done
-        groups: [Group] 
+        groups: [Group] #done
         events: Event 
         group(group_id: Int!): Group 
         event(event_id: Int!): Event
