@@ -62,7 +62,7 @@ const typeDefs = gql`
         events: Event 
         group(group_id: Int!): Group #done
         event(event_id: Int!): Event
-        groupByZip(group_zip: Int!, miles: Int!): [Group] 
+        groupByZip(group_zip: Int!, miles: Int!): [Group] #done
     }
 
     type Mutation {
@@ -70,7 +70,7 @@ const typeDefs = gql`
         addUser(username: String!, email: String!, first_name: String!, last_name: String!, password: String!): Auth #done
         deleteUser(userId: Int): User
         createGroup(group_title: String!, group_text: String!, group_zip: Int!): Group #done
-        addUserGroup(group_id: Int!): Group 
+        addUserGroup(group_id: Int!): Group #done
         updateGroup(group_id: Int!, group_title: String, group_text: String, group_zip: Int): Group 
         deleteGroup(group_id: Int!): Group
         createEvent(input: EventInput): Event 

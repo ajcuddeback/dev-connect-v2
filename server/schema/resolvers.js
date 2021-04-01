@@ -15,6 +15,8 @@ const { response } = require('express');
 
 const resolvers = {
     Query : {
+
+        // ############################# User queries #############################
         me: async (parent, args, context) => {
             console.log(context.user)
             if(context.user) {
@@ -46,6 +48,8 @@ const resolvers = {
         users: async () => {
            return User.findAll({})
         },
+
+        // ############################# Group Queries #############################
         myGroups: async (parent, args, context) => {
 
             console.log(context.user)
@@ -156,6 +160,7 @@ const resolvers = {
         }
     }, 
     Mutation: {
+        // ############################# User mutations #############################
         addUser: async (parent, args) => {
             const user = await User.create(args)
 
@@ -184,6 +189,8 @@ const resolvers = {
 
             return { token, user };
         },
+
+        // ############################# Group mutations #############################
         createGroup: async (parent, { group_title, group_text, group_zip }, context) => {
             if(context.user.id) {
                 const data = await Group.create({
@@ -197,6 +204,16 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You need to be signed in!')
+        }, 
+        addUserGroup: async (parent, { group_id }, context) => {
+            if(context.user.id) {
+                const user_id = context.user.id;
+                const data = await Group.addUser(group_id, user_id, { User, Group, Event, Group_Users })
+                console.log(data)
+                return data;
+            }
+            
+            throw new AuthenticationError('You must be logged in@')
         }
     }
 }
