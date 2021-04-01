@@ -235,6 +235,20 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You must be logged in!')
+        }, 
+        deleteGroup: async (parent, { group_id }, context) => {
+            if(context.user.id) {
+                const data = await Group.destroy({
+                    where: {
+                        id: group_id
+                    }
+                })
+
+                console.log(data)
+                return data;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
         }
     }
 }
