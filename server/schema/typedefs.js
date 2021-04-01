@@ -36,6 +36,7 @@ const typeDefs = gql`
         event_location: String 
         event_time: String 
         group_id: Int
+        users: Int
     }
 
     type Event_User {
@@ -73,7 +74,8 @@ const typeDefs = gql`
         addUserGroup(group_id: Int!): Group #done
         updateGroup(group_id: Int!, group_title: String, group_text: String, group_zip: Int): Group #done
         deleteGroup(group_id: Int!): Group #done
-        createEvent(input: EventInput): Event 
+        createEvent(input: EventInput): Event #done
+        addUserEvent(event_id: Int!): Event
         updateEvent(event_id: Int!, event_title: String, event_text: String, event_location: String, event_time: String): Event 
         deleteEvent(event_id: Int!): Event
     }

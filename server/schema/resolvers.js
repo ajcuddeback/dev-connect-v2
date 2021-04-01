@@ -27,13 +27,13 @@ const resolvers = {
                     include: [
                         {
                             model: Group,
-                            attributes: ["group_title"],
+                            attributes: ["id","group_title"],
                             through: Group_Users,
                             as: "group_user",
                         }, 
                         {
                             model: Event,
-                            attributes: ["event_title"],
+                            attributes: ["id","event_title"],
                             through: Event_Users,
                             as: "event_user"
                         }
@@ -267,6 +267,14 @@ const resolvers = {
             }
             
             throw new AuthenticationError('You must be logged in!')
+        },
+        addUserEvent: async (parent, { event_id }, context) => {
+            if(context.user.id) {
+                const user_id = context.user.id;
+                const data = Event.addUser(event_id, user_id, { User, Group, Event, Event_Users })
+
+                return data
+            }
         }
     }
 }
