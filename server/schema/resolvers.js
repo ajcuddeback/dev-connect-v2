@@ -159,6 +159,9 @@ const resolvers = {
             
         }
     }, 
+
+        // ############################# Mutations #############################
+
     Mutation: {
         // ############################# User mutations #############################
         addUser: async (parent, args) => {
@@ -248,6 +251,21 @@ const resolvers = {
                 return data;
             }
 
+            throw new AuthenticationError('You must be logged in!')
+        },
+        createEvent: async (parent, { input }, context) => {
+            if(context.user.id) {
+                const data = await Event.create({
+                    event_title: input.event_title,
+                    event_text: input.event_text,
+                    event_location: input.event_location,
+                    event_time: input.event_location,
+                    group_id: input.group_id
+                })
+
+                return data
+            }
+            
             throw new AuthenticationError('You must be logged in!')
         }
     }
