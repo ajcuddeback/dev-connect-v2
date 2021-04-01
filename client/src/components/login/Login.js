@@ -8,7 +8,7 @@ import Auth from '../../utils/auth'
 function Login() {
     // GraphQL
     const [login, {error}] = useMutation(LOGIN_USER);
-    const [addUser, {error}] = useMutation(SIGNUP_USER);
+    const [addUser, {err}] = useMutation(SIGNUP_USER);
 
     // State
     const [userLoginData, setUserLoginData] = useState({username: '', password: ''});
@@ -48,8 +48,8 @@ function Login() {
             const { data } = await addUser({
                 variables: {...signupData}
             });
-
-            Auth.login(data.login.token);
+            console.log(data)
+            Auth.login(data.addUser.token);
         } catch(err) {
             console.log(err)
         }
