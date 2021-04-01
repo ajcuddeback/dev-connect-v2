@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 
 import Login from './components/login/Login';
+import Nav from './components/layout-components/Nav';
 
 import Auth from './utils/auth'
 
@@ -25,7 +26,10 @@ function App() {
   return (
     <ApolloProvider client={client}>
       {Auth.loggedIn() ? (
-        <h2>You are logged in</h2>
+        <>
+          <h2>You are logged in</h2>
+          <Nav />
+        </>
       ) : (
         <Login />
       )}
