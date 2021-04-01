@@ -275,6 +275,31 @@ const resolvers = {
 
                 return data
             }
+
+            throw new AuthenticationError('You must be logged in!')
+        }, 
+        updateEvent: async (parent, { event_id, event_title, event_text, event_location, event_time }, context) => {
+            if(context.user.id) {
+                const data = Event.update(
+                    {
+                        event_title: event_title, 
+                        event_text: event_text, 
+                        event_location: event_location,
+                        event_time: event_time
+                    },
+                    {
+                        where: {
+                            id: event_id,
+                        },
+                        attributes: ["id", "event_title", "event_text", "event_location", "event_time"]
+                    }
+                )
+
+                console.log(data);
+                return data;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
         }
     }
 }
