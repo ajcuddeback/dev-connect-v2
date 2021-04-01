@@ -63,7 +63,7 @@ const resolvers = {
                         'group_title',
                         'group_text',
                         'group_zip',
-                        [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'user_count'],
                     ],
                     include: [
                         {
@@ -214,6 +214,27 @@ const resolvers = {
             }
             
             throw new AuthenticationError('You must be logged in@')
+        },
+        updateGroup: async (parent, { group_id, group_title, group_text, group_zip }, context) => {
+            if(context.user.id) {
+                const data = await Group.update(
+                    {
+                        group_title: group_title,
+                        group_text: group_text,
+                        group_zip: group_zip
+                    },
+                    {
+                        where: {
+                            id: group_id
+                        },
+                        attributes: ['id', 'group_title', 'group_text', 'group_zip']
+                    },
+                )
+                return data;
+                
+            }
+
+            throw new AuthenticationError('You must be logged in!')
         }
     }
 }

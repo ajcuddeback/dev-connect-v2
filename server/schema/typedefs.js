@@ -15,8 +15,8 @@ const typeDefs = gql`
         email: String 
         first_name: String 
         last_name: String 
-        group_user: [Group_User]
-        event_user: [Event_User]
+        group_user: [Group]
+        event_user: [Event]
     }
 
     type Group {
@@ -25,8 +25,8 @@ const typeDefs = gql`
         group_text: String 
         group_zip: Int 
         user_id: Int
-        users_count: Int
-        event: [Event]
+        user_count: Int
+        events: [Event]
     }
 
     type Event {
