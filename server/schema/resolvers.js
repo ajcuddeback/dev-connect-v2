@@ -300,7 +300,20 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You must be logged in!')
-        }
+        },
+        deleteEvent: async (parent, { event_id }, context) => {
+            if(context.user.id) {
+                const data = Event.destroy({
+                    where: {
+                        id: event_id
+                    }
+                })
+
+                return data;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
+        } 
     }
 }
 
