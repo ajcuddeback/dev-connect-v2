@@ -71,7 +71,7 @@ const typeDefs = gql`
         deleteUser(userId: Int): User
         createGroup(group_title: String!, group_text: String!, group_zip: Int!): Group #done
         addUserGroup(group_id: Int!): Group #done
-        updateGroup(group_id: Int!, group_title: String, group_text: String, group_zip: Int): Group 
+        updateGroup(group_id: Int!, group_title: String, group_text: String, group_zip: Int): Group #done
         deleteGroup(group_id: Int!): Group
         createEvent(input: EventInput): Event 
         updateEvent(event_id: Int!, event_title: String, event_text: String, event_location: String, event_time: String): Event 
