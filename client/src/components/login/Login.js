@@ -3,17 +3,19 @@ import React, { useState } from 'react';
 import logo from '../../images/red-on-trans-logo.png'
 
 import { useMutation } from '@apollo/react-hooks'
-import { LOGIN_USER } from '../../utils/mutations';
+import { LOGIN_USER, SIGNUP_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth'
 function Login() {
     // GraphQL
     const [login, {error}] = useMutation(LOGIN_USER);
+    const [addUser, {error}] = useMutation(SIGNUP_USER);
 
     // State
     const [userLoginData, setUserLoginData] = useState({username: '', password: ''});
     const [signupData, setSignupData] = useState({username: '', email: '', first_name: '', last_name: '', password: ''});
     const [isNewUser, setIsNewUser] = useState(false);
 
+    // Functions
     const handleLoginChange = (e) => {
         const { name, value } = e.target;
         setUserLoginData({ ...userLoginData, [name]: value })
@@ -33,7 +35,21 @@ function Login() {
             });
 
 
-            Auth.login(data.login.token)
+            Auth.login(data.login.token);
+        } catch(err) {
+            console.log(err)
+        }
+    };
+
+    const handleSignup = async (e) => {
+        e.preventDefault();
+
+        try {
+            const { data } = await addUser({
+                variables: {...signupData}
+            });
+
+            Auth.login(data.login.token);
         } catch(err) {
             console.log(err)
         }
@@ -64,7 +80,7 @@ function Login() {
                 <div className="img-wrapper">
                     <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
                 </div>
-                <form className="login-form">
+                <form className="login-form" onSubmit={handleSignup} >
                     <h2>Signup</h2>
                     <input type="text" name="username" id="username" placeholder="Username" onChange={handleSignupChange} />
                     <br/>
