@@ -60,7 +60,7 @@ const typeDefs = gql`
         users: [User] #done
         myGroups: [Group] #done
         groups: [Group] #done
-        events: Event 
+        events: [Event] 
         group(group_id: Int!): Group #done
         event(event_id: Int!): Event
         groupByZip(group_zip: Int!, miles: Int!): [Group] #done
@@ -77,7 +77,7 @@ const typeDefs = gql`
         createEvent(input: EventInput): Event #done
         addUserEvent(event_id: Int!): Event #done
         updateEvent(event_id: Int!, event_title: String, event_text: String, event_location: String, event_time: String): Event #done
-        deleteEvent(event_id: Int!): Event
+        deleteEvent(event_id: Int!): Event #done
     }
 `
 

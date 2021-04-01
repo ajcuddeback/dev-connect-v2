@@ -155,8 +155,28 @@ const resolvers = {
             })
             console.log(data)
             return data;
-            
-            
+        }, 
+        events: async (parent, args, context) => {
+            if(context.user.id) {
+                const data = await Event.findAll({})
+
+                return data;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
+        },
+        event: async (parent, { event_id }, context) => {
+            if(context.user.id) {
+                const data = await Event.findOne({
+                    where: {
+                        id: event_id
+                    }
+                })
+
+                return data;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
         }
     }, 
 
@@ -271,7 +291,7 @@ const resolvers = {
         addUserEvent: async (parent, { event_id }, context) => {
             if(context.user.id) {
                 const user_id = context.user.id;
-                const data = Event.addUser(event_id, user_id, { User, Group, Event, Event_Users })
+                const data = await Event.addUser(event_id, user_id, { User, Group, Event, Event_Users })
 
                 return data
             }
@@ -280,7 +300,7 @@ const resolvers = {
         }, 
         updateEvent: async (parent, { event_id, event_title, event_text, event_location, event_time }, context) => {
             if(context.user.id) {
-                const data = Event.update(
+                const data = await Event.update(
                     {
                         event_title: event_title, 
                         event_text: event_text, 
@@ -303,7 +323,7 @@ const resolvers = {
         },
         deleteEvent: async (parent, { event_id }, context) => {
             if(context.user.id) {
-                const data = Event.destroy({
+                const data = await Event.destroy({
                     where: {
                         id: event_id
                     }
