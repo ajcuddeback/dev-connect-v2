@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 
 import logo from '../../images/red-on-trans-logo.png'
 
+import { useMutation } from '@apollo/react-hooks'
+import { LOGIN_USER } from '../../utils/mutations';
+import Auth from '../../utils/auth'
 function Login() {
+    // GraphQL
+    const [login, {error}] = useMutation(LOGIN_USER);
+
     // State
     const [userLoginData, setUserLoginData] = useState({username: '', password: ''});
     const [signupData, setSignupData] = useState({username: '', email: '', first_name: '', last_name: '', password: ''});
@@ -18,6 +24,21 @@ function Login() {
         setSignupData({ ...signupData, [name]: value })
     }
 
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        try {
+            const { data } = await login({
+                variables: {...userLoginData}
+            });
+
+
+            Auth.login(data.login.token)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
     // JSX
     if(!isNewUser) {
         return (
@@ -25,7 +46,7 @@ function Login() {
                 <div className="img-wrapper">
                     <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
                 </div>
-                <form className="login-form">
+                <form className="login-form" onSubmit={handleLogin} >
                     <h2>Login</h2>
                     <input type="text" name="username" id="username" placeholder="Username" onChange={handleLoginChange} />
                     <br/>
