@@ -118,36 +118,41 @@ const resolvers = {
         },
         groupByZip: async (parent, { group_zip, miles }) => {
             const apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;
-            const groupData = await axios.get(apiUrl).then((response) => {
-                const intData = response.data.zip_codes.map(zip_code => {
-                    console.log(zip_code)
-                })
-                const Op = Sequelize.Op;
-                Group.findAll({
-                    where: {
-                        group_zip: {
-                            [Op.or]: response.data.zip_codes
-                        }
-                    },
-                    attributes: [
-                        'id',
-                        'group_title',
-                        'group_text',
-                        'group_zip',
-                        [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
-                    ],
-                    include: [
-                        {
-                            model: Event,
-                            attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
-                        }
-                    ]
-                })
+            const intData = [];
+             await axios.get(apiUrl).then((response) => {
+                const zipArr = response.data.zip_codes
+                intData = zipArr.map(zip_code => parseInt(zip_code))
             }).catch(err => {
                 console.log(err)
+            });
+            console.log(intData)
+
+
+            const Op = Sequelize.Op;
+            const data = await Group.findAll({
+                where: {
+                    group_zip: {
+                        [Op.or]: intData
+                    }
+                },
+                attributes: [
+                    'id',
+                    'group_title',
+                    'group_text',
+                    'group_zip',
+                    [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
+                ],
+                include: [
+                    {
+                        model: Event,
+                        attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
+                    }
+                ]
             })
-            console.log(groupData)
-            return groupData;
+            console.log(data)
+            return data;
+            
+            
         }
     }, 
     Mutation: {
