@@ -4,6 +4,10 @@ import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 
+import Login from './components/login/Login';
+
+import Auth from './utils/auth'
+
 const client = new ApolloClient({
   request: operation => {
     const token = localStorage.getItem('id_token');
@@ -20,7 +24,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <h2>Hello React!</h2>
+      {Auth.loggedIn() ? (
+        <h2>You are logged in</h2>
+      ) : (
+        <Login />
+      )}
     </ApolloProvider>
   );
 }
