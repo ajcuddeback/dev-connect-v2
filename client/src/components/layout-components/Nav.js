@@ -16,7 +16,7 @@ function Nav() {
             <ul>
                 <li><Link to={`/`}>Feed</Link></li>
                 <li><Link to={`/meet`}>Meet</Link></li>
-                <li><Link to={`/`}>AskDevs</Link></li>
+                <li><Link to={`/meet`}>AskDevs</Link></li>
                 <li><Link to={`/`}>Shop</Link></li>
                 <li><Link to={`/`}>Meet Up Dashboard</Link></li>
                 <li><Link to={`/`}>My Groups</Link></li>
