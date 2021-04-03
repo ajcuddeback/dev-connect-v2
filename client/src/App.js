@@ -7,6 +7,7 @@ import ApolloClient from 'apollo-boost';
 // Components
 import Login from './components/login/Login';
 import Nav from './components/layout-components/Nav';
+import MeetHome from './components/event-components/MeetHome';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -35,6 +36,9 @@ function App() {
           <h2>You are logged in</h2>
           <Router>
             <Nav />
+            <Switch>
+              <Route exact path='/meet' component={MeetHome}></Route>
+            </Switch>
           </Router>
             
         </>
