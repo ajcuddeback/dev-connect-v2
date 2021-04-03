@@ -63,7 +63,7 @@ const resolvers = {
                         'group_title',
                         'group_text',
                         'group_zip',
-                        [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'user_count'],
+                        [sequelize.literal('(SELECT COUNT(*) AS users_count FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
                     ],
                     include: [
                         {
@@ -74,7 +74,7 @@ const resolvers = {
                 })
                 console.log(userData)
 
-                return userData;
+                return userData.map(item => item.get({plain: true}));
             }
 
             throw new AuthenticationError('You need to be logged in!')
@@ -95,8 +95,7 @@ const resolvers = {
                     }
                 ]
             });
-
-            return groupData;
+            return groupData.map(item => item.get({plain: true}));
         },
         group: async (parent, { group_id }) => {
             const groupData =  await Group.findOne({
@@ -118,7 +117,7 @@ const resolvers = {
                 ]
             });
 
-            return groupData;
+            return groupData.map(item => item.get({plain: true}));
         },
         groupByZip: async (parent, { group_zip, miles }) => {
             const apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;
@@ -129,7 +128,6 @@ const resolvers = {
             }).catch(err => {
                 console.log(err)
             });
-            console.log(intData)
 
 
             const Op = Sequelize.Op;
@@ -152,9 +150,9 @@ const resolvers = {
                         attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
                     }
                 ]
-            })
-            console.log(data)
-            return data;
+            });
+            
+            return data.map(item => item.get({plain: true}));
         }, 
         events: async (parent, args, context) => {
             if(context.user.id) {

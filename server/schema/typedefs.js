@@ -25,7 +25,7 @@ const typeDefs = gql`
         group_text: String 
         group_zip: Int 
         user_id: Int
-        user_count: Int
+        users_count: Int
         events: [Event]
     }
 
