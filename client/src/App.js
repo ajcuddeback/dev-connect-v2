@@ -8,6 +8,8 @@ import ApolloClient from 'apollo-boost';
 import Login from './components/login/Login';
 import Nav from './components/layout-components/Nav';
 
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+
 // Utils
 import Auth from './utils/auth'
 
@@ -31,7 +33,10 @@ function App() {
       {Auth.loggedIn() ? (
         <>
           <h2>You are logged in</h2>
-          <Nav />
+          <Router>
+            <Nav />
+          </Router>
+            
         </>
       ) : (
         <Login />
