@@ -18,8 +18,15 @@ const MeetHome = () => {
         e.preventDefault();
     };
 
-    const findGroupZipHandler = () => {
-
+    const findGroupZipHandler = async () => {
+        if(navigator.geolocation) {
+            await navigator.geolocation.getCurrentPosition(position => {
+                lat = position.coords.latitude;
+                lon = position.coords.longitude;
+            })
+        } else {
+            console.log("No location!")
+        };
     };
 
     // JSX
