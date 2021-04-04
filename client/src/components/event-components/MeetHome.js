@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import axios from 'axios'
+import axios from 'axios';
 
-const MeetHome = ({ miles, setMiles, zipCode, setZipCode }) => {
+const MeetHome = ({ miles, setMiles, setZipCode }) => {
 
     const history = useHistory();
 
