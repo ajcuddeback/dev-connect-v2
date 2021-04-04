@@ -9,6 +9,7 @@ import Login from './components/login/Login';
 import Nav from './components/layout-components/Nav';
 import MeetHome from './components/event-components/MeetHome';
 import ZipGroups from './components/event-components/zipGroups';
+import GroupHome from './components/event-components/GroupHome';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -48,6 +49,9 @@ function App() {
               <Route exact path='/meet/groups' render={() => (
                 <ZipGroups miles={miles} zipCode={zipCode} />
               )}  ></Route>
+              <Route exact path='/meet/:groupName' render={() => (
+                <GroupHome />
+              )} ></Route>
             </Switch>
           </Router>
             

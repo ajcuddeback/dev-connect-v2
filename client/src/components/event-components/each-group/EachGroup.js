@@ -15,6 +15,7 @@ const EachGroup = ({ group, setGroupFetchSuccess }) => {
                 variables: { group_id: id }
             });
             setGroupFetchSuccess(true);
+            
         } catch (e) {
             console.log(e);
             setGroupFetchSuccess(false)

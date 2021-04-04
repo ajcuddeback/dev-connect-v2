@@ -84,6 +84,7 @@ const resolvers = {
                 attributes: [
                     'id',
                     'group_title',
+                    'group_url',
                     'group_text',
                     'group_zip',
                     [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
@@ -105,6 +106,7 @@ const resolvers = {
                 attributes: [
                     'id',
                     'group_title',
+                    'group_url',
                     'group_text',
                     'group_zip',
                     [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
@@ -140,6 +142,7 @@ const resolvers = {
                 attributes: [
                     'id',
                     'group_title',
+                    'group_url',
                     'group_text',
                     'group_zip',
                     [sequelize.literal('(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
@@ -212,10 +215,11 @@ const resolvers = {
         },
 
         // ############################# Group mutations #############################
-        createGroup: async (parent, { group_title, group_text, group_zip }, context) => {
+        createGroup: async (parent, { group_title, group_url, group_text, group_zip }, context) => {
             if(context.user.id) {
                 const data = await Group.create({
                     group_title: group_title,
+                    group_url: group_url,
                     group_text: group_text,
                     group_zip: group_zip,
                     user_id: context.user.id
@@ -236,11 +240,12 @@ const resolvers = {
             
             throw new AuthenticationError('You must be logged in@')
         },
-        updateGroup: async (parent, { group_id, group_title, group_text, group_zip }, context) => {
+        updateGroup: async (parent, { group_id, group_title, group_url, group_text, group_zip }, context) => {
             if(context.user.id) {
                 const data = await Group.update(
                     {
                         group_title: group_title,
+                        group_url: group_url,
                         group_text: group_text,
                         group_zip: group_zip
                     },

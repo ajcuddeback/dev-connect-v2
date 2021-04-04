@@ -11,6 +11,7 @@ const ZipGroups = ({ miles, zipCode }) => {
     // State
     const [groupData, setGroupData] = useState();
     const [groupFetchSuccess, setGroupFetchSuccess] = useState(true);
+    console.log(zipCode, miles)
 
     // Query groups by zipcode
     const { loading, data } = useQuery(GROUPS_BY_ZIP, {
@@ -19,8 +20,9 @@ const ZipGroups = ({ miles, zipCode }) => {
 
     // use Effect for setting group data
     useEffect (() => {
-        if(data) {
+        if(data.groupByZip.length > 0) {
             setGroupData(true);
+            console.log(data)
         } else {
             setGroupData(false);
         }
@@ -52,7 +54,7 @@ const ZipGroups = ({ miles, zipCode }) => {
                     </section>
                     
                 ) : (
-                    <h2>There are no groups here!</h2>
+                    <h2>There are no groups in your area!</h2>
                 )}
             </>
     )        

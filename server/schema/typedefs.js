@@ -22,6 +22,7 @@ const typeDefs = gql`
     type Group {
         id: ID 
         group_title: String 
+        group_url: String
         group_text: String 
         group_zip: Int 
         user_id: Int
@@ -61,7 +62,7 @@ const typeDefs = gql`
         myGroups: [Group] #done
         groups: [Group] #done
         events: [Event] #done
-        group(group_id: Int!): Group #done
+        group(group_title: String!): Group #done
         event(event_id: Int!): Event #done
         groupByZip(group_zip: Int!, miles: Int!): [Group] #done
     }
@@ -69,7 +70,7 @@ const typeDefs = gql`
     type Mutation {
         login(username: String!, password: String!): Auth #done
         addUser(username: String!, email: String!, first_name: String!, last_name: String!, password: String!): Auth #done
-        createGroup(group_title: String!, group_text: String!, group_zip: Int!): Group #done
+        createGroup(group_title: String!, group_url: String! group_text: String!, group_zip: Int!): Group #done
         addUserGroup(group_id: Int!): Group #done
         updateGroup(group_id: Int!, group_title: String, group_text: String, group_zip: Int): Group #done
         deleteGroup(group_id: Int!): Group #done

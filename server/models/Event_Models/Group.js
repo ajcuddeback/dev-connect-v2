@@ -39,6 +39,12 @@ Group.init(
     group_title: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
+    },
+    group_url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     },
     group_text: {
       type: DataTypes.TEXT,
