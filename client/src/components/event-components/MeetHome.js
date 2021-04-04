@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-const MeetHome = () => {
-    // State
-    const [miles, setMiles] = useState(20);
-    const [zipCode, setZipCode] = useState();
+import axios from 'axios'
+
+const MeetHome = ({ miles, setMiles, zipCode, setZipCode }) => {
 
     // Functions
     const handleRange = (event) => {
@@ -21,9 +20,12 @@ const MeetHome = () => {
     const findGroupZipHandler = async () => {
         if(navigator.geolocation) {
             await navigator.geolocation.getCurrentPosition(position => {
-                lat = position.coords.latitude;
-                lon = position.coords.longitude;
-            })
+                let lat = position.coords.latitude;
+                let lon = position.coords.longitude;
+
+                const apiUrl = `https://us1.locationiq.com/v1/reverse.php?key=${process.env.REACT_APP_GEOAPIKEY}&lat=${lat}&lon=${lon}&format=json`;
+                axios.get(apiUrl).then(response => console.log(response.data.address.postcode));
+            });
         } else {
             console.log("No location!")
         };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Apollo
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -8,6 +8,7 @@ import ApolloClient from 'apollo-boost';
 import Login from './components/login/Login';
 import Nav from './components/layout-components/Nav';
 import MeetHome from './components/event-components/MeetHome';
+import zipGroups from './components/event-components/zipGroups';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -29,6 +30,10 @@ const client = new ApolloClient({
 })
 
 function App() {
+  // State
+  const [miles, setMiles] = useState(20);
+  const [zipCode, setZipCode] = useState();
+
   return (
     <ApolloProvider client={client}>
       {Auth.loggedIn() ? (
@@ -37,7 +42,12 @@ function App() {
           <Router>
             <Nav />
             <Switch>
-              <Route exact path='/meet' component={MeetHome}></Route>
+              <Route exact path='/meet' render={() => (
+                <MeetHome miles={miles} setMiles={setMiles} zipCode={zipCode} setZipCode={setZipCode} />
+              )}></Route>
+              <Route exact path='/meet/groups' render={() => (
+                <zipCode miles={miles} zipCode={zipCode} />
+              )}  ></Route>
             </Switch>
           </Router>
             
