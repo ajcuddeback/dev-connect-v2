@@ -1,11 +1,16 @@
 import React from 'react';
 
+// gql
 import { useMutation } from '@apollo/react-hooks';
 import { ADD_USER_GROUP } from '../../../utils/mutations';
+
+import { useHistory } from 'react-router-dom';
 
 const EachGroup = ({ group, setGroupFetchSuccess }) => {
     // gql
     const [addUserGroup, {err}] = useMutation(ADD_USER_GROUP);
+
+    const history = useHistory();
 
     // Functions
     const joinGroupHandler = async (e) => {
@@ -15,7 +20,7 @@ const EachGroup = ({ group, setGroupFetchSuccess }) => {
                 variables: { group_id: id }
             });
             setGroupFetchSuccess(true);
-            
+            history.push(`/meet/${group.group_url}`);
         } catch (e) {
             console.log(e);
             setGroupFetchSuccess(false)
