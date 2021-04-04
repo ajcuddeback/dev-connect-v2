@@ -98,10 +98,10 @@ const resolvers = {
             });
             return groupData.map(item => item.get({plain: true}));
         },
-        group: async (parent, { group_id }) => {
+        group: async (parent, { group_url }) => {
             const groupData =  await Group.findOne({
                 where: {
-                    id: group_id
+                    group_url: group_url
                 },
                 attributes: [
                     'id',
@@ -115,11 +115,17 @@ const resolvers = {
                     {
                         model: Event,
                         attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
+                    },
+                    {
+                        model: User,
+                        attributes: ['id', 'first_name'],
+                        through: Group_Users,
+                        as: 'group_user'
                     }
                 ]
             });
 
-            return groupData.map(item => item.get({plain: true}));
+            return groupData
         },
         groupByZip: async (parent, { group_zip, miles }) => {
             const apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;

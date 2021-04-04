@@ -12,3 +12,25 @@ export const GROUPS_BY_ZIP = gql`
         }
     }
 `
+
+export const GET_GROUP = gql`
+    query group($group_url: String!) {
+        group(group_url: $group_url) {
+            id
+            group_title
+            group_text
+            group_zip
+            events {
+                id
+                event_title
+                event_text
+                event_location
+                event_time
+            }
+            group_user {
+                id
+                first_name
+            }
+        }
+    }
+`

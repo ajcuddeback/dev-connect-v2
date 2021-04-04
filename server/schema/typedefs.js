@@ -28,6 +28,7 @@ const typeDefs = gql`
         user_id: Int
         users_count: Int
         events: [Event]
+        group_user: [User]
     }
 
     type Event {
@@ -62,7 +63,7 @@ const typeDefs = gql`
         myGroups: [Group] #done
         groups: [Group] #done
         events: [Event] #done
-        group(group_title: String!): Group #done
+        group(group_url: String!): Group #done
         event(event_id: Int!): Event #done
         groupByZip(group_zip: Int!, miles: Int!): [Group] #done
     }
