@@ -8,7 +8,7 @@ import ApolloClient from 'apollo-boost';
 import Login from './components/login/Login';
 import Nav from './components/layout-components/Nav';
 import MeetHome from './components/event-components/MeetHome';
-import zipGroups from './components/event-components/zipGroups';
+import ZipGroups from './components/event-components/zipGroups';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -46,7 +46,7 @@ function App() {
                 <MeetHome miles={miles} setMiles={setMiles} zipCode={zipCode} setZipCode={setZipCode} />
               )}></Route>
               <Route exact path='/meet/groups' render={() => (
-                <zipCode miles={miles} zipCode={zipCode} />
+                <ZipGroups miles={miles} zipCode={zipCode} />
               )}  ></Route>
             </Switch>
           </Router>

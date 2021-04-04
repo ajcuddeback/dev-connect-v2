@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const zipGroups = ({ miles, zipCode }) => {
+const ZipGroups = ({ miles, zipCode }) => {
 
     // JSX
     return (
@@ -10,4 +10,4 @@ const zipGroups = ({ miles, zipCode }) => {
     )
 };
 
-export default zipGroups;
+export default ZipGroups;

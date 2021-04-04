@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import axios from 'axios'
 
 const MeetHome = ({ miles, setMiles, zipCode, setZipCode }) => {
+
+    const history = useHistory();
 
     // Functions
     const handleRange = (event) => {
@@ -17,15 +20,18 @@ const MeetHome = ({ miles, setMiles, zipCode, setZipCode }) => {
         e.preventDefault();
     };
 
-    const findGroupZipHandler = async () => {
+    const findGroupZipHandler = () => {
         if(navigator.geolocation) {
-            await navigator.geolocation.getCurrentPosition(position => {
+            navigator.geolocation.getCurrentPosition(async position => {
                 let lat = position.coords.latitude;
                 let lon = position.coords.longitude;
 
                 const apiUrl = `https://us1.locationiq.com/v1/reverse.php?key=${process.env.REACT_APP_GEOAPIKEY}&lat=${lat}&lon=${lon}&format=json`;
-                axios.get(apiUrl).then(response => console.log(response.data.address.postcode));
+                await axios.get(apiUrl).then(response => setZipCode(response.data.address.postcode));
+
+                history.push('/meet/groups');
             });
+            
         } else {
             console.log("No location!")
         };
