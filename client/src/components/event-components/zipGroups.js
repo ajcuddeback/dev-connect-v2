@@ -19,14 +19,10 @@ const ZipGroups = ({ miles, zipCode }) => {
 
     // use Effect for setting group data
     useEffect (() => {
-        // if(data.groupByZip.length > 0) {
-        //     setGroupData(true);
-        // } else {
-        //     setGroupData(false);
-        // }
-        if(data) {
-            console.log(data)
-            setGroupData(true)
+        if(data?.groupByZip.length > 0) {
+            setGroupData(true);
+        } else {
+            setGroupData(false);
         }
     }, [data])
     
