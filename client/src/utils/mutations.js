@@ -23,3 +23,12 @@ export const SIGNUP_USER = gql`
         }
     }
 `
+
+export const ADD_USER_GROUP = gql`
+    mutation addUserGroup($group_id: Int!) {
+        addUserGroup(group_id: $group_id) {
+            id
+            group_title
+        }
+    }
+`
