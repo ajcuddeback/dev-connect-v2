@@ -5,7 +5,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { ADD_USER_EVENT } from '../../../utils/mutations';
 import { GET_ME_EVENTS } from '../../../utils/queries';
 
-const EachEvent = ({ event }) => {
+const EachEvent = ({ event, isAdmin }) => {
     const [eventIds, setEventIds] = useState([])
 
     // gql

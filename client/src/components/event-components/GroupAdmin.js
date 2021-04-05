@@ -7,10 +7,7 @@ import { GET_GROUP, OWNER_GROUPS } from '../../utils/queries';
 // Router
 import { useParams, Link } from 'react-router-dom';
 
-const GroupAdmin = () => {
-    // State
-    const [isAdmin, setIsAdmin] = useState(false);
-
+const GroupAdmin = ({ isAdmin, setIsAdmin }) => {
     // gql
     const { groupName } = useParams();
     const { loading, data } = useQuery(GET_GROUP, {
@@ -42,12 +39,28 @@ const GroupAdmin = () => {
 
     if(!isAdmin) {
         return (
-            <h2>You are not the owner of this group! Please return back to the <Link to={`/meet`}>home page!</Link></h2>
+            <>
+                <h2>You are not the owner of this group!</h2>
+                <p>Want to make your own group? Go to your<Link to={`/meet/dashboard`}> dashboard!</Link></p>
+            </>
         )
     }
     return (
         <>
             <h2>Admin</h2>
+            <section class="group-content-wrapper">
+                <div class="group-info-wrapper">
+                    <h2 class="group-name">{data.group.group_title}</h2>
+                    <p>{data.group.group_text}</p>
+                </div>
+                <div class="group-event-wrapper">
+                    <h2>Events:</h2>
+                    <ol>
+                
+                    </ol>
+                    <a href="/">Add an Event</a>
+                </div>
+            </section>
         </>
     )
 };

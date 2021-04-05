@@ -6,14 +6,17 @@ import { useParams, Link } from 'react-router-dom';
 // gql
 import { useQuery } from '@apollo/react-hooks';
 import { GET_GROUP } from '../../utils/queries';
+import { useMutation } from '@apollo/react-hooks';
+import {  ADD_USER_GROUP } from '../../utils/mutations';
 // Auth
 import Auth from '../../utils/auth';
 
 import EachEvent from './each-event/EachEvent';
 
-const GroupHome = () => {
+const GroupHome = ({ isAdmin }) => {
     const [isMember, setIsMemeber] = useState(false);
     const [dataGroup, setDataGroup] = useState(false);
+    const [addUserGroup, {err}] = useMutation(ADD_USER_GROUP);
 
     // Get the groupName from params
     let { groupName } = useParams();
@@ -21,6 +24,21 @@ const GroupHome = () => {
     const { loading, data } = useQuery(GET_GROUP, {
         variables: {group_url: groupName}
     });
+
+    const handleJoinGroup = async () => {
+        try {
+            await addUserGroup({
+                variables: { group_id: parseInt(data.group.id) },
+                refetchQueries: [{ 
+                    query: GET_GROUP,
+                    variables: { group_url: groupName }
+                }]
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    
 
     useEffect(() => {
         if(data) {
@@ -61,10 +79,13 @@ const GroupHome = () => {
                 <div className="group-info-wrapper">
                     <h2 className="group-name">{data.group.group_title}</h2>
                     <p>{data.group.group_text}</p>
+                    {!isMember ? (
+                        <button onClick={handleJoinGroup}>Join Group</button>
+                    ) : ''}
                 </div>
                 <div className="group-event-wrapper">
                     <ol>
-                        {data.group.events.map(event => (<EachEvent event={event} ></EachEvent>))}
+                        {data.group.events.map(event => (<EachEvent event={event} isAdmin={isAdmin} ></EachEvent>))}
                     </ol>
                 </div>
             </section>
