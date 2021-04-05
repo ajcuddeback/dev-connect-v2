@@ -7,7 +7,11 @@ import { GET_GROUP, OWNER_GROUPS } from '../../utils/queries';
 // Router
 import { useParams, Link } from 'react-router-dom';
 
-const GroupAdmin = ({ isAdmin, setIsAdmin }) => {
+import EachEventAdmin from './each-event/EachEventAdmin';
+
+const GroupAdmin = () => {
+   const [isAdmin, setIsAdmin] = useState(false);
+
     // gql
     const { groupName } = useParams();
     const { loading, data } = useQuery(GET_GROUP, {
@@ -56,7 +60,7 @@ const GroupAdmin = ({ isAdmin, setIsAdmin }) => {
                 <div class="group-event-wrapper">
                     <h2>Events:</h2>
                     <ol>
-                
+                    {data.group.events.map(event => (<EachEventAdmin event={event} ></EachEventAdmin>))}
                     </ol>
                     <a href="/">Add an Event</a>
                 </div>

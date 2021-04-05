@@ -35,7 +35,6 @@ function App() {
   // State
   const [miles, setMiles] = useState(20);
   const [zipCode, setZipCode] = useState();
-   const [isAdmin, setIsAdmin] = useState(false);
 
   return (
     <ApolloProvider client={client}>
@@ -52,10 +51,10 @@ function App() {
                 <ZipGroups miles={miles} zipCode={zipCode} />
               )}  ></Route>
               <Route exact path='/meet/:groupName' render={() => (
-                <GroupHome isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
+                <GroupHome />
               )} ></Route>
               <Route exact path='/meet/admin/:groupName' render ={() => (
-                <GroupAdmin isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
+                <GroupAdmin />
               )}></Route>
             </Switch>
           </Router>

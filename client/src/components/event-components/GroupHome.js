@@ -13,7 +13,7 @@ import Auth from '../../utils/auth';
 
 import EachEvent from './each-event/EachEvent';
 
-const GroupHome = ({ isAdmin }) => {
+const GroupHome = () => {
     const [isMember, setIsMemeber] = useState(false);
     const [dataGroup, setDataGroup] = useState(false);
     const [addUserGroup, {err}] = useMutation(ADD_USER_GROUP);
@@ -85,7 +85,7 @@ const GroupHome = ({ isAdmin }) => {
                 </div>
                 <div className="group-event-wrapper">
                     <ol>
-                        {data.group.events.map(event => (<EachEvent event={event} isAdmin={isAdmin} ></EachEvent>))}
+                        {data.group.events.map(event => (<EachEvent event={event} ></EachEvent>))}
                     </ol>
                 </div>
             </section>
