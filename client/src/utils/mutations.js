@@ -50,3 +50,11 @@ export const CREATE_GROUP = gql`
   }
 }
 `
+
+export const DELETE_EVENT = gql`
+    mutation deleteEvent($event_id: Int!) {
+        deleteEvent(event_id: $event_id) {
+            id
+        }
+    }
+`

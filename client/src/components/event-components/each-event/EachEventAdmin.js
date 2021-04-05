@@ -2,12 +2,32 @@ import React, { useEffect, useState } from 'react';
 
 // gql
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { GET_ME_EVENTS } from '../../../utils/queries';
+import { GET_ME_EVENTS, GET_GROUP } from '../../../utils/queries';
+import { DELETE_EVENT } from '../../../utils/mutations';
 
-const EachEventAdmin = ({ event }) => {
+import { Link } from 'react-router-dom';
+
+const EachEventAdmin = ({ event, groupName }) => {
 
     // gql
     const { loading, data } = useQuery(GET_ME_EVENTS);
+    const groupData = useQuery(GET_GROUP);
+    const [deleteEvent, {err}] = useMutation(DELETE_EVENT);
+
+    // Functions
+    const handleEventDelete = async () => {
+        const eventId = parseInt(event.id);
+
+        await deleteEvent({
+            variables: { event_id: eventId },
+            refetchQueries: [{
+                query: GET_GROUP,
+                variables: { group_url: groupName }
+            }],
+                
+            
+        });
+    }
     
     // JSX
     return (
@@ -21,6 +41,10 @@ const EachEventAdmin = ({ event }) => {
                 <div className="location">
                     <p>Location: {event.event_location}</p>
                 </div>
+            </div>
+            <div className="manage-event-buttons">
+                <button onClick={handleEventDelete} className="delete-event-button">Delete Event</button>
+                <Link to={`/meet/admin/edit-event/${event.id}`}>Edit event</Link>
             </div>
         </>
     )

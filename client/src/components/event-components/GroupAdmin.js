@@ -52,15 +52,15 @@ const GroupAdmin = () => {
     return (
         <>
             <h2>Admin</h2>
-            <section class="group-content-wrapper">
-                <div class="group-info-wrapper">
-                    <h2 class="group-name">{data.group.group_title}</h2>
+            <section className="group-content-wrapper">
+                <div className="group-info-wrapper">
+                    <h2 className="group-name">{data.group.group_title}</h2>
                     <p>{data.group.group_text}</p>
                 </div>
-                <div class="group-event-wrapper">
+                <div className="group-event-wrapper">
                     <h2>Events:</h2>
                     <ol>
-                    {data.group.events.map(event => (<EachEventAdmin event={event} ></EachEventAdmin>))}
+                    {data.group.events.map(event => (<EachEventAdmin event={event} groupName={groupName} ></EachEventAdmin>))}
                     </ol>
                     <a href="/">Add an Event</a>
                 </div>
