@@ -50,7 +50,7 @@ const EachEvent = ({ event, isAdmin }) => {
                     <p>Location: {event.event_location}</p>
                 </div>
             </div>
-
+            
             <button onClick={joinEventHandler} className="join-event-btn grey-red-btn" data-id={event.id}>
                 {eventIds?.some((eventId) => eventId === event.id)
                     ? 'Already Joined'
