@@ -49,13 +49,13 @@ User.init(
         },
         questions: [
             {
-              type: Schema.Types.ObjectId,
+              type: DataTypes.INTEGER,
               ref: 'Question'
             }
           ],
           friends: [
             {
-              type: Schema.Types.ObjectId,
+              type: DataTypes.INTEGER,
               ref: 'User'
             }
           ]
@@ -77,16 +77,7 @@ User.init(
         freezeTableName: true,
         underscored: true,
         modelName: 'user'
-    },
-    {
-    toJSON: {
-        virtuals: true
     }
-}
 );
-
-userSchema.virtual('friendCount').get(function() {
-    return this.friends.length;
-});
 
 module.exports = User;
