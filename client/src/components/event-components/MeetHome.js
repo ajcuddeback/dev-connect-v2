@@ -4,10 +4,22 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const MeetHome = ({ miles, setMiles, setZipCode }) => {
+    // State
+    const [createGroupForm, setCreateGroupForm] = useState({group_title: '', group_text: '', group_zip: ''});
 
     const history = useHistory();
 
-    // Functions
+    // Functions for creating a group
+    const createGroupHandler = () => {
+
+    }
+
+    const handleFormChange = (e) => {
+        const { name, value } = e.target;
+        setCreateGroupForm({ ...createGroupForm, [name]: value })
+    };
+
+    // Functions for finding group
     const handleRange = (event) => {
         setMiles(event.target.value)
     };
@@ -50,11 +62,11 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
             </section>
             <section className="get-group-wrapper">
                 <div className="start-group-wrapper">
-                    <form className="create-group-form">
-                        <input type="text" name="group-name" className="group-name" placeholder="Name of your group" required />
-                        <textarea name="about-group" id="about-group" cols="30" rows="10"
+                    <form onSubmit={createGroupHandler} className="create-group-form">
+                        <input onChange={handleFormChange} type="text" name="group_title" className="group-name" placeholder="Name of your group" required />
+                        <textarea onChange={handleFormChange} name="group_text" id="about-group" cols="30" rows="10"
                             placeholder="What is your group about?" required></textarea>
-                        <input type="number" name="zip" className="zip" placeholder="Zip Code" required />
+                        <input onChange={handleFormChange} type="number" name="group_zip" className="zip" placeholder="Zip Code" required />
                         <button type="submit" className="grey-red-btn">Create Group</button>
                     </form>
                 </div>

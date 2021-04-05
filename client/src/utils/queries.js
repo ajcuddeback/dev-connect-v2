@@ -41,7 +41,7 @@ export const GET_ME_EVENTS = gql`
             id
             event_user {
                 id
-                event_title
+                event_title 
             }
         }
     }
