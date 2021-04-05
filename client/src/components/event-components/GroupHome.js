@@ -13,7 +13,6 @@ import EachEvent from './each-event/EachEvent';
 
 const GroupHome = () => {
     const [isMember, setIsMemeber] = useState(false);
-    const [isAttending, setIsAttending] = useState({});
     const [dataGroup, setDataGroup] = useState(false);
 
     // Get the groupName from params
@@ -57,12 +56,6 @@ const GroupHome = () => {
     return (
         <>
             <h2>Group Home</h2>
-            <div className=" hidden attend-event-success">
-                <p>You are now successfully attending this event!</p>
-            </div>
-            <div className="hidden attend-event-fail">
-                <p>You are already attending this event!</p>
-            </div>
 
             <section className="group-content-wrapper">
                 <div className="group-info-wrapper">

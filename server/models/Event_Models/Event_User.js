@@ -29,7 +29,6 @@ Event_Users.init(
                 key: 'id'
             }
         }
-
     },
     {
         sequelize,

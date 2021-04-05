@@ -34,3 +34,15 @@ export const GET_GROUP = gql`
         }
     }
 `
+
+export const GET_ME_EVENTS = gql`
+    query {
+        me {
+            id
+            event_user {
+                id
+                event_title
+            }
+        }
+    }
+`

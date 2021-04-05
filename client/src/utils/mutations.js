@@ -32,3 +32,12 @@ export const ADD_USER_GROUP = gql`
         }
     }
 `
+
+export const ADD_USER_EVENT = gql`
+    mutation addUserEvent($event_id: Int!) {
+        addUserEvent(event_id: $event_id) {
+            id
+            event_title
+        }
+    }
+`
