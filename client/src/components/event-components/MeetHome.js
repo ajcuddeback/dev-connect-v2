@@ -1,18 +1,41 @@
 import React, { useState } from 'react';
+// Router
 import { useHistory } from 'react-router-dom';
 
 import axios from 'axios';
 
+// gql
+import { useMutation } from '@apollo/react-hooks';
+import { CREATE_GROUP } from '../../utils/mutations';
+
 const MeetHome = ({ miles, setMiles, setZipCode }) => {
     // State
-    const [createGroupForm, setCreateGroupForm] = useState({group_title: '', group_text: '', group_zip: ''});
+    const [createGroupForm, setCreateGroupForm] = useState({group_title: '', group_url: '', group_text: '', group_zip: 0});
 
+    // gql
+    const [ createGroup, {err} ] = useMutation(CREATE_GROUP);
+
+    // useHistory
     const history = useHistory();
 
     // Functions for creating a group
-    const createGroupHandler = () => {
-
-    }
+    const createGroupHandler = async (e) => {
+        e.preventDefault();
+        const groupUrl = createGroupForm.group_title.trim().toLowerCase().split(' ').join('-');
+        setCreateGroupForm({ ...createGroupForm, ['group_url']: groupUrl });
+        const group_title = createGroupForm.group_title;
+        const group_url = createGroupForm.group_url;
+        const group_text = createGroupForm.group_text;
+        const group_zip = parseInt(createGroupForm.group_zip);
+        
+        try {
+            const response = await createGroup({
+                variables: {group_title: group_title, group_url: group_url, group_text: group_text, group_zip: group_zip}
+            })
+        } catch(e) {
+            console.log(e)
+        }
+    };
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;

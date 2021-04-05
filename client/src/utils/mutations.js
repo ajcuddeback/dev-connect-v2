@@ -41,3 +41,12 @@ export const ADD_USER_EVENT = gql`
         }
     }
 `
+
+export const CREATE_GROUP = gql`
+    mutation createGroup($group_title: String!, $group_url: String!, $group_text: String!, $group_zip: Int!) {
+        createGroup(group_title: $group_title, group_url: $group_url, group_text: $group_text, group_zip: $group_zip) {
+            id
+            group_title
+  }
+}
+`
