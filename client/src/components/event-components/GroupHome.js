@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 // Router
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 // gql
 import { useQuery } from '@apollo/react-hooks';
 import { GET_GROUP } from '../../utils/queries';
-
+// Auth
 import Auth from '../../utils/auth';
 
-import { Link } from 'react-router-dom';
+import EachEvent from './each-event/EachEvent';
 
 const GroupHome = () => {
     const [isMember, setIsMemeber] = useState(false);
@@ -21,7 +21,7 @@ const GroupHome = () => {
     // use query to get the groups data
     const { loading, data } = useQuery(GET_GROUP, {
         variables: {group_url: groupName}
-    });    
+    });
 
     useEffect(() => {
         if(data) {
@@ -67,13 +67,11 @@ const GroupHome = () => {
             <section className="group-content-wrapper">
                 <div className="group-info-wrapper">
                     <h2 className="group-name">{data.group.group_title}</h2>
-                    <p></p>
+                    <p>{data.group.group_text}</p>
                 </div>
                 <div className="group-event-wrapper">
                     <ol>
-                        <li>
-                           
-                        </li>
+                        {data.group.events.map(event => (<EachEvent event={event} ></EachEvent>))}
                     </ol>
                 </div>
             </section>
