@@ -125,7 +125,7 @@ const resolvers = {
                 ]
             });
 
-            return groupData
+            return groupData.get({plain: true})
         },
         groupByZip: async (parent, { group_zip, miles }) => {
             const apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;

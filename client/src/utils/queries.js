@@ -20,6 +20,7 @@ export const GET_GROUP = gql`
             group_title
             group_text
             group_zip
+            users_count
             events {
                 id
                 event_title
@@ -43,6 +44,15 @@ export const GET_ME_EVENTS = gql`
                 id
                 event_title 
             }
+        }
+    }
+`
+
+export const OWNER_GROUPS = gql`
+    query {
+        myGroups {
+            id
+            group_title
         }
     }
 `
