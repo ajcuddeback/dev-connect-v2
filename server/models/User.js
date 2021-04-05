@@ -46,7 +46,19 @@ User.init(
             validate: {
                 len: [5]
             }
-        }
+        },
+        questions: [
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'Question'
+            }
+          ],
+          friends: [
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'User'
+            }
+          ]
     },
     {
         hooks: {
@@ -65,7 +77,16 @@ User.init(
         freezeTableName: true,
         underscored: true,
         modelName: 'user'
+    },
+    {
+    toJSON: {
+        virtuals: true
     }
+}
 );
+
+userSchema.virtual('friendCount').get(function() {
+    return this.friends.length;
+});
 
 module.exports = User;
