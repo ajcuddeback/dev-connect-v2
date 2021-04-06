@@ -13,6 +13,7 @@ import GroupHome from './components/event-components/GroupHome';
 import GroupAdmin from './components/event-components/GroupAdmin';
 import EditEvent from './components/event-components/EditEvent';
 import AddEvent from './components/event-components/AddEvent';
+import MeetDashboard from './components/event-components/MeetDashboard';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -52,7 +53,8 @@ function App() {
               <Route exact path='/meet/groups' render={() => (
                 <ZipGroups miles={miles} zipCode={zipCode} />
               )}  ></Route>
-              <Route exact path='/meet/:groupName' render={() => (
+              <Route exact path='/meet/dashboard' component={MeetDashboard}></Route>
+              <Route exact path='/meet/groups/:groupName' render={() => (
                 <GroupHome />
               )} ></Route>
               <Route exact path='/meet/edit-event/:groupName/:eventId' component={EditEvent}></Route>

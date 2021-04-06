@@ -20,7 +20,7 @@ const EachGroup = ({ group, setGroupFetchSuccess }) => {
                 variables: { group_id: id }
             });
             setGroupFetchSuccess(true);
-            history.push(`/meet/${group.group_url}`);
+            history.push(`/meet/groups/${group.group_url}`);
         } catch (e) {
             console.log(e);
             setGroupFetchSuccess(false)

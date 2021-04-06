@@ -53,6 +53,7 @@ export const OWNER_GROUPS = gql`
         myGroups {
             id
             group_title
+            group_url
         }
     }
 `

@@ -61,6 +61,7 @@ const resolvers = {
                     attributes: [
                         'id',
                         'group_title',
+                        'group_url',
                         'group_text',
                         'group_zip',
                         [sequelize.literal('(SELECT COUNT(*) AS users_count FROM group_users WHERE group.id = group_users.group_id)'), 'users_count'],
