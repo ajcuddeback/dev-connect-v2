@@ -6,6 +6,7 @@ import axios from 'axios';
 
 // gql
 import { useMutation } from '@apollo/react-hooks';
+import { OWNER_GROUPS } from '../../utils/queries';
 import { CREATE_GROUP } from '../../utils/mutations';
 
 const MeetHome = ({ miles, setMiles, setZipCode }) => {
@@ -28,7 +29,10 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
         
         try {
             await createGroup({
-                variables: {group_title: group_title, group_url: groupUrl, group_text: group_text, group_zip: group_zip}
+                variables: {group_title: group_title, group_url: groupUrl, group_text: group_text, group_zip: group_zip},
+                refetchQueries: [{
+                    query: OWNER_GROUPS
+                }]
             });
             history.push(`/meet/admin/${groupUrl}`);
         } catch(e) {
