@@ -17,7 +17,7 @@ const typeDefs = gql`
         last_name: String 
         group_user: [Group]
         event_user: [Event]
-        friend_id: [User]
+        user_friends: [User]
     }
 
     type Group {
@@ -102,7 +102,7 @@ const typeDefs = gql`
         deleteEvent(event_id: Int!): Event #done
         addQuestion(questionText: String!): Question
         addAnswer(questionId: ID!, answerBody: String!): Question
-        addFriend(friendId: ID!): User
+        addFriend(friendId: Int!): User
     }
 `
 

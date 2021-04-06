@@ -46,14 +46,6 @@ User.init(
             validate: {
                 len: [5]
             }
-        },
-        friend_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'user',
-                key: 'id'
-            }
         }
     },
     {

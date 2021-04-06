@@ -11,7 +11,8 @@ const {
     Event, 
     Event_Users, 
     Group_Users,
-    Question 
+    Question,
+    User_Friends
 } = require('../models');
 const { response } = require('express');
 
@@ -39,6 +40,12 @@ const resolvers = {
                             attributes: ["id","event_title"],
                             through: Event_Users,
                             as: "event_user"
+                        },
+                        {
+                            model: User,
+                            attributes: ["id","username"],
+                            through: User_Friends,
+                            as: "user_friends"
                         }
                     ]
                 })
@@ -395,13 +402,11 @@ const resolvers = {
         // Friend Mutations
         addFriend: async (parent, { friendId }, context) => {
             if (context.user) {
-              const updatedUser = await User.findOneAndUpdate(
-                { _id: context.user._id },
-                { $addToSet: { friends: friendId } },
-                { new: true }
-              ).populate('friends');
-          
-              return updatedUser;
+              const updatedUser = await User_Friends.create({
+                user_id: context.user.id,
+                friend_id: friendId
+            })
+              return updatedUser.get({plain: true});
             }
           
             throw new AuthenticationError('You need to be logged in!');
