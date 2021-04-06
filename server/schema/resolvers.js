@@ -128,11 +128,12 @@ const resolvers = {
             return groupData.get({plain: true})
         },
         groupByZip: async (parent, { group_zip, miles }) => {
-            const apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;
-            const intData = [];
+            let apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;
+            let intData = [];
              await axios.get(apiUrl).then((response) => {
-                const zipArr = response.data.zip_codes
+                let zipArr = response.data.zip_codes
                 intData = zipArr.map(zip_code => parseInt(zip_code))
+                console.log(intData)
             }).catch(err => {
                 console.log(err)
             });

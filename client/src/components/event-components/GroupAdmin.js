@@ -11,6 +11,7 @@ import EachEventAdmin from './each-event/EachEventAdmin';
 
 const GroupAdmin = () => {
    const [isAdmin, setIsAdmin] = useState(false);
+   const [dataGroup, setDataGroup] = useState(false);
 
     // gql
     const { groupName } = useParams();
@@ -23,13 +24,17 @@ const GroupAdmin = () => {
         if(userData.loading || loading) {
             return;
         };
-        const myGroups = userData.data.myGroups;
-        myGroups.map(group => {
-            if(group.id === data.group.id) {
-                setIsAdmin(true);
-                return;
-            }
-        })
+        if(data && userData) {
+            const myGroups = userData.data.myGroups;
+            myGroups.map(group => {
+                if(group.id === data.group.id) {
+                    setIsAdmin(true);
+                    return;
+                }
+            })
+
+            setDataGroup(true);
+        }
     }, [data, userData]);
 
     
@@ -41,6 +46,14 @@ const GroupAdmin = () => {
         )
     }
 
+    if(dataGroup === false) {
+        return (
+            <>
+                <h2>The group you selected does not exist! Please return to the <Link to={`/meet`}>group home page!</Link></h2>
+            </>
+        )
+    }
+
     if(!isAdmin) {
         return (
             <>
@@ -49,6 +62,7 @@ const GroupAdmin = () => {
             </>
         )
     }
+
     return (
         <>
             <h2>Admin</h2>
@@ -60,7 +74,7 @@ const GroupAdmin = () => {
                 <div className="group-event-wrapper">
                     <h2>Events:</h2>
                     <ol>
-                    {data.group.events.map(event => (<EachEventAdmin event={event} groupName={groupName} ></EachEventAdmin>))}
+                    {data.group.events.map(event => (<EachEventAdmin event={event} groupName={groupName} key={event.id} ></EachEventAdmin>))}
                     </ol>
                     <a href="/">Add an Event</a>
                 </div>

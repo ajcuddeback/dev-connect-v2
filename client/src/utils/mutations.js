@@ -58,3 +58,11 @@ export const DELETE_EVENT = gql`
         }
     }
 `
+
+export const EDIT_EVENT = gql`
+    mutation updateEvent($event_id: Int!, $event_title: String, $event_text: String, $event_location: String, $event_time: String) {
+        updateEvent(event_id: $event_id, event_title: $event_title, event_text: $event_text, event_location: $event_location, event_time: $event_time) {
+            id
+        }
+    }
+`

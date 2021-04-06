@@ -44,7 +44,7 @@ const EachEventAdmin = ({ event, groupName }) => {
             </div>
             <div className="manage-event-buttons">
                 <button onClick={handleEventDelete} className="delete-event-button">Delete Event</button>
-                <Link to={`/meet/admin/edit-event/${event.id}`}>Edit event</Link>
+                <Link to={`/meet/edit-event/${groupName}/${event.id}`}>Edit event</Link>
             </div>
         </>
     )
