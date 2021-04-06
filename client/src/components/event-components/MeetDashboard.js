@@ -45,7 +45,12 @@ function MeetDashboard() {
 
   if(!groupData) {
     return (
-      <h2>You currently have no groups!</h2>
+      <>
+        <h2>You currently have no groups!</h2>
+        <div className="create-group-btn">
+          <Link to={'/meet'}>Create a group!</Link>
+        </div>
+      </>
     )
   }
 
