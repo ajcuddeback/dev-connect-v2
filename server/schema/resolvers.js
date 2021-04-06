@@ -27,7 +27,7 @@ const resolvers = {
                     include: [
                         {
                             model: Group,
-                            attributes: ["id","group_title"],
+                            attributes: ["id","group_title", "group_url"],
                             through: Group_Users,
                             as: "group_user",
                         }, 

@@ -57,3 +57,16 @@ export const OWNER_GROUPS = gql`
         }
     }
 `
+
+export const GET_ME_GROUPS = gql`
+    query {
+        me {
+            id
+            group_user {
+                id
+                group_title
+                group_url
+            }
+        }
+    }
+`
