@@ -37,6 +37,8 @@ const GroupAdmin = () => {
         }
     }, [data, userData]);
 
+    console.log(data)
+
     
    
     // JSX

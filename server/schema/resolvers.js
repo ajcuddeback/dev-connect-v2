@@ -290,7 +290,7 @@ const resolvers = {
                     event_title: input.event_title,
                     event_text: input.event_text,
                     event_location: input.event_location,
-                    event_time: input.event_location,
+                    event_time: input.event_time,
                     group_id: input.group_id
                 })
 

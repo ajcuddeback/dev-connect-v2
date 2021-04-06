@@ -65,8 +65,9 @@ const AddEvent = () => {
             group_id: parseInt(data.group.id)
         }
 
+
         try {
-            await createEvent({
+            const data = await createEvent({
                 variables: {input: input}
             })
             history.push(`/meet/admin/${groupName}`)

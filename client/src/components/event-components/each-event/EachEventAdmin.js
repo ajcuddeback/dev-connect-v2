@@ -28,6 +28,7 @@ const EachEventAdmin = ({ event, groupName }) => {
             
         });
     }
+    console.log(event)
     
     // JSX
     return (
