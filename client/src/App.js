@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 
 // Components
+// Events
 import Login from './components/login/Login';
 import Nav from './components/layout-components/Nav';
 import MeetHome from './components/event-components/MeetHome';
@@ -16,6 +17,9 @@ import AddEvent from './components/event-components/AddEvent';
 import MeetDashboard from './components/event-components/MeetDashboard';
 import MyGroups from './components/event-components/MyGroups';
 import MyEvents from './components/event-components/MyEvents';
+
+// Styled Component
+import GlobalStyle from './components/GlobalStyles';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -43,6 +47,7 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
+      <GlobalStyle />
       {Auth.loggedIn() ? (
         <>
           <h2>You are logged in</h2>
@@ -72,7 +77,10 @@ function App() {
             
         </>
       ) : (
-        <Login />
+        <>
+          <GlobalStyle />
+          <Login />
+        </>
       )}
     </ApolloProvider>
   );
