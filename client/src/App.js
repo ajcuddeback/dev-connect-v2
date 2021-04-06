@@ -12,6 +12,7 @@ import ZipGroups from './components/event-components/zipGroups';
 import GroupHome from './components/event-components/GroupHome';
 import GroupAdmin from './components/event-components/GroupAdmin';
 import EditEvent from './components/event-components/EditEvent';
+import AddEvent from './components/event-components/AddEvent';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -55,6 +56,7 @@ function App() {
                 <GroupHome />
               )} ></Route>
               <Route exact path='/meet/edit-event/:groupName/:eventId' component={EditEvent}></Route>
+              <Route exact path='/meet/add-event/:groupName' component={AddEvent}></Route>
               <Route exact path='/meet/admin/:groupName' render={() => (
                 <GroupAdmin />
               )}></Route>

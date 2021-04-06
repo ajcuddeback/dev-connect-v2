@@ -66,3 +66,17 @@ export const EDIT_EVENT = gql`
         }
     }
 `
+
+export const ADD_EVENT = gql`
+    mutation createEvent($input: EventInput) {
+        createEvent(input: $input) {
+            id
+            event_title
+            event_text
+            event_location
+            event_time
+            group_id
+        }
+    }
+
+`

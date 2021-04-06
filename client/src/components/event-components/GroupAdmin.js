@@ -76,7 +76,7 @@ const GroupAdmin = () => {
                     <ol>
                     {data.group.events.map(event => (<EachEventAdmin event={event} groupName={groupName} key={event.id} ></EachEventAdmin>))}
                     </ol>
-                    <a href="/">Add an Event</a>
+                    <Link to={`/meet/add-event/${groupName}`}>Add an Event</Link>
                 </div>
             </section>
         </>

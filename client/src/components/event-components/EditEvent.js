@@ -114,7 +114,7 @@ const EditEvent = () => {
                     </div>
                     <div className="col-2">
                         <p>Event information:</p>
-                        <textarea onChange={setFormData} name="event_text" id="event-info" cols="30" rows="10" required>{eventData.event_text}</textarea>
+                        <textarea onChange={setFormData} name="event_text" id="event-info" cols="30" rows="10" defaultValue={eventData.event_text} required></textarea>
                     </div>
                 </div>
                 <button className="confirm-edit-event grey-red-btn" type="submit">Edit Event</button>
