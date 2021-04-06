@@ -2,14 +2,14 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../../config/connection");
 
 class Group extends Model {
-  static addUser(body, user_id, models) {
+  static addUser(group_id, user_id, models) {
     return models.Group_Users.create({
       user_id: user_id,
-      group_id: body.group_id,
+      group_id: group_id,
     }).then(() => {
       return Group.findOne({
         where: {
-          id: body.group_id,
+          id: group_id,
         },
         attributes: [
           "id",
@@ -39,6 +39,12 @@ Group.init(
     group_title: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
+    },
+    group_url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     },
     group_text: {
       type: DataTypes.TEXT,

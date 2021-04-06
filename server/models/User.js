@@ -47,18 +47,14 @@ User.init(
                 len: [5]
             }
         },
-        questions: [
-            {
-              type: DataTypes.INTEGER,
-              ref: 'Question'
+        friend_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'user',
+                key: 'id'
             }
-          ],
-          friends: [
-            {
-              type: DataTypes.INTEGER,
-              ref: 'User'
-            }
-          ]
+        }
     },
     {
         hooks: {
