@@ -19,7 +19,6 @@ const { response } = require('express');
 const resolvers = {
     // create, update, delete requests
     Query : {
-
         // ############################# User queries #############################
         me: async (parent, args, context) => {
             console.log(context.user)
@@ -206,7 +205,7 @@ const resolvers = {
 
         question: async (parent, { _id }) => {
             return Question.findOne({ _id });
-        },
+        }
     }, 
 
         // ############################# Mutations #############################
@@ -258,6 +257,7 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be signed in!')
         }, 
+
         addUserGroup: async (parent, { group_id }, context) => {
             if(context.user.id) {
                 const user_id = context.user.id;
@@ -268,6 +268,7 @@ const resolvers = {
             
             throw new AuthenticationError('You must be logged in@')
         },
+
         updateGroup: async (parent, { group_id, group_title, group_url, group_text, group_zip }, context) => {
             if(context.user.id) {
                 const data = await Group.update(
@@ -319,6 +320,7 @@ const resolvers = {
             
             throw new AuthenticationError('You must be logged in!')
         },
+
         addUserEvent: async (parent, { event_id }, context) => {
             if(context.user.id) {
                 const user_id = context.user.id;
@@ -370,33 +372,54 @@ const resolvers = {
 
         // question and answer mutations
         addQuestion: async (parent, args, context) => {
-            if (context.user) {
-              const question = await Question.create({ ...args, username: context.user.username });
-          
-              await User.findByIdAndUpdate(
-                { _id: context.user._id },
-                { $push: { questions: question._id } },
-                { new: true }
-              );
-          
-              return question;
+            if(context.user) {
+                const question = await Question.create({
+                    question_text: question_text,
+                    user_id: context.user.id
+                })
+                
+                return question;
             }
           
             throw new AuthenticationError('You need to be logged in!');
         },
 
-        addAnswer: async (parent, { questionId, answerBody }, context) => {
-            if (context.user) {
-              const updatedQuestion = await Question.findOneAndUpdate(
-                { _id: questionId },
-                { $push: { answers: { answerBody, username: context.user.username } } },
-                { new: true, runValidators: true }
-              );
-          
-              return updatedQuestion;
+        updateQuestion: async (parent, { question_id, question_text }, context) => {
+            if(context.user.id) {
+                const question = await Question.update(
+                    {
+                        question_text: question_text,  
+                        user_id: context.user.id
+                    },
+                    {
+                        where: {
+                            id: question_id,
+                        },
+                        attributes: ["id", "question_text"]
+                    }
+                )
+
+                return question;
             }
-          
-            throw new AuthenticationError('You need to be logged in!');
+
+            throw new AuthenticationError('You must be logged in!')
+        },
+
+        addAnswer: async (parent, { input }, context) => {
+            if(context.user.id) {
+                const updatedQuestion = await Answer.create({
+                    answer_text: input.answer_text,
+                    user_id: context.user.id,
+                    where: {
+                        id: question_id,
+                    },
+                    attributes: ["id", "question_text", "user_id"]
+                })
+
+                return updatedQuestion
+            }
+            
+            throw new AuthenticationError('You must be logged in!')
         },
 
         // Friend Mutations
