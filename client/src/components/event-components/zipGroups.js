@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { GROUPS_BY_ZIP } from '../../utils/queries';
 
 import EachGroup from './each-group/EachGroup';
+import GlobalStyle from '../GlobalStyles';
 
 const ZipGroups = ({ miles, zipCode }) => {
 
@@ -29,7 +30,11 @@ const ZipGroups = ({ miles, zipCode }) => {
 
     // JSX
     if(loading) {
-        return <h2>Loading...</h2>
+        return (
+        <>
+            <iframe src="https://giphy.com/embed/TKrGNVSYsFlxo1XTjm" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dev-TKrGNVSYsFlxo1XTjm"></a></p>
+        </>
+        )
     }
 
     return (

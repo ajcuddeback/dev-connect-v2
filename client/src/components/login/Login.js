@@ -74,7 +74,7 @@ function Login() {
                 <div className="img-wrapper">
                     <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
                 </div>
-                <form className="login-form" onSubmit={handleLogin} >
+                <form className="login-form glass-background" onSubmit={handleLogin} >
                     <h2>Login</h2>
                     <input type="text" name="username" id="username" placeholder="Username" onChange={handleLoginChange} required />
                     <br/>
