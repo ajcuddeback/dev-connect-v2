@@ -65,16 +65,24 @@ const typeDefs = gql`
         _id: ID
         question_text: String
         createdAt: String
-        username: String
-        answerCount: Int
+        user_id: Int
         answers: [Answer]
     }
 
     type Answer {
         _id: ID
-        answerBody: String
+        answer_text: String
         createdAt: String
-        username: String
+        user_id: Int
+        question_id: Int
+    }
+
+    # Friend Type
+
+    type User_Friends {
+        _id: ID
+        user_id: Int
+        friend_id: Int
     }
 
     type Query {
@@ -102,8 +110,8 @@ const typeDefs = gql`
         updateEvent(event_id: Int!, event_title: String, event_text: String, event_location: String, event_time: String): Event #done
         deleteEvent(event_id: Int!): Event #done
         addQuestion(question_text: String!): Question
-        updateQuestion(questionId: ID!, answerBody: String!): Question
-        addAnswer(questionId: ID!, answerBody: String!): Question
+        updateQuestion(questionId: ID!, question_text: String!): Question
+        addAnswer(questionId: ID!, answer_text: String!): Question
         deleteQuestion(question_id: Int!): Question
         addFriend(friendId: Int!): User
     }

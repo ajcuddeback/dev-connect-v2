@@ -376,12 +376,12 @@ const resolvers = {
         },
 
         // question and answer mutations
-        addQuestion: async (parent, { question_text }, context) => {
+        addQuestion: async (parent, { question_text, user_id }, context) => {
             if(context.user) {
-                const user_id = context.user.id;
+                const userId = context.user_id;
                 const question = await Question.create({
                     question_text: question_text,
-                    user_id: user_id
+                    user_id: userId
                 })
                 
                 return question.get({plain: true});;
