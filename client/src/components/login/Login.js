@@ -8,6 +8,9 @@ import { useMutation } from '@apollo/react-hooks';
 import { LOGIN_USER, SIGNUP_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
+// styled comp
+import styled from 'styled-components';
+
 function Login() {
     // GraphQL
     const [login, {error}] = useMutation(LOGIN_USER);
@@ -70,47 +73,95 @@ function Login() {
     // JSX
     if(!isNewUser) {
         return (
-            <>
+            <StyledLogin>
                 <div className="img-wrapper">
                     <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
                 </div>
+                <h2 className="tagname">The Social Media App for Developers</h2>
                 <form className="login-form glass-background" onSubmit={handleLogin} >
                     <h2>Login</h2>
-                    <input type="text" name="username" id="username" placeholder="Username" onChange={handleLoginChange} required />
+                    <input className="glass-background" type="text" name="username" id="username" placeholder="Username" onChange={handleLoginChange} required />
                     <br/>
-                    <input type="password" name="password" id="password" placeholder="Password"onChange={handleLoginChange} required />
+                    <input className="glass-background" type="password" name="password" id="password" placeholder="Password"onChange={handleLoginChange} required />
                     <br/>
                     <p className="errorP">{errorP}</p>
-                    <button type="submit">Login</button>
+                    <button className="glass-button" type="submit">Login</button>
                     <p>Dont have an account with us? <span onClick={() => setIsNewUser(!isNewUser)}>Signup here!</span></p>
                 </form>
-            </>
+            </StyledLogin>
         );
     } else {
         return (
-            <>
+            <StyledLogin>
                 <div className="img-wrapper">
                     <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
                 </div>
-                <form className="login-form" onSubmit={handleSignup} >
+                <h2 className="tagname">The Social Media App for Developers</h2>
+
+                <form className="login-form glass-background" onSubmit={handleSignup} >
                     <h2>Signup</h2>
-                    <input type="text" name="username" id="username" placeholder="Username" onChange={handleSignupChange} required />
+                    <input className="glass-background" type="text" name="username" id="username" placeholder="Username" onChange={handleSignupChange} required />
                     <br/>
-                    <input type="email" name="email" id="email" placeholder="example@example.com" onChange={handleSignupChange} required />
+                    <input className="glass-background" type="email" name="email" id="email" placeholder="example@example.com" onChange={handleSignupChange} required />
                     <br/>
-                    <input type="text" name="first_name" id="firstName" placeholder="First Name" onChange={handleSignupChange} required />
+                    <input className="glass-background" type="text" name="first_name" id="firstName" placeholder="First Name" onChange={handleSignupChange} required />
                     <br/>
-                    <input type="text" name="last_name" id="lastName" placeholder="Last Name" onChange={handleSignupChange} required />
+                    <input className="glass-background" type="text" name="last_name" id="lastName" placeholder="Last Name" onChange={handleSignupChange} required />
                     <br/>
-                    <input type="password" name="password" id="password" placeholder="Password" onChange={handleSignupChange} required />
+                    <input className="glass-background" type="password" name="password" id="password" placeholder="Password" onChange={handleSignupChange} required />
                     <br/>
                     <p className="errorP">{errorP}</p>
-                    <button type="submit">Login</button>
+                    <button className="glass-button" type="submit">Signup</button>
                     <p>Already have an account? <span onClick={() => setIsNewUser(!isNewUser)}>Signup here!</span></p>
                 </form>
-            </>
+            </StyledLogin>
         );
     };
 };
+
+const StyledLogin = styled.div`
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+
+    .tagname {
+        margin-bottom: 3rem;
+        color: #f05454;
+    }
+
+    .img-wrapper {
+        margin-bottom: 2rem;
+    }
+
+    .login-form {
+        margin-bottom: 16rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        h2 {
+            margin-bottom: 1rem;
+        }
+        p {
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        form {
+            width: 20rem;
+        }
+        .img-wrapper {
+            
+        }
+    }
+`
 
 export default Login;

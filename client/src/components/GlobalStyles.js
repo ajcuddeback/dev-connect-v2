@@ -32,8 +32,8 @@ const GlobalStyle = createGlobalStyle`
     body {
         text-rendering: optimizeSpeed;
         min-height: 100vh;
-        background: #151BC2;
-        /* background: linear-gradient( #0f0718,  #151BC2); */
+        background: #005bff;
+        background: linear-gradient( #090718,  #005bff);
     }
 
     button {
