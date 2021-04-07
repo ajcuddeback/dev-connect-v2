@@ -24,15 +24,15 @@ function Nav({navOpen, setNavOpen}) {
                         <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
                     </div>
                     <ul>
-                        <li><Link to={`/`}>Feed</Link></li>
-                        <li><Link to={`/meet`}>Meet</Link></li>
-                        <li><Link to={`/`}>AskDevs</Link></li>
-                        <li><Link to={`/`}>Shop</Link></li>
-                        <li><Link to={`/meet/dashboard`}>Meet Up Dashboard</Link></li>
-                        <li><Link to={`/meet/my-groups`}>My Groups</Link></li>
-                        <li><Link to={`/meet/my-events`}>My Events</Link></li>
-                        <li><Link to={`/`}>My Posts</Link></li>
-                        <li><Link to={`/`}>My Questions</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>Feed</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet`}>Meet</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>AskDevs</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>Shop</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/dashboard`}>Meet Up Dashboard</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-groups`}>My Groups</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-events`}>My Events</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>My Posts</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>My Questions</Link></li>
                     </ul>
                     
                     <button className="glass-button" onClick={handleLogout}>Logout</button>

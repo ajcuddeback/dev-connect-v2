@@ -12,6 +12,9 @@ import { Link } from 'react-router-dom';
 // Components
 import EachMyGroups from './each-group/EachMyGroups';
 
+// styled comp
+import styled from 'styled-components';
+
 const MyGroups = () => {
     // State
     const [groupData, setGroupData] = useState(false);
@@ -39,29 +42,70 @@ const MyGroups = () => {
     // JSX
     if(loading) {
         return (
-            <h1>Loading...</h1>
+            <StyledLoader>
+                <h2>Loading...</h2>
+                <div class="loader"></div>
+            </StyledLoader>
         )
     }
 
     if(!groupData) {
         return (
-            <>
+            <StyledError>
                 <h2>You currently are not a part of any groups!</h2>
-                <p>Join a group here: <Link to={'/meet'}>Join Group</Link> </p>
-            </>
+                <h3>Join a group here: <Link to={'/meet'}>Join Group</Link> </h3>
+            </StyledError>
         )
     }
 
     return (
-        <>
+        <StyledGroups>
             <h2>{username}'s groups</h2>
             <div className="groups">
                 <ol>
                     {data.me.group_user.map(group => (<EachMyGroups group={group} />))}
                 </ol>
             </div>
-        </>
+        </StyledGroups>
     )
 };
+
+const StyledLoader = styled.div`
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
+const StyledError = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
+const StyledGroups = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+
+    .group-wrapper {
+        width: 20rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        text-align: center;
+        div {
+            a {
+                margin-top: 1rem;
+                padding: 3px;
+            }
+        }
+    }
+`
 
 export default MyGroups;
