@@ -1,5 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 
+// fonts
+import HindMadurai from '../fonts/HindMadurai-Regular.ttf';
+import Philosopher from '../fonts/Philosopher-Regular.ttf';
+
 const GlobalStyle = createGlobalStyle`
     * {
         margin: 0;
@@ -9,6 +13,20 @@ const GlobalStyle = createGlobalStyle`
 
     html:focus-within {
         scroll-behavior: smooth;
+    }
+
+    @font-face {
+        font-family: 'Hind Madurai';
+        src: url(${HindMadurai}) format('truetype');
+        font-style: normal;
+        font-display: auto;
+    }
+
+    @font-face {
+        font-family: 'Philosopher';
+        src: url(${Philosopher}) format('truetype');
+        font-style: normal;
+        font-display: auto;
     }
 
     body {
@@ -24,10 +42,38 @@ const GlobalStyle = createGlobalStyle`
 
     a {
         text-decoration: none;
+        color: black;
     }
 
     ol, ul {
 	    list-style: none;
+    }
+
+    h1 {
+        font-size: 48px;
+        font-family: 'Philosopher';
+    }
+    h2 {
+        font-family: 'Philosopher';
+        font-size: 36px;
+    }
+    p {
+        font-size: 16px;
+    }
+
+    p,
+    input,
+    textarea,
+    button,
+    a {
+        font-family: 'Hind Madurai';
+    }
+    input,
+    textarea {
+        padding: 5px;
+        border-radius: 5px;
+        outline: none;
+        border: none;
     }
 
     .glass-background,
