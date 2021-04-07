@@ -50,3 +50,33 @@ export const CREATE_GROUP = gql`
   }
 }
 `
+
+export const DELETE_EVENT = gql`
+    mutation deleteEvent($event_id: Int!) {
+        deleteEvent(event_id: $event_id) {
+            id
+        }
+    }
+`
+
+export const EDIT_EVENT = gql`
+    mutation updateEvent($event_id: Int!, $event_title: String, $event_text: String, $event_location: String, $event_time: String) {
+        updateEvent(event_id: $event_id, event_title: $event_title, event_text: $event_text, event_location: $event_location, event_time: $event_time) {
+            id
+        }
+    }
+`
+
+export const ADD_EVENT = gql`
+    mutation createEvent($input: EventInput) {
+        createEvent(input: $input) {
+            id
+            event_title
+            event_text
+            event_location
+            event_time
+            group_id
+        }
+    }
+
+`
