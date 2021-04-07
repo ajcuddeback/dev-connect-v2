@@ -39,7 +39,7 @@ const EachEvent = ({ event, isMember }) => {
     
     // JSX
     return (
-        <>
+        <div className="each-event glass-background">
             <h2>{event.event_title}</h2>
             <div className="meetup-info-wrapper">
                 <div className="time-and-info">
@@ -52,7 +52,7 @@ const EachEvent = ({ event, isMember }) => {
             </div>
 
             {isMember 
-            ? <button onClick={joinEventHandler} className="join-event-btn grey-red-btn" data-id={event.id}>
+            ? <button onClick={joinEventHandler} className="join-event-btn glass-button" data-id={event.id}>
             {eventIds?.some((eventId) => eventId === event.id)
                 ? 'Already Joined'
                 : 'Join Event'
@@ -60,7 +60,7 @@ const EachEvent = ({ event, isMember }) => {
         </button>
         : ''}
             
-        </>
+        </div>
     )
 };
 
