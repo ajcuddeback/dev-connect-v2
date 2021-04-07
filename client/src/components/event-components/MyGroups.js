@@ -60,7 +60,7 @@ const MyGroups = () => {
 
     return (
         <StyledGroups>
-            <h2>{username}'s groups</h2>
+            <h2>{username}'s Groups</h2>
             <div className="groups">
                 <ol>
                     {data.me.group_user.map(group => (<EachMyGroups group={group} />))}
