@@ -1,40 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 // Apollo
-import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from "@apollo/react-hooks";
+import ApolloClient from "apollo-boost";
 
 // Components
-import Login from './components/login/Login';
-import Nav from './components/layout-components/Nav';
-import MeetHome from './components/event-components/MeetHome';
-import ZipGroups from './components/event-components/zipGroups';
-import GroupHome from './components/event-components/GroupHome';
-import GroupAdmin from './components/event-components/GroupAdmin';
-import EditEvent from './components/event-components/EditEvent';
-import AddEvent from './components/event-components/AddEvent';
-import MeetDashboard from './components/event-components/MeetDashboard';
-import MyGroups from './components/event-components/MyGroups';
-import MyEvents from './components/event-components/MyEvents';
+import Login from "./components/login/Login";
+import Nav from "./components/layout-components/Nav";
+import MeetHome from "./components/event-components/MeetHome";
+import ZipGroups from "./components/event-components/zipGroups";
+import GroupHome from "./components/event-components/GroupHome";
+import GroupAdmin from "./components/event-components/GroupAdmin";
+import EditEvent from "./components/event-components/EditEvent";
+import AddEvent from "./components/event-components/AddEvent";
+import MeetDashboard from "./components/event-components/MeetDashboard";
+import MyGroups from "./components/event-components/MyGroups";
+import MyEvents from "./components/event-components/MyEvents";
 
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Utils
-import Auth from './utils/auth'
+import Auth from "./utils/auth";
+import Checkout from "./components/store-components/Checkout";
 
 // Client
 const client = new ApolloClient({
-  request: operation => {
-    const token = localStorage.getItem('id_token');
+  request: (operation) => {
+    const token = localStorage.getItem("id_token");
 
     operation.setContext({
       headers: {
-        authorization: token ? `Bearer ${token}`: ''
-      }
-    })
-  }, 
-  uri: '/graphql'
-})
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  uri: "/graphql",
+});
 
 function App() {
   // State
@@ -49,27 +50,53 @@ function App() {
           <Router>
             <Nav />
             <Switch>
-              <Route exact path='/meet' render={() => (
-                <MeetHome miles={miles} setMiles={setMiles} zipCode={zipCode} setZipCode={setZipCode} />
-              )}></Route>
-              <Route exact path='/meet/groups' render={() => (
-                <ZipGroups miles={miles} zipCode={zipCode} />
-              )}  ></Route>
-              <Route exact path='/meet/dashboard' component={MeetDashboard}></Route>
-              <Route exact path='/meet/my-groups' component={MyGroups}></Route>
-              <Route exact path='/meet/my-events' component={MyEvents}></Route>
-              <Route exact path='/meet/groups/:groupName' render={() => (
-                <GroupHome />
-              )} ></Route>
-              <Route exact path='/meet/edit-event/:groupName/:eventId' component={EditEvent}></Route>
-              <Route exact path='/meet/add-event/:groupName' component={AddEvent}></Route>
-              <Route exact path='/meet/admin/:groupName' render={() => (
-                <GroupAdmin />
-              )}></Route>
-              
+              <Route
+                exact
+                path="/meet"
+                render={() => (
+                  <MeetHome
+                    miles={miles}
+                    setMiles={setMiles}
+                    zipCode={zipCode}
+                    setZipCode={setZipCode}
+                  />
+                )}
+              ></Route>
+              <Route
+                exact
+                path="/meet/groups"
+                render={() => <ZipGroups miles={miles} zipCode={zipCode} />}
+              ></Route>
+              <Route
+                exact
+                path="/meet/dashboard"
+                component={MeetDashboard}
+              ></Route>
+              <Route exact path="/meet/my-groups" component={MyGroups}></Route>
+              <Route exact path="/meet/my-events" component={MyEvents}></Route>
+              <Route
+                exact
+                path="/meet/groups/:groupName"
+                render={() => <GroupHome />}
+              ></Route>
+              <Route
+                exact
+                path="/meet/edit-event/:groupName/:eventId"
+                component={EditEvent}
+              ></Route>
+              <Route
+                exact
+                path="/meet/add-event/:groupName"
+                component={AddEvent}
+              ></Route>
+              <Route
+                exact
+                path="/meet/admin/:groupName"
+                render={() => <GroupAdmin />}
+              ></Route>
+              <Route exact path="checkout" component={Checkout}></Route>
             </Switch>
           </Router>
-            
         </>
       ) : (
         <Login />
