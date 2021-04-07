@@ -49,7 +49,7 @@ const resolvers = {
                     ]
                 })
 
-                return userData;
+                return userData.map(item => item.get({plain: true}));
             }
 
             throw new AuthenticationError('You need to be logged in!')
@@ -371,14 +371,15 @@ const resolvers = {
         },
 
         // question and answer mutations
-        addQuestion: async (parent, args, context) => {
+        addQuestion: async (parent, question_text, context) => {
             if(context.user) {
+                const user_id = context.user.id;
                 const question = await Question.create({
                     question_text: question_text,
-                    user_id: context.user.id
+                    user_id: user_id
                 })
                 
-                return question;
+                return question.get({plain: true});;
             }
           
             throw new AuthenticationError('You need to be logged in!');
@@ -405,6 +406,20 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in!')
         },
 
+        deleteQuestion: async (parent, { question_id }, context) => {
+            if(context.user.id) {
+                const data = await Question.destroy({
+                    where: {
+                        id: question_id
+                    }
+                })
+
+                return data;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
+        },
+
         addAnswer: async (parent, { input }, context) => {
             if(context.user.id) {
                 const updatedQuestion = await Answer.create({
@@ -416,7 +431,7 @@ const resolvers = {
                     attributes: ["id", "question_text", "user_id"]
                 })
 
-                return updatedQuestion
+                return updatedQuestion.get({plain: true});
             }
             
             throw new AuthenticationError('You must be logged in!')

@@ -17,6 +17,7 @@ const typeDefs = gql`
         last_name: String 
         group_user: [Group]
         event_user: [Event]
+        questions: [Question]
         user_friends: [User]
     }
 
@@ -62,7 +63,7 @@ const typeDefs = gql`
     # Question and Answer Types
     type Question {
         _id: ID
-        questionText: String
+        question_text: String
         createdAt: String
         username: String
         answerCount: Int
@@ -100,8 +101,10 @@ const typeDefs = gql`
         addUserEvent(event_id: Int!): Event #done
         updateEvent(event_id: Int!, event_title: String, event_text: String, event_location: String, event_time: String): Event #done
         deleteEvent(event_id: Int!): Event #done
-        addQuestion(questionText: String!): Question
+        addQuestion(question_text: String!): Question
+        updateQuestion(questionId: ID!, answerBody: String!): Question
         addAnswer(questionId: ID!, answerBody: String!): Question
+        deleteQuestion(question_id: Int!): Question
         addFriend(friendId: Int!): User
     }
 `
