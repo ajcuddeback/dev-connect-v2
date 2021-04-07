@@ -13,6 +13,7 @@ import Auth from '../../utils/auth';
 // Components
 import EachGroupOwner from './each-group/EachGroupOwner';
 
+import styled from 'styled-components'
 function MeetDashboard() {
   // State
   const [groupData, setGroupData] = useState(false);
@@ -39,23 +40,26 @@ function MeetDashboard() {
   // JSX
   if(loading) {
     return (
-      <h1>Loading...</h1>
+      <StyledLoader>
+          <h2>Loading...</h2>
+          <div class="loader"></div>
+      </StyledLoader>
     )
   }
 
   if(!groupData) {
     return (
-      <>
+      <StyledError>
         <h2>You currently have no groups!</h2>
         <div className="create-group-btn">
           <Link to={'/meet'}>Create a group!</Link>
         </div>
-      </>
+      </StyledError>
     )
   }
 
   return (
-    <>
+    <StyledDash>
       <h2>Welcome back to your dashboard {username}</h2>
       <h3>Please choose a group you would like to manage</h3>
       <div className="dashboard-groups">
@@ -64,10 +68,51 @@ function MeetDashboard() {
         </ol>
       </div>
       <div className="create-group-btn">
-        <Link to={'/meet'}>Create a group</Link>
+        <Link className="glass-button" to={'/meet'}>Create a group</Link>
       </div>
-    </>
+    </StyledDash>
   );
 }
+
+const StyledLoader = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`
+
+const StyledError = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`
+
+const StyledDash = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  .group-wrapper {
+    width: 20rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    text-align: center;
+    div {
+        a {
+            margin-top: 1rem;
+            padding: 3px;
+        }
+    }
+  }
+
+  .create-group-btn {
+    margin-bottom: 2rem;
+  }
+`
 
 export default MeetDashboard;

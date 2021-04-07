@@ -46,7 +46,7 @@ const StyledHead = styled.header`
     display: flex;
     .toggleNav {
         position: relative;
-        left: 95vw;;
+        left: 80vw;;
     }
 
     @media (max-width: 1050px) {

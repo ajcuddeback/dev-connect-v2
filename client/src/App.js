@@ -89,7 +89,7 @@ function App() {
 
 const StyledLoginBack = styled.div`
   min-height: 100vh;
-  background: linear-gradient( #090718,  #005bff);
+  background: linear-gradient( #090718,  #28bad6);
 `
 
 export default App;

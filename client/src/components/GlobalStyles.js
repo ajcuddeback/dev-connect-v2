@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 // fonts
 import HindMadurai from '../fonts/HindMadurai-Regular.ttf';
 import Philosopher from '../fonts/Philosopher-Regular.ttf';
+import orientalTiles from '../images/oriental-tiles.png'
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -32,7 +33,10 @@ const GlobalStyle = createGlobalStyle`
     body {
         text-rendering: optimizeSpeed;
         min-height: 100vh;
-        background: #005bff;
+         /* background: #005bff; */
+         /* background-image: url(${orientalTiles}); */
+         
+        background: linear-gradient( 0.25turn, #4765ab,  #28bad6);
         
     }
 
@@ -80,7 +84,7 @@ const GlobalStyle = createGlobalStyle`
     .glass-button {
         border: none;
         border-radius: 5px;
-        background: rgba(255,255,255,0.35);
+        background: rgba(255,255,255,0.2);
         backdrop-filter: blur(5px);
     }
 
