@@ -4,6 +4,10 @@ import Auth from '../../utils/auth';
 
 import { Link } from 'react-router-dom';
 
+import logo from '../../images/red-on-trans-logo.png';
+
+import styled from 'styled-components';
+
 function Nav() {
 
     // functions
@@ -12,7 +16,10 @@ function Nav() {
     }
 
     return (
-        <>
+        <StyledNav>
+            <div className="img-wrapper">
+                <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
+            </div>
             <ul>
                 <li><Link to={`/`}>Feed</Link></li>
                 <li><Link to={`/meet`}>Meet</Link></li>
@@ -25,9 +32,34 @@ function Nav() {
                 <li><Link to={`/`}>My Questions</Link></li>
             </ul>
             
-            <button onClick={handleLogout}>Logout</button>
-        </>
+            <button className="glass-button" onClick={handleLogout}>Logout</button>
+        </StyledNav>
     )
 }
+
+const StyledNav = styled.nav`
+    min-height: 100vh;
+    position: fixed;
+    width: 15rem;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .logo {
+        width: 90%;
+    }
+    a {
+        font-size: 24px;
+    }
+    ul {
+        height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+`
 
 export default Nav;

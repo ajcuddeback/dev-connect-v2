@@ -51,7 +51,6 @@ function App() {
       <GlobalStyle />
       {Auth.loggedIn() ? (
         <>
-          <h2>You are logged in</h2>
           <Router>
             <Nav />
             <Switch>
