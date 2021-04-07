@@ -32,7 +32,7 @@ const EachEventAdmin = ({ event, groupName }) => {
     
     // JSX
     return (
-        <>
+        <div className="each-event glass-background">
             <h2>{event.event_title}</h2>
             <div className="meetup-info-wrapper">
                 <div className="time-and-info">
@@ -44,10 +44,10 @@ const EachEventAdmin = ({ event, groupName }) => {
                 </div>
             </div>
             <div className="manage-event-buttons">
-                <button onClick={handleEventDelete} className="delete-event-button">Delete Event</button>
-                <Link to={`/meet/edit-event/${groupName}/${event.id}`}>Edit event</Link>
+                <button onClick={handleEventDelete} className="delete-event-button glass-button">Delete Event</button>
+                <Link className="glass-button" to={`/meet/edit-event/${groupName}/${event.id}`}>Edit event</Link>
             </div>
-        </>
+        </div>
     )
 };
 
