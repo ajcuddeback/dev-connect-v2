@@ -331,6 +331,28 @@ const StyledHome = styled.div`
             }
         }
     }
+    @media (max-width: 970px) {
+        .welcome {
+            width: 100%;
+        }
+    }
+    @media (max-width: 550px) {
+        width: 80%;
+        .get-group-wrapper {
+            div {
+                width: 25rem;
+            }
+        } 
+    }
+
+    @media (max-width: 450px) {
+        width: 90%;
+        .get-group-wrapper {
+            div {
+                width: 20rem;
+            }
+        }
+    }
 `
 
 export default MeetHome;
