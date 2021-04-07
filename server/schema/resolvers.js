@@ -198,9 +198,14 @@ const resolvers = {
         },
 
         // Question queries
-        questions: async (parent, { username }) => {
-            const params = username ? { username } : {};
-            return Question.find(params).sort({ createdAt: -1 });
+        questions: async (parent, args, context) => {
+            if(context.user.id) {
+                const questions = await Question.findAll({})
+
+                return questions.map(item => item.get({plain: true}));
+            }
+
+            throw new AuthenticationError('You must be logged in!')
         },
 
         question: async (parent, { _id }) => {
@@ -371,7 +376,7 @@ const resolvers = {
         },
 
         // question and answer mutations
-        addQuestion: async (parent, question_text, context) => {
+        addQuestion: async (parent, { question_text }, context) => {
             if(context.user) {
                 const user_id = context.user.id;
                 const question = await Question.create({
