@@ -32,8 +32,9 @@ const GroupHome = () => {
                 refetchQueries: [{ 
                     query: GET_GROUP,
                     variables: { group_url: groupName }
-                }]
+                }]  
             })
+            setIsMemeber(true)
         } catch (e) {
             console.log(e)
         }
@@ -57,7 +58,7 @@ const GroupHome = () => {
             });
             setDataGroup(true);
         }
-    }, [data])
+    }, [data, isMember])
 
     if(loading) {
         return (
@@ -85,7 +86,7 @@ const GroupHome = () => {
                 </div>
                 <div className="group-event-wrapper">
                     <ol>
-                        {data.group.events.map(event => (<EachEvent event={event} ></EachEvent>))}
+                        {data.group.events.map(event => (<EachEvent event={event} isMember={isMember} ></EachEvent>))}
                     </ol>
                 </div>
             </section>
