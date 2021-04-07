@@ -135,6 +135,17 @@ const StyledAdmin = styled.div`
             margin-bottom: 1rem;
         }
     }
+
+    @media (max-width: 550px) {
+        .each-event {
+            width: 20rem;
+        }
+    }
+    @media (max-width: 400px) {
+        .each-event {
+            width: 16rem;
+        }
+    }
 `
 
 export default GroupAdmin;
