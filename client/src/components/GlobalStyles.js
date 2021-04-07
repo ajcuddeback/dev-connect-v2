@@ -92,6 +92,11 @@ const GlobalStyle = createGlobalStyle`
     .glass-button:hover {
         top: 3px;
     }
+
+    .disabled {
+        opacity: 0;
+        pointer-events: none;
+    }
 `
 
 export default GlobalStyle;

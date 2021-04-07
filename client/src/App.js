@@ -45,6 +45,7 @@ function App() {
   // State
   const [miles, setMiles] = useState(20);
   const [zipCode, setZipCode] = useState();
+  const [navOpen, setNavOpen] = useState(false);
 
   return (
     <ApolloProvider client={client}>
@@ -52,24 +53,24 @@ function App() {
       {Auth.loggedIn() ? (
         <>
           <Router>
-            <Nav />
+            <Nav navOpen={navOpen} setNavOpen={setNavOpen} />
             <Switch>
               <Route exact path='/meet' render={() => (
-                <MeetHome miles={miles} setMiles={setMiles} zipCode={zipCode} setZipCode={setZipCode} />
+                <MeetHome miles={miles} setMiles={setMiles} zipCode={zipCode} setZipCode={setZipCode} navOpen={navOpen} />
               )}></Route>
               <Route exact path='/meet/groups' render={() => (
-                <ZipGroups miles={miles} zipCode={zipCode} />
+                <ZipGroups miles={miles} zipCode={zipCode} navOpen={navOpen} />
               )}  ></Route>
               <Route exact path='/meet/dashboard' component={MeetDashboard}></Route>
               <Route exact path='/meet/my-groups' component={MyGroups}></Route>
               <Route exact path='/meet/my-events' component={MyEvents}></Route>
               <Route exact path='/meet/groups/:groupName' render={() => (
-                <GroupHome />
+                <GroupHome navOpen={navOpen} />
               )} ></Route>
               <Route exact path='/meet/edit-event/:groupName/:eventId' component={EditEvent}></Route>
               <Route exact path='/meet/add-event/:groupName' component={AddEvent}></Route>
               <Route exact path='/meet/admin/:groupName' render={() => (
-                <GroupAdmin />
+                <GroupAdmin navOpen={navOpen} />
               )}></Route>
               
             </Switch>

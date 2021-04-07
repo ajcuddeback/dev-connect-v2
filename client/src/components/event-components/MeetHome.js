@@ -318,6 +318,19 @@ const StyledHome = styled.div`
             }
         }
     }
+    @media (max-width: 1600px) {
+        width: 65%;
+    }
+    @media (max-width: 1500px) {
+        .get-group-wrapper {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            div {
+                margin-bottom: 1rem;
+            }
+        }
+    }
 `
 
 export default MeetHome;
