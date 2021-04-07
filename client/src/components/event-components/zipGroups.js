@@ -17,7 +17,7 @@ const ZipGroups = ({ miles, zipCode }) => {
 
     // Query groups by zipcode
     const { loading, data } = useQuery(GROUPS_BY_ZIP, {
-        variables: { group_zip: parseInt(zipCode), miles: miles }
+        variables: { group_zip: parseInt(zipCode), miles: parseInt(miles) }
     });
 
     // use Effect for setting group data
@@ -55,7 +55,7 @@ const ZipGroups = ({ miles, zipCode }) => {
                     <section className="groups-near-user-wrapper">
                         <h2>Groups in your area: </h2>
                         <ol>
-                            {data.groupByZip.map(group => (<EachGroup group={group} setGroupFetchSuccess={setGroupFetchSuccess} />))}
+                            {data.groupByZip.map(group => (<EachGroup group={group} key={group.id} setGroupFetchSuccess={setGroupFetchSuccess} />))}
                         </ol>
                     </section>
                     
