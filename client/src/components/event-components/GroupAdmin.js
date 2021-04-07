@@ -9,6 +9,9 @@ import { useParams, Link } from 'react-router-dom';
 
 import EachEventAdmin from './each-event/EachEventAdmin';
 
+// styled comp
+import styled from 'styled-components';
+
 const GroupAdmin = () => {
    const [isAdmin, setIsAdmin] = useState(false);
    const [dataGroup, setDataGroup] = useState(false);
@@ -44,45 +47,105 @@ const GroupAdmin = () => {
     // JSX
     if(loading) {
         return (
-            <h2>Loading...</h2>
+            <StyledLoader>
+                <h2>Loading...</h2>
+                <div class="loader"></div>
+            </StyledLoader>
         )
     }
 
     if(dataGroup === false) {
         return (
-            <>
+            <StyledError>
                 <h2>The group you selected does not exist! Please return to the <Link to={`/meet`}>group home page!</Link></h2>
-            </>
+            </StyledError>
         )
     }
 
     if(!isAdmin) {
         return (
-            <>
+            <StyledError>
                 <h2>You are not the owner of this group!</h2>
-                <p>Want to make your own group? Go to your<Link to={`/meet/dashboard`}> dashboard!</Link></p>
-            </>
+                <h3>Want to make your own group? Go to your<Link to={`/meet/dashboard`}> dashboard!</Link></h3>
+            </StyledError>
         )
     }
 
     return (
-        <>
-            <h2>Admin</h2>
+        <StyledAdmin>
+            <div className="group-info-wrapper">
+                <h2 className="group-name">{data.group.group_title}</h2>
+                 <p>{data.group.group_text}</p>
+            </div>
+            <br/>
             <section className="group-content-wrapper">
-                <div className="group-info-wrapper">
-                    <h2 className="group-name">{data.group.group_title}</h2>
-                    <p>{data.group.group_text}</p>
-                </div>
                 <div className="group-event-wrapper">
                     <h2>Events:</h2>
                     <ol>
                     {data.group.events.map(event => (<EachEventAdmin event={event} groupName={groupName} key={event.id} ></EachEventAdmin>))}
                     </ol>
-                    <Link to={`/meet/add-event/${groupName}`}>Add an Event</Link>
+                    <br/>
+                    <br/>
+                    <Link className="glass-button" to={`/meet/add-event/${groupName}`}>Add an Event</Link>
                 </div>
             </section>
-        </>
+        </StyledAdmin>
     )
 };
+
+const StyledLoader = styled.div`
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
+const StyledError = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
+const StyledAdmin = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    section {
+        padding: 2rem;
+    }
+    .each-event {
+        margin-top: 1rem;
+        padding: 1rem;
+        width: 30rem;
+    }
+    .meetup-info-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    .time-and-info, .location {
+        width: 50%;
+        p{
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    @media (max-width: 550px) {
+        .each-event {
+            width: 20rem;
+        }
+    }
+    @media (max-width: 400px) {
+        .each-event {
+            width: 16rem;
+        }
+    }
+`
 
 export default GroupAdmin;

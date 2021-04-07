@@ -5,7 +5,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { ADD_USER_EVENT } from '../../../utils/mutations';
 import { GET_ME_EVENTS } from '../../../utils/queries';
 
-const EachEvent = ({ event }) => {
+const EachEvent = ({ event, isMember }) => {
     const [eventIds, setEventIds] = useState([])
 
     // gql
@@ -33,13 +33,13 @@ const EachEvent = ({ event }) => {
             })
             setEventIds(eventIdArr);
         }
-    }, [data, eventIds])
+    }, [data, eventIds, isMember])
 
     
     
     // JSX
     return (
-        <>
+        <div className="each-event glass-background">
             <h2>{event.event_title}</h2>
             <div className="meetup-info-wrapper">
                 <div className="time-and-info">
@@ -50,14 +50,17 @@ const EachEvent = ({ event }) => {
                     <p>Location: {event.event_location}</p>
                 </div>
             </div>
+
+            {isMember 
+            ? <button onClick={joinEventHandler} className="join-event-btn glass-button" data-id={event.id}>
+            {eventIds?.some((eventId) => eventId === event.id)
+                ? 'Already Joined'
+                : 'Join Event'
+            }
+        </button>
+        : ''}
             
-            <button onClick={joinEventHandler} className="join-event-btn grey-red-btn" data-id={event.id}>
-                {eventIds?.some((eventId) => eventId === event.id)
-                    ? 'Already Joined'
-                    : 'Join Event'
-                }
-            </button>
-        </>
+        </div>
     )
 };
 

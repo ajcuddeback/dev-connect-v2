@@ -5,6 +5,9 @@ import { GROUPS_BY_ZIP } from '../../utils/queries';
 
 import EachGroup from './each-group/EachGroup';
 
+// styled comp
+import styled from 'styled-components';
+
 const ZipGroups = ({ miles, zipCode }) => {
 
     // State
@@ -29,11 +32,16 @@ const ZipGroups = ({ miles, zipCode }) => {
 
     // JSX
     if(loading) {
-        return <h2>Loading...</h2>
+        return (
+        <StyledLoader>
+            <h2>Loading...</h2>
+            <div className="loader"></div>
+        </StyledLoader>
+        )
     }
 
     return (
-        <>
+        <StyledGroupsZip>
                 {!groupFetchSuccess ? (
                     <div className="hidden join-group-fail">
                         <p>You are already part of this group</p>
@@ -54,8 +62,44 @@ const ZipGroups = ({ miles, zipCode }) => {
                 ) : (
                     <h2>There are no groups in your area!</h2>
                 )}
-            </>
+            </StyledGroupsZip>
     )        
 };
+
+const StyledLoader = styled.div`
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
+const StyledGroupsZip = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    .join-group-fail {
+        position: fixed;
+        background-color: red;
+        color:white;
+        padding: 1rem;
+        z-index: 999;
+    }
+    .group-info {
+        width: 20rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        text-align: center;
+        div {
+            a {
+                margin-top: 1rem;
+                padding: 3px;
+            }
+        }
+    }
+`
 
 export default ZipGroups;
