@@ -20,6 +20,7 @@ import MyEvents from './components/event-components/MyEvents';
 
 // Styled Component
 import GlobalStyle from './components/GlobalStyles';
+import styled from 'styled-components';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -77,13 +78,18 @@ function App() {
             
         </>
       ) : (
-        <>
+        <StyledLoginBack>
           <GlobalStyle />
           <Login />
-        </>
+        </StyledLoginBack>
       )}
     </ApolloProvider>
   );
 }
+
+const StyledLoginBack = styled.div`
+  min-height: 100vh;
+  background: linear-gradient( #090718,  #005bff);
+`
 
 export default App;

@@ -112,7 +112,7 @@ function Login() {
                     <br/>
                     <p className="errorP">{errorP}</p>
                     <button className="glass-button" type="submit">Signup</button>
-                    <p>Already have an account? <span onClick={() => setIsNewUser(!isNewUser)}>Signup here!</span></p>
+                    <p>Already have an account? <span onClick={() => setIsNewUser(!isNewUser)}>Login here!</span></p>
                 </form>
             </StyledLogin>
         );
@@ -155,11 +155,29 @@ const StyledLogin = styled.div`
     }
 
     @media (max-width: 500px) {
+        width: 60%;
         form {
             width: 20rem;
         }
         .img-wrapper {
-            
+            .logo {
+                width: 20rem;
+            }
+        }
+        .tagname {
+            font-size: 24px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        width: 70%;
+        form {
+            width: 15rem;
+        }
+        .img-wrapper {
+            .logo {
+                width: 18rem;
+            }
         }
     }
 `
