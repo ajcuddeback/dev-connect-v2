@@ -14,7 +14,8 @@ const {
   Event_Users,
   Group_Users,
   Product,
-  Items,
+  Order,
+  Category,
 } = require("../models");
 const { response } = require("express");
 
@@ -40,6 +41,12 @@ const resolvers = {
               attributes: ["id", "event_title"],
               through: Event_Users,
               as: "event_user",
+            },
+            {
+              model: Product,
+              attributes: ["id", "product_name"],
+              through: Order,
+              as: "orders",
             },
           ],
         });
@@ -235,17 +242,48 @@ const resolvers = {
       throw new AuthenticationError("You must be logged in!");
     },
     // ############################# Product Queries #############################
-
-    products: async (parent, args) => {
-      return Product.findAll({});
+    categories: async (parent, args, context) => {
+      if (context.user.id) {
+        const data = await Category.findAll({});
+        return data;
+      }
+      throw new AuthenticationError("You must be logged in!");
     },
-    product: async (parent, { id }) => {
-      return Product.findOne({ where: { id: id } });
+    products: async (parent, { category_id }, context) => {
+      if (context.user.id) {
+        const data = await Product.findAll({
+          where: {
+            id: category_id,
+          },
+        });
+
+        return data;
+      }
+
+      throw new AuthenticationError("You must be logged in!");
     },
 
-    items: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Thought.find(params);
+    product: async (parent, { id }, context) => {
+      if (context.user.id) {
+        const data = await Product.findOne({ where: { id: id } });
+        return data;
+      }
+
+      throw new AuthenticationError("You must be logged in!");
+    },
+
+    order: async (parent, { id }, context) => {
+      if (context.user.id) {
+        const data = await Order.findOne({
+          where: {
+            id: event_id,
+          },
+        });
+
+        return data;
+      }
+
+      throw new AuthenticationError("You must be logged in!");
     },
   },
 
@@ -425,6 +463,21 @@ const resolvers = {
           where: {
             id: event_id,
           },
+        });
+
+        return data;
+      }
+
+      throw new AuthenticationError("You must be logged in!");
+    },
+
+    addOrder: async (parent, { id }, context) => {
+      if (context.user.id) {
+        const user_id = context.user.id;
+        const data = await Order.addUser(id, user_id, {
+          User,
+
+          Product,
         });
 
         return data;

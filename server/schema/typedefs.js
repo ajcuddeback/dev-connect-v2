@@ -17,7 +17,7 @@ const typeDefs = gql`
     last_name: String
     group_user: [Group]
     event_user: [Event]
-
+    orders: [Order]
   }
 
   type Group {
@@ -58,23 +58,25 @@ const typeDefs = gql`
     token: ID!
     user: User
   }
+  type Category {
+    id: ID
+    category_name: String
+  }
 
   type Product {
     id: ID
     product_name: String
     imgPath: String
     price: Int
+    quantity: Int
+    category_id: Int
   }
 
-  type Items {
-      id:{
-          type: ID
-          quantity: Int
-          user_id: Int
-          product_id: Int
-
-      }
-
+  type Order {
+    id: ID
+    user_id: Int
+    purchase_date: String
+    products: [Product]
   }
 
   type Query {
@@ -86,10 +88,10 @@ const typeDefs = gql`
     group(group_url: String!): Group #done
     event(event_id: Int!): Event #done
     groupByZip(group_zip: Int!, miles: Int!): [Group] #done
-    products: [Product]
+    categories: [Category]
+    products(category_id: Int): [Product]
     product(id: Int!): Product
-    items(username:String): [Items]
-
+    order(id: Int!): Order
   }
 
   type Mutation {
@@ -125,6 +127,8 @@ const typeDefs = gql`
       event_time: String
     ): Event #done
     deleteEvent(event_id: Int!): Event #done
+    addOrder(id: Int!): Order
+    updateProduct(id: Int!, quantity: Int!): Product
   }
 `;
 
