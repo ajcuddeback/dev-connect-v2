@@ -60,6 +60,14 @@ const typeDefs = gql`
         user: User
     }
 
+    type Answer {
+        id: ID
+        answer_text: String
+        createdAt: String
+        user_id: Int
+        question_id: Int
+    }
+
     # Question and Answer Types
     type Question {
         id: ID
@@ -67,14 +75,6 @@ const typeDefs = gql`
         createdAt: String
         user_id: Int
         answers: [Answer]
-    }
-
-    type Answer {
-        id: ID
-        answer_text: String
-        createdAt: String
-        user_id: Int
-        question_id: Int
     }
 
     # Friend Type

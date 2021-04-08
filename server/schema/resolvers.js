@@ -12,6 +12,7 @@ const {
     Event_Users, 
     Group_Users,
     Question,
+    Answer,
     User_Friends
 } = require('../models');
 const { response } = require('express');
@@ -213,7 +214,14 @@ const resolvers = {
         // Question queries
         questions: async (parent, args, context) => {
             if(context.user.id) {
-                const questions = await Question.findAll({})
+                const questions = await Question.findAll({
+                    include: [
+                        {
+                            model: Answer,
+                            attributes: ["id","answer_text"]
+                        }
+                    ]
+                })
 
                 return questions.map(item => item.get({plain: true}));
             }
@@ -438,15 +446,12 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in!')
         },
 
-        addAnswer: async (parent, { input }, context) => {
+        addAnswer: async (parent, { question_id, answer_text }, context) => {
             if(context.user.id) {
                 const updatedQuestion = await Answer.create({
-                    answer_text: input.answer_text,
+                    answer_text: answer_text,
                     user_id: context.user.id,
-                    where: {
-                        id: question_id,
-                    },
-                    attributes: ["id", "question_text", "user_id"]
+                    question_id: question_id
                 })
 
                 return updatedQuestion.get({plain: true});
