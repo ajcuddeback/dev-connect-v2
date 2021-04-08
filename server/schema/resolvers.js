@@ -45,12 +45,12 @@ const resolvers = {
                             model: User,
                             attributes: ["id","username"],
                             through: User_Friends,
-                            as: "user_friends"
+                            as: "friends"
                         }
                     ]
                 })
 
-                return userData.map(item => item.get({plain: true}));
+                return userData.get({plain: true});
             }
 
             throw new AuthenticationError('You need to be logged in!')
