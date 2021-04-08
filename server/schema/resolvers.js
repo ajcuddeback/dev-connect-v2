@@ -376,9 +376,9 @@ const resolvers = {
         },
 
         // question and answer mutations
-        addQuestion: async (parent, { question_text, user_id }, context) => {
+        addQuestion: async (parent, { question_text }, context) => {
             if(context.user) {
-                const userId = context.user_id;
+                const userId = context.user.id;
                 const question = await Question.create({
                     question_text: question_text,
                     user_id: userId
