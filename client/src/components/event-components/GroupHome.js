@@ -56,14 +56,25 @@ const GroupHome = () => {
                 console.log(user.id, userid)
                 
                 if(parseInt(user.id) === userid) {
-                    console.log('yes')
-                    setIsMemeber(true);
-                    return;
+                    if(!isMember) {
+                        console.log('yes')
+                        setIsMemeber(true);
+                        return;
+                    }
+                    
                 } else {
-                    setIsMemeber(false);
+                    if(isMember) {
+                        setIsMemeber(false);
+                    }
                 }
             });
-            setDataGroup(true);
+
+            console.log(dataGroup)
+            if(!dataGroup) {
+                setDataGroup(true);
+                
+                // return;
+            }
         }
     }, [data])
 
@@ -76,7 +87,7 @@ const GroupHome = () => {
         )
     };
 
-    if(dataGroup === false) {
+    if(!dataGroup) {
         return(
             <StyledError>
                 <h2>No group exists at this url! Go back to the <Link to={`/meet`}>events page</Link>  to find a group in your area!</h2>

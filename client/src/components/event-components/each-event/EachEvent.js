@@ -33,7 +33,7 @@ const EachEvent = ({ event, isMember }) => {
             })
             setEventIds(eventIdArr);
         }
-    }, [data, eventIds, isMember])
+    }, [data, isMember])
 
     
     

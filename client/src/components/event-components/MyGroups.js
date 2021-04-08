@@ -25,6 +25,7 @@ const MyGroups = () => {
     const userData = Auth.getProfile();
     const username = userData.data.username;
 
+
     console.log(data)
 
     useEffect(() => {
