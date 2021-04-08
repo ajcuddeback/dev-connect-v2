@@ -4,18 +4,22 @@ const { signToken } = require('../utils/auth');
 const sequelize = require('../config/connection');
 const Sequelize = require('sequelize');
 const axios = require('axios');
+
 const { 
     User,
     Group, 
     Event, 
     Event_Users, 
-    Group_Users 
+    Group_Users,
+    Question,
+    Answer,
+    User_Friends
 } = require('../models');
 const { response } = require('express');
 
 const resolvers = {
+    // create, update, delete requests
     Query : {
-
         // ############################# User queries #############################
         me: async (parent, args, context) => {
             console.log(context.user)
@@ -36,17 +40,36 @@ const resolvers = {
                             attributes: ["id","event_title"],
                             through: Event_Users,
                             as: "event_user"
+                        },
+                        {
+                            model: User,
+                            attributes: ["id","username"],
+                            through: User_Friends,
+                            as: "user_friends"
                         }
                     ]
                 })
 
-                return userData;
+                return userData.map(item => item.get({plain: true}));
             }
 
             throw new AuthenticationError('You need to be logged in!')
         },
         users: async () => {
-           return User.findAll({})
+           return User.findAll({
+               include: [
+                    {
+                        model: Question,
+                        attributes: ["id","question_text"]
+                    },
+                    {
+                        model: User,
+                        attributes: ["id","username"],
+                        through: User_Friends,
+                        as: "friends"
+                    }
+               ]
+           })
         },
 
         // ############################# Group Queries #############################
@@ -186,6 +209,28 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You must be logged in!')
+        },
+
+        // Question queries
+        questions: async (parent, args, context) => {
+            if(context.user.id) {
+                const questions = await Question.findAll({
+                    include: [
+                        {
+                            model: Answer,
+                            attributes: ["id","answer_text"]
+                        }
+                    ]
+                })
+
+                return questions.map(item => item.get({plain: true}));
+            }
+
+            throw new AuthenticationError('You must be logged in!')
+        },
+
+        question: async (parent, { _id }) => {
+            return Question.findOne({ _id });
         }
     }, 
 
@@ -238,6 +283,7 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be signed in!')
         }, 
+
         addUserGroup: async (parent, { group_id }, context) => {
             if(context.user.id) {
                 const user_id = context.user.id;
@@ -248,6 +294,7 @@ const resolvers = {
             
             throw new AuthenticationError('You must be logged in@')
         },
+
         updateGroup: async (parent, { group_id, group_title, group_url, group_text, group_zip }, context) => {
             if(context.user.id) {
                 const data = await Group.update(
@@ -299,6 +346,7 @@ const resolvers = {
             
             throw new AuthenticationError('You must be logged in!')
         },
+
         addUserEvent: async (parent, { event_id }, context) => {
             if(context.user.id) {
                 const user_id = context.user.id;
@@ -309,6 +357,7 @@ const resolvers = {
 
             throw new AuthenticationError('You must be logged in!')
         }, 
+
         updateEvent: async (parent, { event_id, event_title, event_text, event_location, event_time }, context) => {
             if(context.user.id) {
                 const data = await Event.update(
@@ -332,6 +381,7 @@ const resolvers = {
 
             throw new AuthenticationError('You must be logged in!')
         },
+
         deleteEvent: async (parent, { event_id }, context) => {
             if(context.user.id) {
                 const data = await Event.destroy({
@@ -344,7 +394,84 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You must be logged in!')
-        } 
+        },
+
+        // question and answer mutations
+        addQuestion: async (parent, { question_text }, context) => {
+            if(context.user) {
+                const userId = context.user.id;
+                const question = await Question.create({
+                    question_text: question_text,
+                    user_id: userId
+                })
+                
+                return question.get({plain: true});;
+            }
+          
+            throw new AuthenticationError('You need to be logged in!');
+        },
+
+        updateQuestion: async (parent, { question_id, question_text }, context) => {
+            if(context.user.id) {
+                const question = await Question.update(
+                    {
+                        question_text: question_text,  
+                        user_id: context.user.id
+                    },
+                    {
+                        where: {
+                            id: question_id,
+                        },
+                        attributes: ["id", "question_text"]
+                    }
+                )
+
+                return question;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
+        },
+
+        deleteQuestion: async (parent, { question_id }, context) => {
+            if(context.user.id) {
+                const data = await Question.destroy({
+                    where: {
+                        id: question_id
+                    }
+                })
+
+                return data;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
+        },
+
+        addAnswer: async (parent, { question_id, answer_text }, context) => {
+            if(context.user.id) {
+                const updatedQuestion = await Answer.create({
+                    answer_text: answer_text,
+                    user_id: context.user.id,
+                    question_id: question_id
+                })
+
+                return updatedQuestion.get({plain: true});
+            }
+            
+            throw new AuthenticationError('You must be logged in!')
+        },
+
+        // Friend Mutations
+        addFriend: async (parent, { friendId }, context) => {
+            if (context.user) {
+              const updatedUser = await User_Friends.create({
+                user_id: context.user.id,
+                friend_id: friendId
+            })
+              return updatedUser.get({plain: true});
+            }
+          
+            throw new AuthenticationError('You need to be logged in!');
+        }
     }
 }
 

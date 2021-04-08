@@ -6,6 +6,7 @@ const Event_Users = require("./Event_Models/Event_User");
 const Question = require("./Question_Models/Question");
 const Answer = require("./Question_Models/Answer");
 const QuestionTag = require("./Question_Models/QuestionTag");
+const User_Friends = require("./User_Friends");
 const Tag = require("./Question_Models/Tag");
 const Post = require("./Social_Models/Post");
 const Comment = require("./Social_Models/Comment");
@@ -135,7 +136,21 @@ Question.hasMany(Answer, {
   foreignKey: "question_id",
 });
 
-//create Posts and Likesassociations
+// Friend Associations
+
+User.belongsToMany(User, {
+  through: User_Friends,
+  as: "friends",
+  foreignKey: "user_id"
+});
+
+User.belongsToMany(User, {
+  through: User_Friends,
+  as: "from",
+  foreignKey: "user_id"
+});
+
+//create Posts and Likes associations
 User.hasMany(Post);
 
 Post.belongsTo(User);
@@ -246,4 +261,5 @@ module.exports = {
   Answer,
   QuestionTag,
   Tag,
+  User_Friends
 };
