@@ -55,7 +55,20 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in!')
         },
         users: async () => {
-           return User.findAll({})
+           return User.findAll({
+               include: [
+                    {
+                        model: Question,
+                        attributes: ["id","question_text"]
+                    },
+                    {
+                        model: User,
+                        attributes: ["id","username"],
+                        through: User_Friends,
+                        as: "friends"
+                    }
+               ]
+           })
         },
 
         // ############################# Group Queries #############################

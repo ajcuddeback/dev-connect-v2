@@ -18,7 +18,7 @@ const typeDefs = gql`
         group_user: [Group]
         event_user: [Event]
         questions: [Question]
-        user_friends: [User]
+        friends: [User]
     }
 
     type Group {
@@ -62,7 +62,7 @@ const typeDefs = gql`
 
     # Question and Answer Types
     type Question {
-        _id: ID
+        id: ID
         question_text: String
         createdAt: String
         user_id: Int
@@ -70,7 +70,7 @@ const typeDefs = gql`
     }
 
     type Answer {
-        _id: ID
+        id: ID
         answer_text: String
         createdAt: String
         user_id: Int
@@ -80,7 +80,7 @@ const typeDefs = gql`
     # Friend Type
 
     type User_Friends {
-        _id: ID
+        id: ID
         user_id: Int
         friend_id: Int
     }
@@ -110,10 +110,10 @@ const typeDefs = gql`
         updateEvent(event_id: Int!, event_title: String, event_text: String, event_location: String, event_time: String): Event #done
         deleteEvent(event_id: Int!): Event #done
         addQuestion(question_text: String!): Question
-        updateQuestion(questionId: ID!, question_text: String!): Question
-        addAnswer(questionId: ID!, answer_text: String!): Question
+        updateQuestion(question_id: ID!, question_text: String!): Question
+        addAnswer(question_id: ID!, answer_text: String!): Question
         deleteQuestion(question_id: Int!): Question
-        addFriend(friendId: Int!): User
+        addFriend(friend_id: Int!): User
     }
 `
 

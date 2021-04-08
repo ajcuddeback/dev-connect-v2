@@ -138,16 +138,26 @@ Question.hasMany(Answer, {
 
 // Friend Associations
 
-User.belongsToMany(User_Friends, {
-  through: "friend_id",
-  foreignKey: "user_id",
+// User.belongsToMany(User_Friends, {
+//   through: "friend_id",
+//   foreignKey: "user_id",
+// });
+
+// User_Friends.belongsTo(User, {
+//   foreignKey: "user_id",
+// });
+
+User.belongsToMany(User, {
+  through: User_Friends,
+  as: "friends",
+  foreignKey: "user_id"
 });
 
-User_Friends.belongsTo(User, {
-  foreignKey: "user_id",
+User.belongsToMany(User, {
+  through: User_Friends,
+  as: "from",
+  foreignKey: "user_id"
 });
-
-
 
 //create Posts and Likes associations
 User.hasMany(Post);
