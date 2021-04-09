@@ -17,7 +17,7 @@ function Nav({navOpen, setNavOpen}) {
 
     return (
         <StyledHead>
-            <div className="burger" onClick={() => setNavOpen(!navOpen)} className={`toggleNav disabled ${navOpen ? 'nav-open' : ''}`}>
+            <div onClick={() => setNavOpen(!navOpen)} className={`toggleNav disabled ${navOpen ? 'nav-open' : ''}`}>
                 <div className={`line1 ${navOpen ? 'nav-open1' : 'nav-close1'}`}></div>
                 <div className={`line2 ${navOpen ? 'nav-open2' : 'nav-close2'}`}></div>
                 <div className={`line3 ${navOpen ? 'nav-open3' : 'nav-close3'}`}></div>
@@ -50,9 +50,12 @@ const StyledHead = styled.header`
     display: flex;
     .toggleNav {
         position: relative;
-        left: 80vw;;
+        left: 80vw;
+        width: 3rem;
+        height: 2.1rem;
+        cursor: pointer;
     }
-
+    
     .line1,
     .line2, 
     .line3 {
@@ -153,6 +156,7 @@ const StyledNav = styled.nav`
         left: -400px;
         transition: all 0.9s ease;
     }
+    
     }
 `
 
