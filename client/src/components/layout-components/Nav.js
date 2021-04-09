@@ -141,6 +141,10 @@ const StyledNav = styled.nav`
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            text-align: center;
+        }
+        button {
+            margin-top: 5rem;
         }
     }
 

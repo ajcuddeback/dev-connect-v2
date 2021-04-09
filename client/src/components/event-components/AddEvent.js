@@ -30,6 +30,8 @@ const AddEvent = () => {
         }],
     });
 
+    console.log(err)
+
     useEffect(() => {
         if(userData.loading || loading) {
             return;
@@ -40,7 +42,7 @@ const AddEvent = () => {
             myGroups.map(group => {
                 if(group.id === data.group.id) {
                     setIsAdmin(true);
-                    return;
+                    return group;
                 }
             });
 
