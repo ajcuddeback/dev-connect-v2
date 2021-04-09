@@ -49,7 +49,7 @@ const GroupAdmin = () => {
         return (
             <StyledLoader>
                 <h2>Loading...</h2>
-                <div class="loader"></div>
+                <div className="loader"></div>
             </StyledLoader>
         )
     }

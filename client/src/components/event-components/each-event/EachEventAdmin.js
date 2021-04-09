@@ -41,6 +41,7 @@ const EachEventAdmin = ({ event, groupName }) => {
                 </div>
                 <div className="location">
                     <p>Location: {event.event_location}</p>
+                    <p>Users: {event.event_user.length}</p>
                 </div>
             </div>
             <div className="manage-event-buttons">

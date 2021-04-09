@@ -117,6 +117,12 @@ const resolvers = {
                     {
                         model: Event,
                         attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
+                        include: {
+                            model: User,
+                            attributes: ['id', 'username', 'first_name'],
+                            through: Event_Users,
+                            as:'event_user'
+                        }
                     }
                 ]
             });
@@ -139,6 +145,12 @@ const resolvers = {
                     {
                         model: Event,
                         attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
+                        include: {
+                            model: User,
+                            attributes: ['id', 'username', 'first_name'],
+                            through: Event_Users,
+                            as:'event_user'
+                        }
                     },
                     {
                         model: User,
@@ -182,6 +194,12 @@ const resolvers = {
                     {
                         model: Event,
                         attributes: ['id', 'event_title', 'event_text', 'event_location', 'event_time'],
+                        include: {
+                            model: User,
+                            attributes: ['id', 'username', 'first_name'],
+                            through: Event_Users,
+                            as:'event_user'
+                        }
                     }
                 ]
             });
@@ -190,7 +208,16 @@ const resolvers = {
         }, 
         events: async (parent, args, context) => {
             if(context.user.id) {
-                const data = await Event.findAll({})
+                const data = await Event.findAll({
+                    include: [
+                        {
+                            model: User,
+                            attributes: ['id', 'username', 'first_name'],
+                            through: Event_Users,
+                            as:'event_user'
+                        }
+                    ]
+                })
 
                 return data;
             }

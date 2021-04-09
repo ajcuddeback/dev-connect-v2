@@ -27,6 +27,10 @@ export const GET_GROUP = gql`
                 event_text
                 event_location
                 event_time
+                event_user {
+                    id
+                    username
+                }
             }
             group_user {
                 id

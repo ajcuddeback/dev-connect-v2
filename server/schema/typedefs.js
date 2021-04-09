@@ -41,6 +41,7 @@ const typeDefs = gql`
         event_time: String 
         group_id: Int
         users: Int
+        event_user: [User]
     }
 
     type Event_User {
