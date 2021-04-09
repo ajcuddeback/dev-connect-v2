@@ -5,6 +5,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from "apollo-boost";
 
 // Components
+// Events
 import Login from "./components/login/Login";
 import Nav from "./components/layout-components/Nav";
 import MeetHome from "./components/event-components/MeetHome";
@@ -16,6 +17,10 @@ import AddEvent from "./components/event-components/AddEvent";
 import MeetDashboard from "./components/event-components/MeetDashboard";
 import MyGroups from "./components/event-components/MyGroups";
 import MyEvents from "./components/event-components/MyEvents";
+
+// Styled Component
+import GlobalStyle from "./components/GlobalStyles";
+import styled from "styled-components";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -41,14 +46,15 @@ function App() {
   // State
   const [miles, setMiles] = useState(20);
   const [zipCode, setZipCode] = useState();
+  const [navOpen, setNavOpen] = useState(false);
 
   return (
     <ApolloProvider client={client}>
+      <GlobalStyle />
       {Auth.loggedIn() ? (
         <>
-          <h2>You are logged in</h2>
           <Router>
-            <Nav />
+            <Nav navOpen={navOpen} setNavOpen={setNavOpen} />
             <Switch>
               <Route
                 exact
@@ -59,13 +65,20 @@ function App() {
                     setMiles={setMiles}
                     zipCode={zipCode}
                     setZipCode={setZipCode}
+                    navOpen={navOpen}
                   />
                 )}
               ></Route>
               <Route
                 exact
                 path="/meet/groups"
-                render={() => <ZipGroups miles={miles} zipCode={zipCode} />}
+                render={() => (
+                  <ZipGroups
+                    miles={miles}
+                    zipCode={zipCode}
+                    navOpen={navOpen}
+                  />
+                )}
               ></Route>
               <Route
                 exact
@@ -77,7 +90,7 @@ function App() {
               <Route
                 exact
                 path="/meet/groups/:groupName"
-                render={() => <GroupHome />}
+                render={() => <GroupHome navOpen={navOpen} />}
               ></Route>
               <Route
                 exact
@@ -92,17 +105,24 @@ function App() {
               <Route
                 exact
                 path="/meet/admin/:groupName"
-                render={() => <GroupAdmin />}
+                render={() => <GroupAdmin navOpen={navOpen} />}
               ></Route>
-              <Route exact path="checkout" component={Checkout}></Route>
             </Switch>
           </Router>
         </>
       ) : (
-        <Login />
+        <StyledLoginBack>
+          <GlobalStyle />
+          <Login />
+        </StyledLoginBack>
       )}
     </ApolloProvider>
   );
 }
+
+const StyledLoginBack = styled.div`
+  min-height: 100vh;
+  background: linear-gradient(#090718, #28bad6);
+`;
 
 export default App;

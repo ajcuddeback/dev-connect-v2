@@ -471,12 +471,10 @@ const resolvers = {
       throw new AuthenticationError("You must be logged in!");
     },
 
-    addOrder: async (parent, { id }, context) => {
+    addOrder: async (parent, { product_name }, context) => {
       if (context.user.id) {
         const user_id = context.user.id;
-        const data = await Order.addUser(id, user_id, {
-          User,
-
+        const data = await Order.addUser(product_name, user_id, {
           Product,
         });
 

@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ajcuddeback/dev-connect-v2#readme",
   "dependencies": {
-  
+    "@apollo/react-hooks": "^4.0.0",
     "if-env": "^1.0.4"
   },
   "devDependencies": {

@@ -8,6 +8,8 @@ import { EDIT_EVENT } from '../../utils/mutations';
 // Router
 import { useParams, Link, useHistory } from 'react-router-dom';
 
+// styled comp
+import styled from 'styled-components';
 
 const EditEvent = () => {
     // State
@@ -82,25 +84,25 @@ const EditEvent = () => {
     // JSX
     if(confirmData === false) {
         return (
-            <>
+            <StyledError>
                 <h2>No group exists at this url! Please return to your <Link to={`/meet/dashboard`}>dashboard!</Link></h2>
-                </>
+            </StyledError>
         )
     };
 
     if(!isAdmin) {
         return (
-            <>
+            <StyledError>
                 <h2>You are not the owner of this group!</h2>
-                <p>Want to make your own group? Go to your<Link to={`/meet/dashboard`}> dashboard!</Link></p>
-            </>
+                <h3>Want to make your own group? Go to your<Link to={`/meet/dashboard`}> dashboard!</Link></h3>
+            </StyledError>
         )
     };
 
     return (
-        <>
+        <StyledAddEvent>
             <h2>Edit Event {eventData.event_title}</h2>
-            <form onSubmit={editEventHandler} className="edit-event-form">
+            <form onSubmit={editEventHandler} className="edit-event-form glass-background">
                 <div className="form-wrapper">
                     <div className="col-1">
                         <p>Event title:</p>
@@ -117,10 +119,36 @@ const EditEvent = () => {
                         <textarea onChange={setFormData} name="event_text" id="event-info" cols="30" rows="10" defaultValue={eventData.event_text} required></textarea>
                     </div>
                 </div>
-                <button className="confirm-edit-event grey-red-btn" type="submit">Edit Event</button>
+                <button className="confirm-edit-event glass-button" type="submit">Edit Event</button>
             </form>
-        </>
+        </StyledAddEvent>
     );
 };
+
+const StyledError = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
+const StyledAddEvent = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    h2 {
+        margin-top: 4rem;
+    }
+    form {
+        width: 20rem;
+        padding: 1rem;
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+    }
+`
 
 export default EditEvent;

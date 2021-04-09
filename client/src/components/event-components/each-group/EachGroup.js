@@ -7,7 +7,7 @@ import { ADD_USER_GROUP } from '../../../utils/mutations';
 
 import { useHistory } from 'react-router-dom';
 
-const EachGroup = ({ group, setGroupFetchSuccess }) => {
+const EachGroup = ({ group, setGroupFetchSuccess, groupFetchSuccess }) => {
     // gql
     const [addUserGroup, {err}] = useMutation(ADD_USER_GROUP);
 
@@ -37,13 +37,14 @@ const EachGroup = ({ group, setGroupFetchSuccess }) => {
     // JSX
     return (
         <>
-            <div className="group-info">
+            <div className="group-info glass-background">
                 <p>{ group.group_title }</p>
                 <p>{ group.group_text }</p>
                 <p>Zip Code: { group.group_zip }</p>
                 <p>Users: { group.users_count }</p>
+                <button onClick={joinGroupHandler} className="join-group glass-button" data-id={group.id}>Join {group.group_title}</button>
             </div>
-            <button onClick={joinGroupHandler} className="join-group" data-id={group.id}>Join {group.group_title}</button>
+            
         </>
     )
 };

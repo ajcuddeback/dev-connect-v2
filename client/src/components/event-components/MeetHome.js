@@ -9,6 +9,9 @@ import { useMutation } from '@apollo/react-hooks';
 import { OWNER_GROUPS } from '../../utils/queries';
 import { CREATE_GROUP } from '../../utils/mutations';
 
+// styled comp
+import styled from 'styled-components';
+
 const MeetHome = ({ miles, setMiles, setZipCode }) => {
     // State
     const [createGroupForm, setCreateGroupForm] = useState({group_title: '', group_text: '', group_zip: 0});
@@ -79,36 +82,277 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
 
     // JSX
     return (
-        <>
-            <section>
-                <h2>Welcome to meetDevs</h2>
+        <StyledHome>
+            <section className="welcome glass-background">
+                <h1>Welcome to meetDevs</h1>
                 <p>meetDevs is a great place to find groups for developers like you! Simply eneter your zip-code in the find 
                     group form below and pick a group that best fits you needs! Don't see a group in your area? Feel free to start one!
                 </p>
             </section>
             <section className="get-group-wrapper">
-                <div className="start-group-wrapper">
+                <div className="start-group-wrapper glass-background">
+                    <h2>Create a group in your area!</h2>
                     <form onSubmit={createGroupHandler} className="create-group-form">
                         <input onChange={handleFormChange} type="text" name="group_title" className="group-name" placeholder="Name of your group" required />
                         <textarea onChange={handleFormChange} name="group_text" id="about-group" cols="30" rows="10"
                             placeholder="What is your group about?" required></textarea>
                         <input onChange={handleFormChange} type="number" name="group_zip" className="zip" placeholder="Zip Code" required />
-                        <button type="submit" className="grey-red-btn">Create Group</button>
+                        <button type="submit" className="glass-button">Create Group</button>
                     </form>
                 </div>
-                <div className="find-group-wrapper">
+                <div className="find-group-wrapper glass-background">
                     <h2>Find a group near you!</h2>
                     <form onSubmit={findGroupHandler} className="find-group-form">
                         <input type="range" className="mile-slider" max="150" min="10" value={miles} onChange={handleRange} />
                         <p>Within <span className="miles-nr">{miles}</span> miles</p>
                         <input onChange={handleZipChange} type="number" name="zip-code" placeholder="Zip Code" required />
-                        <button type="submit" className="grey-red-btn">Find a group!</button>
+                        <button type="submit" className="glass-button">Find a group!</button>
                     </form>
-                    <button className="use-location grey-red-btn" onClick={findGroupZipHandler}>Use your current location?</button>
+
+                    <button className="use-location glass-button" onClick={findGroupZipHandler}>Use your current location?</button>
                     </div>
             </section>
-        </>
+        </StyledHome>
     )
 };
+
+const StyledHome = styled.div`
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+
+    .welcome {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem;
+        p {
+            text-align: center;
+            font-size: 20px;
+        }
+    }
+    .get-group-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 3rem;
+        div {
+            width: 30rem;
+            padding: 1.5rem;
+            height: 30rem;
+            .create-group-form {
+                margin-top: 1rem;
+                height: 80%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .find-group-form {
+                display: flex;
+                flex-direction: column;
+                height: 60%;
+                justify-content: center;
+                input {
+                    margin-top: 1rem;
+                    margin-bottom: 1rem;
+                }
+                /* Input styles by Natalie:  https://codemenatalie.com/blog/classy-slider-with-pure-css/*/
+                input[type="range"] {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    background-color: transparent;
+
+                    &:focus {
+                    outline-color: #f8b195;
+                    }
+                }
+                input[type="range"]::-webkit-slider-runnable-track {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    height: 3px;
+                    background: rgb(246, 114, 128);
+                    background: -webkit-linear-gradient(
+                    left,
+                    #005bff 0%,
+                    rgba(192, 108, 132, 1) 50%,
+                    #f05454 100%
+                    );
+                    background: linear-gradient(
+                    to right,
+                    #005bff 0%,
+                    rgba(192, 108, 132, 1) 50%,
+                    #f05454 100%
+                    );
+                    filter: progid:DXImageTransform.Microsoft.gradient(
+                    startColorstr="#f67280",
+                    endColorstr="#355c7d",
+                    GradientType=1
+                    );
+                }
+
+                input[type="range"]::-moz-range-track {
+                    -moz-appearance: none;
+                    appearance: none;
+                    height: 3px;
+                    background: rgb(246, 114, 128);
+                    background: -moz-linear-gradient(
+                    left,
+                    #005bff 0%,
+                    rgba(192, 108, 132, 1) 50%,
+                    #f05454 100%
+                    );
+                    background: linear-gradient(
+                    to right,
+                    #005bff 0%,
+                    rgba(192, 108, 132, 1) 50%,
+                    #f05454 100%
+                    );
+                    filter: progid:DXImageTransform.Microsoft.gradient(
+                    startColorstr="#f67280",
+                    endColorstr="#355c7d",
+                    GradientType=1
+                    );
+                }
+                
+                input[type="range"]::-ms-track {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    height: 3px;
+                    background: rgb(246, 114, 128);
+                    background: -moz-linear-gradient(
+                    left,
+                    #005bff 0%,
+                    rgba(192, 108, 132, 1) 50%,
+                    #f05454 100%
+                    );
+                    background: -webkit-linear-gradient(
+                    left,
+                    #005bff 0%,
+                    rgba(192, 108, 132, 1) 50%,
+                    #f05454 100%
+                    );
+                    background: linear-gradient(
+                    to right,
+                    #005bff 0%,
+                    rgba(192, 108, 132, 1) 50%,
+                    #f05454 100%
+                    );
+                    filter: progid:DXImageTransform.Microsoft.gradient(
+                    startColorstr="#f67280",
+                    endColorstr="#355c7d",
+                    GradientType=1
+                    );
+                }
+
+                input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                border: 2px solid #005bff;
+                border-radius: 50%;
+                height: 20px;
+                width: 20px;
+                position: relative;
+                bottom: 8px;
+                background: #222
+                    url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png")
+                    center no-repeat;
+                background-size: 50%;
+                box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+                cursor: grab;
+                    
+                    &:active {
+                    cursor: grabbing;
+                    }
+                }
+
+
+                input[type="range"]::-moz-range-thumb {
+                    -moz-appearance: none;
+                    appearance: none;
+                    border: 2px solid #f8b195;
+                    border-radius: 50%;
+                    height: 20px;
+                    width: 20px;
+                    position: relative;
+                    bottom: 8px;
+                    background: #222
+                    url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png")
+                    center no-repeat;
+                    background-size: 50%;
+                    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+                    cursor: grab;
+                    
+                    &:active {
+                    cursor: grabbing;
+                    }
+                }
+
+                input[type="range"]::-ms-thumb {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    border: 2px solid #f8b195;
+                    border-radius: 50%;
+                    height: 20px;
+                    width: 20px;
+                    position: relative;
+                    bottom: 8px;
+                    background: #222
+                    url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png")
+                    center no-repeat;
+                    background-size: 50%;
+                    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+                    cursor: grab;
+                    
+                    &:active {
+                    cursor: grabbing;
+                    }
+                }
+            }
+        }
+    }
+    @media (max-width: 1600px) {
+        width: 65%;
+    }
+    @media (max-width: 1500px) {
+        .get-group-wrapper {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            div {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+    @media (max-width: 970px) {
+        .welcome {
+            width: 100%;
+        }
+    }
+    @media (max-width: 550px) {
+        width: 80%;
+        .get-group-wrapper {
+            div {
+                width: 25rem;
+            }
+        } 
+    }
+
+    @media (max-width: 450px) {
+        width: 90%;
+        .get-group-wrapper {
+            div {
+                width: 20rem;
+            }
+        }
+    }
+`
 
 export default MeetHome;

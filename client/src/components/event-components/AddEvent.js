@@ -8,6 +8,8 @@ import { ADD_EVENT } from '../../utils/mutations';
 // Router
 import { useParams, Link, useHistory } from 'react-router-dom';
 
+// styled comp
+import styled from 'styled-components';
 
 const AddEvent = () => {
     // State
@@ -80,17 +82,17 @@ const AddEvent = () => {
     // JSX
     if(!isAdmin) {
         return (
-            <>
+            <StyledError>
                 <h2>You are not the owner of this group!</h2>
                 <p>Want to make your own group? Go to your<Link to={`/meet/dashboard`}> dashboard!</Link></p>
-            </>
+            </StyledError>
         )
     };
 
     return (
-        <>
+        <StyledAddEvent>
             <h2>Add Event to {data.group.group_title}</h2>
-            <form onSubmit={addEventHandler} className="edit-event-form">
+            <form onSubmit={addEventHandler} className="edit-event-form glass-background">
                 <div className="form-wrapper">
                     <div className="col-1">
                         <p>Event title:</p>
@@ -106,10 +108,36 @@ const AddEvent = () => {
                         <textarea onChange={setFormData} name="event_text" id="event-info" cols="30" rows="10" required></textarea>
                     </div>
                 </div>
-                <button className="confirm-edit-event grey-red-btn" type="submit">Add Event</button>
+                <button className="confirm-edit-event glass-button" type="submit">Add Event</button>
             </form>
-        </>
+        </StyledAddEvent>
     );
 };
+
+const StyledError = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
+const StyledAddEvent = styled.div` 
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    h2 {
+        margin-top: 4rem;
+    }
+    form {
+        width: 20rem;
+        padding: 1rem;
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+    }
+`
 
 export default AddEvent;

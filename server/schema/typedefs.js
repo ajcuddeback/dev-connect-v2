@@ -127,7 +127,7 @@ const typeDefs = gql`
       event_time: String
     ): Event #done
     deleteEvent(event_id: Int!): Event #done
-    addOrder(id: Int!): Order
+    addOrder(product_name: String): Order
     updateProduct(id: Int!, quantity: Int!): Product
   }
 `;

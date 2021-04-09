@@ -1,72 +1,82 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const GROUPS_BY_ZIP = gql`
-    query groupByZip($group_zip: Int!, $miles: Int!) {
-        groupByZip(group_zip: $group_zip, miles: $miles) {
-            id
-            group_title
-            group_url
-            group_text
-            group_zip
-            users_count
-        }
+  query groupByZip($group_zip: Int!, $miles: Int!) {
+    groupByZip(group_zip: $group_zip, miles: $miles) {
+      id
+      group_title
+      group_url
+      group_text
+      group_zip
+      users_count
     }
-`
+  }
+`;
 
 export const GET_GROUP = gql`
-    query group($group_url: String!) {
-        group(group_url: $group_url) {
-            id
-            group_title
-            group_text
-            group_zip
-            users_count
-            events {
-                id
-                event_title
-                event_text
-                event_location
-                event_time
-            }
-            group_user {
-                id
-                first_name
-            }
-        }
+  query group($group_url: String!) {
+    group(group_url: $group_url) {
+      id
+      group_title
+      group_text
+      group_zip
+      users_count
+      events {
+        id
+        event_title
+        event_text
+        event_location
+        event_time
+      }
+      group_user {
+        id
+        first_name
+      }
     }
-`
+  }
+`;
 
 export const GET_ME_EVENTS = gql`
-    query {
-        me {
-            id
-            event_user {
-                id
-                event_title 
-            }
-        }
+  query {
+    me {
+      id
+      event_user {
+        id
+        event_title
+      }
     }
-`
+  }
+`;
 
 export const OWNER_GROUPS = gql`
-    query {
-        myGroups {
-            id
-            group_title
-            group_url
-        }
+  query {
+    myGroups {
+      id
+      group_title
+      group_url
     }
-`
+  }
+`;
 
 export const GET_ME_GROUPS = gql`
-    query {
-        me {
-            id
-            group_user {
-                id
-                group_title
-                group_url
-            }
-        }
+  query {
+    me {
+      id
+      group_user {
+        id
+        group_title
+        group_url
+      }
     }
-`
+  }
+`;
+export const GET_PRODUCTS = gql`
+  query {
+    products {
+      id
+      product_name
+      imgPath
+      price
+    }
+  }
+`;
