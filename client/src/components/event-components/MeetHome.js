@@ -9,10 +9,15 @@ import { useMutation } from '@apollo/react-hooks';
 import { OWNER_GROUPS } from '../../utils/queries';
 import { CREATE_GROUP } from '../../utils/mutations';
 
+import { useForm } from 'react-hook-form';
+
 // styled comp
 import styled from 'styled-components';
 
 const MeetHome = ({ miles, setMiles, setZipCode }) => {
+
+    const { register, handleSubmit, watch, formState: {errors} } = useForm();
+
     // State
     const [createGroupForm, setCreateGroupForm] = useState({group_title: '', group_text: '', group_zip: 0});
 
@@ -53,12 +58,11 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
         setMiles(event.target.value)
     };
 
-    const handleZipChange = (e) => {
-        setZipCode(e.target.value)
-    };
 
-    const findGroupHandler = (e) => {
-        e.preventDefault();
+    const findGroupHandler = (e, j) => {
+        j.preventDefault();
+
+        setZipCode(e.zipCode)
 
         history.push('/meet/groups')
     };
@@ -102,10 +106,11 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
                 </div>
                 <div className="find-group-wrapper glass-background">
                     <h2>Find a group near you!</h2>
-                    <form onSubmit={findGroupHandler} className="find-group-form">
+                    <form onSubmit={handleSubmit(findGroupHandler)} className="find-group-form">
                         <input type="range" className="mile-slider" max="150" min="10" value={miles} onChange={handleRange} />
                         <p>Within <span className="miles-nr">{miles}</span> miles</p>
-                        <input onChange={handleZipChange} type="number" name="zip-code" placeholder="Zip Code" required />
+                        <input type="number" {...register("zipCode", {minLength:5, maxLength: 5})} placeholder="Zip Code" required />
+                        {errors.zipCode && "You must enter a zip code!"}
                         <button type="submit" className="glass-button">Find a group!</button>
                     </form>
 
