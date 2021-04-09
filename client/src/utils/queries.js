@@ -99,7 +99,7 @@ export const QUERY_ALL_PRODUCTS = gql`
 `;
 
 export const QUERY_CATEGORIES = gql`
-  {
+  query {
     categories {
       id
       category_name

@@ -18,6 +18,9 @@ import MeetDashboard from "./components/event-components/MeetDashboard";
 import MyGroups from "./components/event-components/MyGroups";
 import MyEvents from "./components/event-components/MyEvents";
 
+import Home from "./components/store-components/Home";
+import Detail from "./components/store-components/Detail";
+import OrderHistory from "./components/store-components/OrderHistory";
 // Styled Component
 import GlobalStyle from "./components/GlobalStyles";
 import styled from "styled-components";
@@ -26,7 +29,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Utils
 import Auth from "./utils/auth";
-import Checkout from "./components/store-components/Checkout";
 
 // Client
 const client = new ApolloClient({
@@ -47,6 +49,7 @@ function App() {
   const [miles, setMiles] = useState(20);
   const [zipCode, setZipCode] = useState();
   const [navOpen, setNavOpen] = useState(false);
+  const [currentCategory, setCategory] = useState("");
 
   return (
     <ApolloProvider client={client}>
@@ -107,6 +110,9 @@ function App() {
                 path="/meet/admin/:groupName"
                 render={() => <GroupAdmin navOpen={navOpen} />}
               ></Route>
+              <Route exact path="/shop" component={Home} />
+              <Route exact path="/orderHistory" component={OrderHistory} />
+              <Route exact path="/products/:id" component={Detail} />
             </Switch>
           </Router>
         </>
