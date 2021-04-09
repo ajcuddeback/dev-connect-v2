@@ -285,8 +285,35 @@ const resolvers = {
 
       throw new AuthenticationError("You must be logged in!");
     },
-  },
 
+    orders: async (parent, args, context) => {
+      if (context.user.id) {
+        const orderData = await Order.findAll({
+          include: [
+            {
+              model: Product,
+              attributes: [
+                "id",
+                "product_name",
+                "imgPath",
+                "price",
+                "quantity",
+                "category_id",
+              ],
+            },
+            {
+              model: User,
+              attributes: ["id"],
+            },
+          ],
+        });
+
+        return orderData.map((data) => data.get({ plain: true }));
+      }
+
+      throw new AuthenticationError("You must be logged in!");
+    },
+  },
   // ############################# Mutations #############################
 
   Mutation: {
@@ -471,14 +498,31 @@ const resolvers = {
       throw new AuthenticationError("You must be logged in!");
     },
 
-    addOrder: async (parent, { product_name }, context) => {
+    addOrder: async (parent, { product_id }, context) => {
       if (context.user.id) {
         const user_id = context.user.id;
-        const data = await Order.addUser(product_name, user_id, {
-          Product,
+        const orderData = await Order.create({
+          product_id,
+          user_id,
+          include: [
+            {
+              model: Product,
+              attributes: [
+                " id",
+                " product_name",
+                "imgPath",
+                "price",
+                "quantity",
+                "category_id",
+              ],
+            },
+            {
+              model: User,
+              attributes: ["user_id"],
+            },
+          ],
         });
-
-        return data;
+        return orderData.get({ plain: true });
       }
 
       throw new AuthenticationError("You must be logged in!");

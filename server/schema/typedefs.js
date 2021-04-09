@@ -92,6 +92,7 @@ const typeDefs = gql`
     products(category_id: Int): [Product]
     product(id: Int!): Product
     order(id: Int!): Order
+    orders: [Order]
   }
 
   type Mutation {
@@ -127,7 +128,7 @@ const typeDefs = gql`
       event_time: String
     ): Event #done
     deleteEvent(event_id: Int!): Event #done
-    addOrder(product_name: String): Order
+    addOrder(product_id: Int!): Order
     updateProduct(id: Int!, quantity: Int!): Product
   }
 `;

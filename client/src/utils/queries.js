@@ -70,13 +70,58 @@ export const GET_ME_GROUPS = gql`
     }
   }
 `;
-export const GET_PRODUCTS = gql`
-  query {
+export const QUERY_PRODUCTS = gql`
+  query getProducts($category_id: Int) {
+    products(category_id: $category_id) {
+      id
+      product_name
+      price
+      quantity
+      imgPath
+      category_id
+    }
+  }
+`;
+
+export const QUERY_ALL_PRODUCTS = gql`
+  {
     products {
       id
       product_name
-      imgPath
       price
+      quantity
+      imgPath
+      category {
+        category_name
+      }
+    }
+  }
+`;
+
+export const QUERY_CATEGORIES = gql`
+  {
+    categories {
+      id
+      category_name
+    }
+  }
+`;
+export const QUERY_USER = gql`
+  {
+    user {
+      firstName
+      lastName
+      orders {
+        id
+        purchase_date
+        products {
+          id
+          product_name
+          price
+          quantity
+          imgPath
+        }
+      }
     }
   }
 `;

@@ -195,30 +195,35 @@ Category.hasMany(Product, {
   foreignKey: "category_id",
 });
 
-// Products belongToMany Tags (through ProductTag)
-// Product.belongsToMany(Tag, {
-//   through: ProductTag,
-//   as: "product_tags",
-//   foreignKey: "product_id",
-// });
-// Tags belongToMany Products (through ProductTag)
-// Tag.belongsToMany(Product, {
-//   through: ProductTag,
-//   as: "product_tags",
-//   foreignKey: "tag_id",
-// });
+Product.belongsToMany(User, {
+  through: Order,
+  as: "user_order",
+  foreignKey: "product_id",
+});
+User.belongsToMany(Product, {
+  through: Order,
+  as: "user_order",
+  foreignKey: "user_id",
+});
+User.hasMany(Product, {
+  foreignKey: "user_id",
+});
+
+Product.belongsTo(User, {
+  foreignKey: "user_id",
+});
+
+Order.belongsTo(Product, {
+  foreignKey: "product_id",
+});
+
 User.hasMany(Order, {
   foreignKey: "user_id",
 });
 
-// Order.hasMany(Product, {
-//   foreignKey: "product_id",
-// });
-
-// Items.belongsTo(Product, {
-//   foreignKey: "product_id",
-// });
-
+Product.hasMany(Order, {
+  foreignKey: "product_id",
+});
 Order.belongsTo(User, {
   foreignKey: "user_id",
 });
