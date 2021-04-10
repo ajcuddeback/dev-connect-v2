@@ -87,7 +87,7 @@ const typeDefs = gql`
     }
     ################# Post Query #######################
     type Post {
-        id: ID!
+        post_id: Int!
         body: String!
         author: User!
         comments: [Comment!]!
@@ -95,7 +95,7 @@ const typeDefs = gql`
 
     ################# Comment Query ###################
     type Comment {
-        id: ID!
+        comment_id: Int!
         text: String!
         author: User!
         post: Post!
@@ -132,7 +132,11 @@ const typeDefs = gql`
         deleteQuestion(question_id: Int!): Question
         addFriend(friend_id: Int!): User
         createPost(body: String!, author: ID!): Post!
+        updatePost(body:String!, post_id: Int): Post!
+        deletePost(post_id:Int): Post!
         createComment(text: String!, author: ID!, post: ID!): Comment!
+        updateComment(comment_id: Int): Comment!
+        deleteComment(comment_id: Int): Comment!
    
     }
 `

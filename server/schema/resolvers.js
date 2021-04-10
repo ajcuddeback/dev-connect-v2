@@ -258,7 +258,10 @@ const resolvers = {
 
         question: async (parent, { _id }) => {
             return Question.findOne({ _id });
-        }
+        },
+        Post: async () => {
+            return Post.find().sort({ createdAt: -1 });
+          }
     }, 
 
         // ############################# Mutations #############################
@@ -498,7 +501,23 @@ const resolvers = {
             }
           
             throw new AuthenticationError('You need to be logged in!');
-        }
+        },
+
+        ////////////////////////////////// Post /////////////////////////
+        createPost: async (parent, { post_id, body }, context) => {
+            if (context.user) {
+              const updatedPost = await Thought.findOneAndUpdate(
+                { _id: post_id },
+                { $push: { posts: { body, username: context.user.username } } },
+                { new: true, runValidators: true }
+              );
+          
+              return updatedPost
+            }
+          
+            throw new AuthenticationError('You need to be logged in!');
+          },
+
     }
 }
 
