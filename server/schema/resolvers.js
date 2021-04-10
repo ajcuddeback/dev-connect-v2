@@ -262,13 +262,7 @@ const resolvers = {
         question: async (parent, { _id }) => {
             return Question.findOne({ _id });
         },
-        createPost: async (parent, args, context) => {
-            return Post.create({
-                post_content: req.body.post_content,
-                user_id: context.user.id
-              })
 
-        },
         posts: async () => {
             return Post.findAll({
                 order: [
@@ -332,68 +326,7 @@ const resolvers = {
             }
             throw new AuthenticationError('You must be logged in!')
         },
-        updatePost: async (parent, args, context) => {
-            if (context.post.id){
-                return  Post.findOne({
-                    where: {
-                      id: req.params.id
-                    },
-                    attributes: [
-                      'id',
-                      'created_at',
-                      'post_content'
-                    ],
-                    include: [
-                      {
-                        model: Comment,
-                        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-                        include: {
-                          model: User,
-                          attributes: ['username']
-                        }
-                      },
-                      {
-                        model: User,
-                        attributes: ['username']
-                      }
-                    ]
-                  })
-            }
-            throw new AuthenticationError('You must be logged in')
-        },
-        deletePost: async (parent, args, context) => {
-            if (context.post.id) {
-                return  Post.destroy({
-                    where: {
-                      id: req.params.id
-                    }
-                  })
-            }
-        },
-        createComment: async (parent, args, context) =>
-        {
-           if (context.user.id) {
-            return Comment.create({
-                comment_text: req.body.comment_text,
-                post_id: req.body.post_id,
-                // use the id from the session
-                user_id: context.user.id
-              })
-           }
-           throw new AuthenticationError("No post found")
-
-        },
-        deleteComment: async (parent, args, context) =>{
-            if(context.comment.id){
-                return Comment.destroy({
-                    where: {
-                      id: req.params.id
-                    }
-                  })
-            }
-            throw new AuthenticationError("No comment found with this id")
-
-        },
+       
         commentsByPost: async (parent, args, context) => {
             if (context.post.id){
                 return Comment.findAll(
@@ -412,27 +345,7 @@ const resolvers = {
             }
 
         },
-        addLike: async (parent, args, context) => {
-            if (context.post.id){
-                return Like.create({
-                    post_id: req.params.id,
-                    user_id: context.user.id
-                  })
-            }
-            throw new AuthenticationError("No post to be liked")
-        },
-        removeLike: async (parent, args, context) => {
-            if (context.post.id){
-                return Like.destroy({
-                    where: {
-                      user_id: context.user.id, 
-                      post_id: req.params.id,
-                    },
-                    
-                   })
-            }
-            throw new AuthenticationError("No post to be unliked")
-        }
+       
     }, 
 
         // ############################# Mutations #############################
@@ -675,19 +588,87 @@ const resolvers = {
         },
 
         ////////////////////////////////// Post /////////////////////////
-        createPost: async (parent, { post_id, body }, context) => {
-            if (context.user) {
-              const updatedPost = await Thought.findOneAndUpdate(
-                { _id: post_id },
-                { $push: { posts: { body, username: context.user.username } } },
-                { new: true, runValidators: true }
-              );
-          
-              return updatedPost
+      
+          createPost: async (parent,  { post_content }, context) => {
+            if (context.user.id){
+                return Post.create({
+                    post_content: post_content,
+                    user_id: context.user.id
+                  })
             }
-          
-            throw new AuthenticationError('You need to be logged in!');
-          },
+
+        },
+        updatePost: async (parent, {post_id, post_content}, context) => {
+            if (context.user.id){
+                return  Post.update(
+                    {
+                        post_content
+                    },
+                   
+                   {
+                    where: {
+                        id: post_id
+                      },
+
+                   }
+                  )
+            }
+            throw new AuthenticationError('You must be logged in')
+        },
+        deletePost: async (parent, {post_id}, context) => {
+            if (context.user.id) {
+                return  Post.destroy({
+                    where: {
+                      id: post_id
+                    }
+                  })
+            }
+        },
+        createComment: async (parent, {comment_text, post_id}, context) =>
+        {
+           if (context.user.id) {
+            return Comment.create({
+                comment_text,
+                post_id
+               
+                
+              })
+           }
+           throw new AuthenticationError("No post found")
+
+        },
+        deleteComment: async (parent, {comment_id}, context) =>{
+            if(context.user.id){
+                return Comment.destroy({
+                    where: {
+                      id: comment_id
+                    }
+                  })
+            }
+            throw new AuthenticationError("No comment found with this id")
+
+        },
+        addLike: async (parent, {post_id, user_id}, context) => {
+            if (context.user.id){
+                return Like.create({
+                     post_id,
+                     user_id
+                  })
+            }
+            throw new AuthenticationError("No post to be liked")
+        },
+        removeLike: async (parent, {user_id, post_id}, context) => {
+            if (context.user.id){
+                return Like.destroy({
+                    where: {
+                      user_id, 
+                      post_id
+                    },
+                    
+                   })
+            }
+            throw new AuthenticationError("No post to be unliked")
+        }
 
     }
 }

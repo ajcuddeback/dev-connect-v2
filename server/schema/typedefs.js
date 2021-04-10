@@ -135,13 +135,13 @@ const typeDefs = gql`
         addAnswer(question_id: ID!, answer_text: String!): Question
         deleteQuestion(question_id: Int!): Question
         addFriend(friend_id: Int!): User
-        createPost(post_content: String!, user_id: Int!): Post! #done
+        createPost(post_content: String!): Post! #done
         updatePost(post_content:String!, post_id: Int): Post! #done
         deletePost(post_id:Int): Post! #done
-        createComment(comment_text: String!, user_id: Int!, post_id: Int!): Comment! #done
+        createComment(comment_text: String!, post_id: Int!): Comment! #done
         deleteComment(comment_id: Int): Comment! #done
-        addLike(user_id: Int!, post_id: Int!) #done
-        removeLike(user_id: Int, post_id: Int) #done
+        addLike(user_id: Int!, post_id: Int!): Post #done
+        removeLike(user_id: Int, post_id: Int): Post #done
    
     }
 `
