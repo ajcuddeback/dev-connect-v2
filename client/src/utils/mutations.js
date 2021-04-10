@@ -111,15 +111,7 @@ export const DELETE_QUESTION = gql`
 }
 `
 
-export const ADD_QUESTION = gql`
-    mutation addQuestion($question_id: Int!, $question_text: String!, $username: String!) {
-        addQuestion(question_id: $question_id, username: $username, question_text: $question_text) {
-            id
-            username
-            question_text
-    }
-}
-`
+
 
 // Friend Mutations
 

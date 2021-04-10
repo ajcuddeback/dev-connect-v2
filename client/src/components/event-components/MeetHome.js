@@ -62,7 +62,7 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
     const findGroupHandler = (e, j) => {
         j.preventDefault();
 
-        setZipCode(e.zipCode)
+        setZipCode(e.zipCode);
 
         history.push('/meet/groups')
     };
