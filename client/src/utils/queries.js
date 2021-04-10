@@ -74,3 +74,57 @@ export const GET_ME_GROUPS = gql`
         }
     }
 `
+
+// question and answer queries
+export const GET_QUESTIONS = gql`
+    query questions($username: String) {
+        questions {
+            id
+            question_text
+            username
+            createdAt
+            answers {
+                id
+                answer_text
+                username
+                createdAt
+            }
+        }
+    }
+    
+`
+
+export const GET_ME_QUESTIONS = gql`
+    query {
+        me {
+            id
+            questions {
+                id
+                question_text
+                username
+                createdAt
+                answers {
+                    id
+                    answer_text
+                    username
+                    createdAt
+                }
+            }
+        }
+    }
+`
+
+// friend queries
+
+export const GET_ME_FRIENDS = gql`
+    query {
+        me {
+            id
+            username
+            friends {
+                id
+                username
+            }
+        }
+    }
+`
