@@ -23,7 +23,7 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
 
     // gql
     const [ createGroup, {err} ] = useMutation(CREATE_GROUP);
-
+    console.log(err)
     // useHistory
     const history = useHistory();
 

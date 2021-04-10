@@ -1,7 +1,7 @@
 import React, {  } from 'react';
 
 // gql
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import {  GET_GROUP } from '../../../utils/queries';
 import { DELETE_EVENT } from '../../../utils/mutations';
 
@@ -11,6 +11,7 @@ const EachEventAdmin = ({ event, groupName }) => {
 
     // gql
     const [deleteEvent, {err}] = useMutation(DELETE_EVENT);
+    console.log(err);
 
     // Functions
     const handleEventDelete = async () => {

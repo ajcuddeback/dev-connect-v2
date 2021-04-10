@@ -20,6 +20,7 @@ function Login() {
     // GraphQL
     const [login, {error}] = useMutation(LOGIN_USER);
     const [addUser, {err}] = useMutation(SIGNUP_USER);
+    console.log(error, err);
 
     // State
     const [userLoginData, setUserLoginData] = useState({username: '', password: ''});

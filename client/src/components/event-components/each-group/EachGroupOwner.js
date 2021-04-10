@@ -12,7 +12,7 @@ const EachGroupOwner = ({ group }) => {
                 <div className="group-info-wrapper">
                     <h3>{group.group_title}</h3>
                 </div>
-                <div class="group-button-wrapper">
+                <div className="group-button-wrapper">
                     <Link className="glass-button" to={`/meet/admin/${group.group_url}`}>Manage Group</Link>
                 </div>
             </div>
