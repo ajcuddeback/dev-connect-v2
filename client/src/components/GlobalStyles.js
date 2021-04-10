@@ -94,7 +94,6 @@ const GlobalStyle = createGlobalStyle`
     textarea {
         padding: 5px;
         border-radius: 5px;
-        outline: none;
         border: none;
     }
 

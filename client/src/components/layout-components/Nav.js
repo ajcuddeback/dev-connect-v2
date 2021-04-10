@@ -4,7 +4,7 @@ import Auth from '../../utils/auth';
 
 import { Link } from 'react-router-dom';
 
-import logo from '../../images/red-on-trans-logo.png';
+import logo from '../../images/red-on-trans-logo.webp';
 
 import styled from 'styled-components';
 

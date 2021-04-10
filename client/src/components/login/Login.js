@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Import logo
-import logo from '../../images/red-on-trans-logo.png';
+import logo from '../../images/red-on-trans-logo.webp';
 
 // Import utils
 import { useMutation } from '@apollo/react-hooks';
