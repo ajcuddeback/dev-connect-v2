@@ -13,7 +13,10 @@ const {
     Group_Users,
     Question,
     Answer,
-    User_Friends
+    User_Friends,
+    Post,
+    Comment,
+    Like
 } = require('../models');
 const { response } = require('express');
 
@@ -259,9 +262,177 @@ const resolvers = {
         question: async (parent, { _id }) => {
             return Question.findOne({ _id });
         },
-        Post: async () => {
-            return Post.find().sort({ createdAt: -1 });
-          }
+        createPost: async (parent, args, context) => {
+            return Post.create({
+                post_content: req.body.post_content,
+                user_id: context.user.id
+              })
+
+        },
+        posts: async () => {
+            return Post.findAll({
+                order: [
+                    ['created_at', 'DESC'],
+                    
+                ],
+                include: [
+                    {
+                      model: Comment,
+                      attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                      include: {
+                        model: User,
+                        attributes: ['username']
+                      }
+                    },
+                    {
+                      model: User,
+                      attributes: ['username']
+                    },
+                    {
+                      model: Like,
+                      attributes: ['user_id', 'post_id']
+                    }
+              
+                  ]
+
+            })
+           
+          },
+        getPostByUsername: async(parent, args, context) =>{
+            if (context.user.id) {
+                return Post.findAll({
+                    where: {
+                      // use the ID from the session
+                      user_id: context.user.id
+                    },
+                    attributes: [
+                      'id',
+                      'created_at',
+                      'post_content'
+                    ],
+                    include: [
+                      {
+                        model: Comment,
+                        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                        include: {
+                          model: User,
+                          attributes: ['username']
+                        }
+                      },
+                      {
+                        model: User,
+                        attributes: ['username']
+                      },
+                      {
+                        model: Like,
+                        attributes: ['user_id', 'post_id']
+                      }
+                    ]
+                  })
+            }
+            throw new AuthenticationError('You must be logged in!')
+        },
+        updatePost: async (parent, args, context) => {
+            if (context.post.id){
+                return  Post.findOne({
+                    where: {
+                      id: req.params.id
+                    },
+                    attributes: [
+                      'id',
+                      'created_at',
+                      'post_content'
+                    ],
+                    include: [
+                      {
+                        model: Comment,
+                        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                        include: {
+                          model: User,
+                          attributes: ['username']
+                        }
+                      },
+                      {
+                        model: User,
+                        attributes: ['username']
+                      }
+                    ]
+                  })
+            }
+            throw new AuthenticationError('You must be logged in')
+        },
+        deletePost: async (parent, args, context) => {
+            if (context.post.id) {
+                return  Post.destroy({
+                    where: {
+                      id: req.params.id
+                    }
+                  })
+            }
+        },
+        createComment: async (parent, args, context) =>
+        {
+           if (context.user.id) {
+            return Comment.create({
+                comment_text: req.body.comment_text,
+                post_id: req.body.post_id,
+                // use the id from the session
+                user_id: context.user.id
+              })
+           }
+           throw new AuthenticationError("No post found")
+
+        },
+        deleteComment: async (parent, args, context) =>{
+            if(context.comment.id){
+                return Comment.destroy({
+                    where: {
+                      id: req.params.id
+                    }
+                  })
+            }
+            throw new AuthenticationError("No comment found with this id")
+
+        },
+        commentsByPost: async (parent, args, context) => {
+            if (context.post.id){
+                return Comment.findAll(
+                    {
+                        where: {
+                            // use the ID from the session
+                            post_id: context.post.id
+                          },
+                          attributes: [
+                            'id',
+                            'comment_text'
+                          ],
+
+                    }
+                )
+            }
+
+        },
+        addLike: async (parent, args, context) => {
+            if (context.post.id){
+                return Like.create({
+                    post_id: req.params.id,
+                    user_id: context.user.id
+                  })
+            }
+            throw new AuthenticationError("No post to be liked")
+        },
+        removeLike: async (parent, args, context) => {
+            if (context.post.id){
+                return Like.destroy({
+                    where: {
+                      user_id: context.user.id, 
+                      post_id: req.params.id,
+                    },
+                    
+                   })
+            }
+            throw new AuthenticationError("No post to be unliked")
+        }
     }, 
 
         // ############################# Mutations #############################

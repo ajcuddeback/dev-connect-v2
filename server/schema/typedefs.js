@@ -87,18 +87,19 @@ const typeDefs = gql`
     }
     ################# Post Query #######################
     type Post {
-        post_id: Int!
-        body: String!
-        author: User!
+        id: ID!
+        post_content: String!
+        user_id: User
         comments: [Comment!]!
+        liked_posts: [User]!
     }
 
     ################# Comment Query ###################
     type Comment {
-        comment_id: Int!
-        text: String!
-        author: User!
-        post: Post!
+        id: ID!
+        comment_text: String!
+        user_id: User!
+        post_id: Post!
     }
 
     type Query {
@@ -112,6 +113,9 @@ const typeDefs = gql`
         groupByZip(group_zip: Int!, miles: Int!): [Group] #done
         questions(username: String): [Question]
         question(_id: ID!): Question
+        posts: [Post] #done
+        commentsByPost: [Comment] #done
+        getPostByUsername: [Post] #done
     }
 
 
@@ -131,12 +135,13 @@ const typeDefs = gql`
         addAnswer(question_id: ID!, answer_text: String!): Question
         deleteQuestion(question_id: Int!): Question
         addFriend(friend_id: Int!): User
-        createPost(body: String!, author: ID!): Post!
-        updatePost(body:String!, post_id: Int): Post!
-        deletePost(post_id:Int): Post!
-        createComment(text: String!, author: ID!, post: ID!): Comment!
-        updateComment(comment_id: Int): Comment!
-        deleteComment(comment_id: Int): Comment!
+        createPost(post_content: String!, user_id: Int!): Post! #done
+        updatePost(post_content:String!, post_id: Int): Post! #done
+        deletePost(post_id:Int): Post! #done
+        createComment(comment_text: String!, user_id: Int!, post_id: Int!): Comment! #done
+        deleteComment(comment_id: Int): Comment! #done
+        addLike(user_id: Int!, post_id: Int!) #done
+        removeLike(user_id: Int, post_id: Int) #done
    
     }
 `
