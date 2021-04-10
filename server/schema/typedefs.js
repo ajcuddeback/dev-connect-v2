@@ -85,6 +85,21 @@ const typeDefs = gql`
         user_id: Int
         friend_id: Int
     }
+    ################# Post Query #######################
+    type Post {
+        id: ID!
+        body: String!
+        author: User!
+        comments: [Comment!]!
+    }
+
+    ################# Comment Query ###################
+    type Comment {
+        id: ID!
+        text: String!
+        author: User!
+        post: Post!
+    }
 
     type Query {
         me: User #done
@@ -98,6 +113,7 @@ const typeDefs = gql`
         questions(username: String): [Question]
         question(_id: ID!): Question
     }
+
 
     type Mutation {
         login(username: String!, password: String!): Auth #done
@@ -115,6 +131,9 @@ const typeDefs = gql`
         addAnswer(question_id: ID!, answer_text: String!): Question
         deleteQuestion(question_id: Int!): Question
         addFriend(friend_id: Int!): User
+        createPost(body: String!, author: ID!): Post!
+        createComment(text: String!, author: ID!, post: ID!): Comment!
+   
     }
 `
 
