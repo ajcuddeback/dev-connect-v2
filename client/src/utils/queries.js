@@ -133,6 +133,8 @@ export const GET_POSTS = gql`
         posts {
             id
             post_content
+            createdAt
+            username
             comments{
                 id
                 comment_text
