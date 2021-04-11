@@ -17,6 +17,8 @@ import AddEvent from './components/event-components/AddEvent';
 import MeetDashboard from './components/event-components/MeetDashboard';
 import MyGroups from './components/event-components/MyGroups';
 import MyEvents from './components/event-components/MyEvents';
+import HomePage from './components/post-component/Home';
+import SingleUser from './components/post-component/Dashboard';
 
 // Styled Component
 import GlobalStyle from './components/GlobalStyles';
@@ -61,6 +63,7 @@ function App() {
               <Route exact path='/meet/groups' render={() => (
                 <ZipGroups miles={miles} zipCode={zipCode} navOpen={navOpen} />
               )}  ></Route>
+              
               <Route exact path='/meet/dashboard' component={MeetDashboard}></Route>
               <Route exact path='/meet/my-groups' component={MyGroups}></Route>
               <Route exact path='/meet/my-events' component={MyEvents}></Route>
@@ -72,6 +75,8 @@ function App() {
               <Route exact path='/meet/admin/:groupName' render={() => (
                 <GroupAdmin navOpen={navOpen} />
               )}></Route>
+              <Route exact path='/' component={HomePage}></Route>
+              <Route exact path='profile/userId' component={SingleUser}></Route>
               
             </Switch>
           </Router>
