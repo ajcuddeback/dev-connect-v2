@@ -128,3 +128,40 @@ export const GET_ME_FRIENDS = gql`
         }
     }
 `
+export const GET_POSTS = gql`
+    query {
+        posts {
+            id
+            post_content
+            comments{
+                id
+                comment_text
+            }
+            {
+            liked_posts{
+                user_id
+                post_id
+                }
+            }
+        }
+    }
+`
+export const COMMENT_BY_POST = gql`
+    query {
+        commentsByPost {
+            id
+            comment_text
+        }
+    }
+`
+
+export const GET_POST_BY_ID = gql`
+    query {
+        getPostById {
+            id 
+            post_content
+        }
+    }
+
+
+`
