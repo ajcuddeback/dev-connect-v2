@@ -2,34 +2,65 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { pluralize } from "../../../utils/helpers";
 import styled from "styled-components";
+import "gestalt/dist/gestalt.css";
+import { Box, Image, Text, Card, Button } from "gestalt";
 
-function ProductItem(item) {
-  const { imgPath, product_name, id, price, quantity } = item;
-
+const ProductItem = ({ image, product_name, id, price, quantity }) => {
+  console.log(image);
   return (
-    <StyledItem>
-      <div className="card px-1 py-1">
-        <Link to={`/products/${id}`}>
-          <img alt={product_name} src={`/images/${imgPath}`} />
-          <p>{product_name}</p>
-        </Link>
-        <div>
-          <div>
-            {quantity} {pluralize("item", quantity)} in stock
-          </div>
-          <span>${price}</span>
-        </div>
-        <button>Add to cart</button>
-      </div>
-    </StyledItem>
-  );
-}
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      direction="column"
+    >
+      <Box key={id} margin={2} width={200}>
+        <Card
+          image={
+            <Box height={200} width={200}>
+              <Image
+                alt={product_name}
+                naturalWidht={1}
+                naturalHeight={1}
+                src={`/images/${image}`}
+              />
+            </Box>
+          }
+        >
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            direction="column"
+          >
+            <Text bold size="xl">
+              {product_name}
+            </Text>
+            <Text>
+              <Link to={`/products/${id}`}> See Deatils</Link>
+            </Text>
 
-const StyledItem = styled.div`
-  display: flex;
-  height: 100vh;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`;
+            <Text>
+              {quantity} {pluralize("item", quantity)} in stock
+            </Text>
+
+            <Text bold size="xl" color="watermelon">
+              ${price}
+            </Text>
+          </Box>
+
+          <Button color="blue" text="Add to cart"></Button>
+        </Card>
+      </Box>
+    </Box>
+  );
+};
+
+// const StyledItem = styled.div`
+//   /* display: flex;
+//   height: 100vh;
+//   width: 100%;
+//   justify-content: center; */
+//   align-items: center;
+// `;
 export default ProductItem;

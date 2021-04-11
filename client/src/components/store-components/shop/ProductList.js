@@ -1,14 +1,17 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
+// import styled from "styled-components";
+import "gestalt/dist/gestalt.css";
+import { Box, Heading, Card } from "gestalt";
 
 import ProductItem from "./ProductItem";
 import { QUERY_PRODUCTS } from "../../../utils/queries";
-import spinner from "../../../assets/spinner.gif";
 
-function ProductList({ currentCategory }) {
+const ProductList = ({ currentCategory }) => {
   const { loading, data } = useQuery(QUERY_PRODUCTS);
-
-  const products = data?.products || [];
+  console.log(data);
+  const products = data?.allProducts || [];
+  console.log(products);
 
   function filterProducts() {
     if (!currentCategory) {
@@ -16,15 +19,39 @@ function ProductList({ currentCategory }) {
     }
 
     return products.filter(
-      (product) => product.category_id === currentCategory
+      (product) => product.category.id === currentCategory
+    );
+  }
+
+  if (loading) {
+    return (
+      <>
+        <h2>Loading...</h2>
+        <div className="loader"></div>
+      </>
     );
   }
 
   return (
-    <div className="my-2">
-      <h2>Our Products:</h2>
+    // <StyledItem>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="start"
+      marginTop={4}
+      direction="column"
+    >
       {products.length ? (
-        <div className="flex-row">
+        <Box
+          dangerouslySetInlineStyle={{
+            __style: { backgroundColor: "#bdcdd9" },
+          }}
+          wrap
+          shape="rounded"
+          display="flex"
+          justifyContent="center"
+          padding="4"
+        >
           {filterProducts().map((product) => (
             <ProductItem
               key={product.id}
@@ -35,13 +62,20 @@ function ProductList({ currentCategory }) {
               quantity={product.quantity}
             />
           ))}
-        </div>
+        </Box>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <Heading>You haven't added any products yet!</Heading>
       )}
-      {loading ? <img src={spinner} alt="loading" /> : null}
-    </div>
+    </Box>
+    // </StyledItem>
   );
-}
+};
+// const StyledItem = styled.div`
+//   display: flex;
+//   height: 100vh;
+//   width: 100%;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 export default ProductList;

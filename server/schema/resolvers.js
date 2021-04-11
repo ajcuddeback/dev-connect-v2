@@ -249,17 +249,18 @@ const resolvers = {
       }
       throw new AuthenticationError("You must be logged in!");
     },
-    products: async (parent, { category_id }, context) => {
+    allProducts: async (parent, args, context) => {
       if (context.user.id) {
-        const data = await Product.findAll({
-          where: {
-            id: category_id,
-          },
+        const productData = await Product.findAll({
+          include: [
+            {
+              model: Category,
+              attributes: ["id", "category_name"],
+            },
+          ],
         });
-
-        return data;
+        return productData.map((data) => data.get({ plain: true }));
       }
-
       throw new AuthenticationError("You must be logged in!");
     },
 

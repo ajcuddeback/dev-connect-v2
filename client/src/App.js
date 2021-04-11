@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // Apollo
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from "apollo-boost";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Components
 // Events
@@ -24,8 +25,6 @@ import OrderHistory from "./components/store-components/OrderHistory";
 // Styled Component
 import GlobalStyle from "./components/GlobalStyles";
 import styled from "styled-components";
-
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Utils
 import Auth from "./utils/auth";
@@ -49,7 +48,6 @@ function App() {
   const [miles, setMiles] = useState(20);
   const [zipCode, setZipCode] = useState();
   const [navOpen, setNavOpen] = useState(false);
-  const [currentCategory, setCategory] = useState("");
 
   return (
     <ApolloProvider client={client}>

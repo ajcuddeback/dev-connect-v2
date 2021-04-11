@@ -69,7 +69,8 @@ const typeDefs = gql`
     imgPath: String
     price: Int
     quantity: Int
-    category_id: Int
+
+    category: Category
   }
 
   type Order {
@@ -89,10 +90,11 @@ const typeDefs = gql`
     event(event_id: Int!): Event #done
     groupByZip(group_zip: Int!, miles: Int!): [Group] #done
     categories: [Category]
-    products(category_id: Int): [Product]
+
     product(id: Int!): Product
     order(id: Int!): Order
     orders: [Order]
+    allProducts: [Product]
   }
 
   type Mutation {

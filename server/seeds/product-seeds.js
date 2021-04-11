@@ -3,28 +3,28 @@ const { Product } = require("../models");
 const products = [
   {
     product_name: "Branded T-Shirt in white",
-    imgPath: "/images/White_TShirt.jpg",
+    imgPath: "White_TShirt.jpg",
     price: 30.99,
     quantity: 14,
     category_id: 1,
   },
   {
     product_name: "Branded Sweatshirt in white",
-    imgPath: "/images/Sweatshirt.png",
+    imgPath: "Sweatshirt.png",
     price: 50.99,
     quantity: 22,
     category_id: 1,
   },
   {
     product_name: "Running Sneakers in white",
-    imgPath: "/images/Running_sneakers.jpg",
+    imgPath: "Running_sneakers.jpg",
     price: 90,
     quantity: 25,
     category_id: 3,
   },
   {
     product_name: "Running Sneakers in black",
-    imgPath: "/images/Running_sneaker.jpg",
+    imgPath: "Running_sneaker.jpg",
     price: 90,
     quantity: 25,
     category_id: 3,
@@ -32,14 +32,14 @@ const products = [
 
   {
     product_name: "Branded coffee mug white",
-    imgPath: "/images/Coffee_Mug.jpg",
+    imgPath: "Coffee_Mug.jpg",
     price: 20.99,
     quantity: 22,
     category_id: 2,
   },
   {
     product_name: "Branded water bottle white",
-    imgPath: "/images/Water_Bottle.jpg",
+    imgPath: "Water_Bottle.jpg",
     price: 10.99,
     quantity: 22,
     category_id: 2,

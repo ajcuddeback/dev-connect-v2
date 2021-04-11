@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { QUERY_PRODUCTS } from "../../utils/queries";
 import spinner from "../../assets/spinner.gif";
 
-function Detail() {
+const Detail = () => {
   const { id } = useParams();
 
   const [currentProduct, setCurrentProduct] = useState({});
@@ -43,6 +43,6 @@ function Detail() {
       {loading ? <img src={spinner} alt="loading" /> : null}
     </>
   );
-}
+};
 
 export default Detail;

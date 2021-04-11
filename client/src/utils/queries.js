@@ -70,28 +70,17 @@ export const GET_ME_GROUPS = gql`
     }
   }
 `;
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category_id: Int) {
-    products(category_id: $category_id) {
-      id
-      product_name
-      price
-      quantity
-      imgPath
-      category_id
-    }
-  }
-`;
 
-export const QUERY_ALL_PRODUCTS = gql`
-  {
-    products {
+export const QUERY_PRODUCTS = gql`
+  query {
+    allProducts {
       id
-      product_name
       price
-      quantity
+      product_name
       imgPath
+      quantity
       category {
+        id
         category_name
       }
     }
