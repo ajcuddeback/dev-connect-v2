@@ -120,3 +120,69 @@ export const ADD_FRIEND = gql`
     }
 }
 `
+
+//Post Mutations
+
+export const CREATE_POST =gql`
+    mutation createPost($post_content: String!){
+        createPost(post_content: $post_content){
+            id
+            post_content
+        }
+    }
+`
+export const UPDATE_POST = gql`
+    mutation updatePost($post_content:String!, $post_id: Int){
+        updatePost((post_content:$post_content, post_id: $post_id){
+            id
+            post_content
+        }
+
+    }
+`
+export const DELETE_POST = gql`
+    mutation deletePost($post_id: Int)
+        deletePost(post_id:$post_id){
+            id
+            post_content
+
+        }
+        
+`
+//Comment Mutations
+
+export const CREATE_COMMENT = gql`
+    mutation createComment($comment_text:String!, $post_id:Int){
+        createComment(comment_text:$createComment, post_id:$post_id){
+            id
+            comment_text
+            post_id
+        }
+    }
+`
+export const DELETE_COMMENT = gql`
+    mutation deleteComment($comment_id:Int){
+        deleteComment(comment_id:$comment_id){
+            id
+        }
+    }
+`
+//Like Mutations
+export const ADD_LIKE = gql`
+    mutation addLike($user_id: Int, $post_id){
+        addLike(user_id:$user_id, post_id:$post_id){
+            user_id
+            post_id
+
+        }
+    }
+`
+export const REMOVE_LIKE = gql`
+    mutation removeLike($user_id: Int, $post_id){
+        removeLike(user_id:$user_id, post_id:$post_id){
+            user_id
+            post_id
+
+        }
+    }
+`

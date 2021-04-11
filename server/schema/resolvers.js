@@ -15,8 +15,9 @@ const {
     Answer,
     User_Friends,
     Post,
-    Comment,
-    Like
+    Like,
+    Comment
+    
 } = require('../models');
 const { response } = require('express');
 
@@ -264,35 +265,35 @@ const resolvers = {
         },
 
         posts: async () => {
-            return Post.findAll({
-                order: [
-                    ['created_at', 'DESC'],
-                    
-                ],
+            const postData = await Post.findAll({
+                
                 include: [
                     {
                       model: Comment,
                       attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                       include: {
                         model: User,
-                        attributes: ['username']
+                        attributes: ['id', 'username']
                       }
                     },
                     {
                       model: User,
-                      attributes: ['username']
+                      attributes: ['id','username'],
+                      as: 'user'
                     },
                     {
-                      model: Like,
-                      attributes: ['user_id', 'post_id']
+                        model: User,
+                        attributes: ["id", "username"],
+                        through: Like,
+                        as: "liked_posts"
                     }
-              
                   ]
-
             })
+
+            return postData.map(data => data.get({plain: true}))
            
           },
-        getPostByUsername: async(parent, args, context) =>{
+        getPostById: async(parent, args, context) =>{
             if (context.user.id) {
                 return Post.findAll({
                     where: {
@@ -591,11 +592,15 @@ const resolvers = {
       
           createPost: async (parent,  { post_content }, context) => {
             if (context.user.id){
-                return Post.create({
+                const postData = await Post.create({
                     post_content: post_content,
                     user_id: context.user.id
-                  })
+                })
+
+                return postData.get({plain: true})
             }
+
+            throw new AuthenticationError('You must be logged in')
 
         },
         updatePost: async (parent, {post_id, post_content}, context) => {
