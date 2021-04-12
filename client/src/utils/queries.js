@@ -111,7 +111,6 @@ export const GET_ME_QUESTIONS = gql`
 `
 
 // friend queries
-
 export const GET_ME_FRIENDS = gql`
     query {
         me {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const AnswerList = ({ answers }) => {
   return (
@@ -12,9 +11,6 @@ const AnswerList = ({ answers }) => {
             answers.map(answer => (
                 <p className="pill mb-3" key={answer.id}>
                 {answer.answer_text} {'// '}
-                <Link to={`/profile/${answer.username}`} style={{ fontWeight: 700 }}>
-                    {answer.username} on {answer.createdAt}
-                </Link>
                 </p>
             ))}
         </div>

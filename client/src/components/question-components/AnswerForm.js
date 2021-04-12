@@ -44,11 +44,11 @@ const AnswerForm = ({ question_id }) => {
                     <textarea
                     placeholder="Provide an answer..."
                     value={answer_text}
-                    className="form-input col-12 col-md-9"
+                    className="form-input col-12"
                     onChange={handleChange}
                     ></textarea>
             
-                    <button className="btn col-12 col-md-3" type="submit">
+                    <button className="btn col-12" type="submit">
                     Submit
                     </button>
                 </form>

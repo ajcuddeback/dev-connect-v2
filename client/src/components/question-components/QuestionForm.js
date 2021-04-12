@@ -53,15 +53,15 @@ const QuestionForm = ({ questions }) => {
             {error && <span className="ml-2">Something went wrong...</span>}
         </p>
         <div className="glass-background p-4">
-            <form className="flex-row justify-center justify-space-between-md align-stretch"
+            <form className="flex-row justify-center justify-space-around-md align-stretch"
                 onSubmit={handleFormSubmit}>        
             <textarea
                 placeholder="I have a question..."
                 value={question_text}
-                className="form-input col-12 col-md-9"
+                className="form-input col-12"
                 onChange={handleChange}
             ></textarea>
-                <button className="btn col-12 col-md-3 glass-button" type="submit">
+                <button className="btn col-12 glass-button" type="submit">
                 Submit
                 </button>
             </form>

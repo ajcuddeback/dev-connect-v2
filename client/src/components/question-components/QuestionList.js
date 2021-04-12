@@ -13,13 +13,6 @@ const QuestionList = ({ questions }) => {
                 questions.map(question => (
                 <div key={question.id} className="card mb-3">
                     <p className="card-header">
-                    <Link
-                        to={`/profile/${question.username}`}
-                        style={{ fontWeight: 700 }}
-                        className="text-light"
-                    >
-                        {question.username}
-                    </Link>{' '}
                     question on {question.createdAt}
                     </p>
                     <div className="card-body">
