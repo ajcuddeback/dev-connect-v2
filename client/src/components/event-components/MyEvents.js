@@ -35,7 +35,7 @@ const MyEvents = () => {
         } else {
           seteventData(true)
         }
-      }, [data])
+      }, [data, loading])
 
     // JSX
     if(loading) {
@@ -61,7 +61,7 @@ const MyEvents = () => {
             <h2>{username}'s Events</h2>
             <div className="events">
                 <ol>
-                    {data.me.event_user.map(event => (<EachMyEvents event={event} />))}
+                    {data.me.event_user.map(event => (<EachMyEvents event={event} key={event.id} />))}
                 </ol>
             </div>
         </StyledEvents>

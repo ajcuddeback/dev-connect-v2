@@ -40,6 +40,24 @@ const GlobalStyle = createGlobalStyle`
         
     }
 
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+    background:  linear-gradient( #4765ab,  #28bad6); 
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background:#f05454; 
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: #eb2222; 
+    }
+
     button {
         cursor: pointer;
     }
@@ -76,7 +94,6 @@ const GlobalStyle = createGlobalStyle`
     textarea {
         padding: 5px;
         border-radius: 5px;
-        outline: none;
         border: none;
     }
 

@@ -29,6 +29,7 @@ const EditEvent = () => {
             variables: { group_url: groupName }
         }],
     });
+    console.log(err);
 
     useEffect(() => {
         if(userData.loading || loading) {
@@ -40,8 +41,9 @@ const EditEvent = () => {
             myGroups.map(group => {
                 if(group.id === data.group.id) {
                     setIsAdmin(true);
-                    return;
+                    return true;
                 }
+                return false;
             });
 
             setConfirmData(true);
@@ -50,7 +52,7 @@ const EditEvent = () => {
             const event = myEvents.filter(event => event.id === eventId);
             setEventData(event[0]);
         }
-    }, [data, userData]);
+    }, [data, userData, loading, eventId]);
 
     // Functions
     const setFormData = (e) => {

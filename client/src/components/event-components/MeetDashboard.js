@@ -23,7 +23,6 @@ function MeetDashboard() {
 
   const userData = Auth.getProfile();
   const username = userData.data.username;
-  console.log(data)
   useEffect(() => {
     if(loading) {
       return;
@@ -34,7 +33,7 @@ function MeetDashboard() {
     } else {
       setGroupData(true)
     }
-  }, [data])
+  }, [data, loading])
   
 
   // JSX
@@ -42,7 +41,7 @@ function MeetDashboard() {
     return (
       <StyledLoader>
           <h2>Loading...</h2>
-          <div class="loader"></div>
+          <div className="loader"></div>
       </StyledLoader>
     )
   }
@@ -64,7 +63,7 @@ function MeetDashboard() {
       <h3>Please choose a group you would like to manage</h3>
       <div className="dashboard-groups">
         <ol>
-          {data.myGroups.map(group => (<EachGroupOwner group={group} />))}
+          {data.myGroups.map(group => (<EachGroupOwner group={group} key={group.id} />))}
         </ol>
       </div>
       <div className="create-group-btn">

@@ -21,6 +21,8 @@ const GroupHome = () => {
     const [dataGroup, setDataGroup] = useState(false);
     const [addUserGroup, {err}] = useMutation(ADD_USER_GROUP);
 
+    console.log(err);
+
     // Get the groupName from params
     let { groupName } = useParams();
     // use query to get the groups data
@@ -50,14 +52,11 @@ const GroupHome = () => {
                 return;
             }
             const groupUsers = data.group.group_user;
-            console.log(groupUsers)
             groupUsers.forEach(user => {
                 const userid = Auth.getProfile().data.id;
-                console.log(user.id, userid)
                 
                 if(parseInt(user.id) === userid) {
                     if(!isMember) {
-                        console.log('yes')
                         setIsMemeber(true);
                         return;
                     }
@@ -69,7 +68,6 @@ const GroupHome = () => {
                 }
             });
 
-            console.log(dataGroup)
             if(!dataGroup) {
                 setDataGroup(true);
                 
@@ -109,7 +107,7 @@ const GroupHome = () => {
                 </div>
                 <div className="group-event-wrapper">
                     <ol>
-                        {data.group.events.map(event => (<EachEvent event={event} isMember={isMember} ></EachEvent>))}
+                        {data.group.events.map(event => (<EachEvent event={event} isMember={isMember} key={event.id} ></EachEvent>))}
                     </ol>
                 </div>
             </section>
