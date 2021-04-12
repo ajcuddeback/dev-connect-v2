@@ -2,16 +2,15 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 // import styled from "styled-components";
 import "gestalt/dist/gestalt.css";
-import { Box, Heading, Card } from "gestalt";
+import { Box, Heading } from "gestalt";
 
 import ProductItem from "./ProductItem";
 import { QUERY_PRODUCTS } from "../../../utils/queries";
 
-const ProductList = ({ currentCategory }) => {
+const ProductList = ({ currentCategory, setCartItems, cartItems }) => {
   const { loading, data } = useQuery(QUERY_PRODUCTS);
-  console.log(data);
+
   const products = data?.allProducts || [];
-  console.log(products);
 
   function filterProducts() {
     if (!currentCategory) {
@@ -50,7 +49,7 @@ const ProductList = ({ currentCategory }) => {
           shape="rounded"
           display="flex"
           justifyContent="center"
-          padding="4"
+          padding={4}
         >
           {filterProducts().map((product) => (
             <ProductItem
@@ -60,6 +59,8 @@ const ProductList = ({ currentCategory }) => {
               product_name={product.product_name}
               price={product.price}
               quantity={product.quantity}
+              setCartItems={setCartItems}
+              cartItems={cartItems}
             />
           ))}
         </Box>

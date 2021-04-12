@@ -4,34 +4,34 @@ import { QUERY_CATEGORIES } from "../../../utils/queries";
 import "gestalt/dist/gestalt.css";
 import { Box, Heading, Button } from "gestalt";
 
-function CategoryMenu({ setCategory }) {
+function CategoryMenu({ setCurrentCategory }) {
   const { data: categoryData } = useQuery(QUERY_CATEGORIES);
   const categories = categoryData?.categories || [];
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="start">
-      <Heading color="mignight">Choose a Category:</Heading>
+    <Box display="flex" margin={2} justifyContent="center" alignItems="center">
+      <Heading
+        color="midnight"
+        size="md"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        Filters:
+      </Heading>
       {categories.map((item) => (
-        <Box>
-          <Box
-            display="flex"
-            alignItems="sart"
-            justifyContent="center"
-            marginTop={2}
-            padding={1}
-          >
-            <Button
-              color="blue"
-              text={item.category_name}
-              key={item.id}
-              onClick={() => {
-                setCategory(item.id);
-              }}
-            >
-              {item.category_name}
-            </Button>
-          </Box>
-        </Box>
+        <Button
+          text="small"
+          padding={5}
+          color="blue"
+          text={item.category_name}
+          key={item.id}
+          onClick={() => {
+            setCurrentCategory(item.id);
+          }}
+        >
+          {item.category_name}
+        </Button>
       ))}
     </Box>
   );

@@ -304,7 +304,7 @@ const resolvers = {
             },
             {
               model: User,
-              attributes: ["id"],
+              attributes: ["id", "username"],
             },
           ],
         });

@@ -6,7 +6,8 @@ import "gestalt/dist/gestalt.css";
 import { Box, Heading, Card } from "gestalt";
 
 const Home = () => {
-  const [currentCategory, setCategory, cartItems] = useState("");
+  const [currentCategory, setCurrentCategory] = useState("");
+  const [cartItems, setCartItems] = useState([]);
 
   return (
     <Box
@@ -15,10 +16,19 @@ const Home = () => {
       alignItems="center"
       marginTop={4}
       direction="column"
+      dangerouslySetInlineStyle={{
+        __style: {
+          flexWrap: "wrap-reverse",
+        },
+      }}
     >
-      <CategoryMenu setCategory={setCategory} />
+      <CategoryMenu setCurrentCategory={setCurrentCategory} />
       <Box display="flex" justifyContent="around"></Box>
-      <ProductList currentCategory={currentCategory} />
+      <ProductList
+        currentCategory={currentCategory}
+        setCartItems={setCartItems}
+        cartItems={cartItems}
+      />
       <Box display="flex" justifyContent="around"></Box>
       <Cart cartItems={cartItems} />
     </Box>
