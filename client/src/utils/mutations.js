@@ -111,8 +111,6 @@ export const DELETE_QUESTION = gql`
 }
 `
 
-
-
 // Friend Mutations
 
 export const ADD_FRIEND = gql`

@@ -30,7 +30,7 @@ function Nav({navOpen, setNavOpen}) {
                     <ul>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>Feed</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet`}>Meet</Link></li>
-                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>AskDevs</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/askDevs`}>AskDevs</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>Shop</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/dashboard`}>Meet Up Dashboard</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-groups`}>My Groups</Link></li>

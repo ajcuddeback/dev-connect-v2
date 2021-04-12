@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Apollo
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -18,11 +20,12 @@ import MeetDashboard from './components/event-components/MeetDashboard';
 import MyGroups from './components/event-components/MyGroups';
 import MyEvents from './components/event-components/MyEvents';
 
+// Question Components
+import AskDevsHome from './components/question-components/AskDevsHome';
+
 // Styled Component
 import GlobalStyle from './components/GlobalStyles';
 import styled from 'styled-components';
-
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 // Utils
 import Auth from './utils/auth'
@@ -62,6 +65,7 @@ function App() {
                 <ZipGroups miles={miles} zipCode={zipCode} navOpen={navOpen} />
               )}  ></Route>
               <Route exact path='/meet/dashboard' component={MeetDashboard}></Route>
+              <Route exact path='/askDevs' component={AskDevsHome}></Route>
               <Route exact path='/meet/my-groups' component={MyGroups}></Route>
               <Route exact path='/meet/my-events' component={MyEvents}></Route>
               <Route exact path='/meet/groups/:groupName' render={() => (
@@ -72,7 +76,6 @@ function App() {
               <Route exact path='/meet/admin/:groupName' render={() => (
                 <GroupAdmin navOpen={navOpen} />
               )}></Route>
-              
             </Switch>
           </Router>
             
