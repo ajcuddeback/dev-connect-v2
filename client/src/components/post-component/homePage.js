@@ -15,9 +15,9 @@ function Home(){
             <div className="postWrapper">
                 <PostForm/>
                 {
-                    data.map((p) => (
-                        <Post key = {p.id} post={p}/>
-                    ))
+                    // this.data.map((p) => (
+                    //     <Post key = {p.id} post={p}/>
+                    // ))
                 }
 
             </div>

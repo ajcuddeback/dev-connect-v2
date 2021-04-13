@@ -17,7 +17,7 @@ import AddEvent from './components/event-components/AddEvent';
 import MeetDashboard from './components/event-components/MeetDashboard';
 import MyGroups from './components/event-components/MyGroups';
 import MyEvents from './components/event-components/MyEvents';
-import HomePage from './components/post-component/Home';
+import HomePage from './components/post-component/homePage';
 import SingleUser from './components/post-component/Dashboard';
 
 
