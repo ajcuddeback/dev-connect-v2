@@ -34,6 +34,21 @@ function ProductItem({
     }
   }
   console.log(image);
+  function removeFromCart() {
+    setCartItems((cartItems) => {
+      const indexOfItemToRemove = cartItems.findIndex(
+        (cartItem) => cartItem.id === cartItems.id
+      );
+      if (indexOfItemToRemove === -1) {
+        return cartItems;
+      }
+
+      return [
+        ...cartItems.slice(0, indexOfItemToRemove),
+        ...cartItems.slice(indexOfItemToRemove + 1),
+      ];
+    });
+  }
 
   return (
     <Box
@@ -76,8 +91,35 @@ function ProductItem({
               ${price}
             </Text>
           </Box>
-
-          <Button onClick={addToCart} color="blue" text="Add to cart"></Button>
+          <Box flex="grow" paddingX={3} paddingY={3}>
+            <Box
+              justifyContent="end"
+              marginStart={-1}
+              marginEnd={-1}
+              marginTop={-1}
+              marginBottom={-1}
+              display="flex"
+              wrap
+            >
+              <Box paddingX={1} paddingY={1}>
+                <Button
+                  size="sm"
+                  inline
+                  onClick={addToCart}
+                  color="blue"
+                  text="To Cart"
+                ></Button>{" "}
+              </Box>
+              <Box paddingX={1} paddingY={1}>
+                <Button
+                  text="Remove"
+                  color="watermelon"
+                  onClick={removeFromCart}
+                  size="sm"
+                />
+              </Box>
+            </Box>
+          </Box>
         </Card>
       </Box>
     </Box>
