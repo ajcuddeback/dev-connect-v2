@@ -66,6 +66,7 @@ const typeDefs = gql`
         answer_text: String
         createdAt: String
         user_id: Int
+        user: User
         question_id: Int
     }
 
@@ -75,6 +76,7 @@ const typeDefs = gql`
         question_text: String
         createdAt: String
         user_id: Int
+        user: User
         answers: [Answer]
     }
 
@@ -96,7 +98,7 @@ const typeDefs = gql`
         event(event_id: Int!): Event #done
         groupByZip(group_zip: Int!, miles: Int!): [Group] #done
         questions(username: String): [Question]
-        question(_id: ID!): Question
+        question(question_id: Int!): Question
     }
 
     type Mutation {

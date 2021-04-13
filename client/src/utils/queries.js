@@ -82,10 +82,13 @@ export const GET_QUESTIONS = gql`
             id
             question_text
             createdAt
-            username
-            answers {
+            user_id
+            user{
                 id
                 username
+            }
+            answers {
+                id
                 answer_text
             }
         }
@@ -100,12 +103,20 @@ export const GET_ME_QUESTIONS = gql`
             questions {
                 id
                 question_text
-                username
                 createdAt
+                user_id
+                user{
+                    id
+                    username
+                }
                 answers {
                     id
                     answer_text
-                    username
+                    user_id
+                    user{
+                        id
+                        username
+                    }
                     createdAt
                 }
             }
@@ -121,6 +132,7 @@ export const GET_ME_FRIENDS = gql`
             username
             friends {
                 id
+                user_id
                 username
             }
         }

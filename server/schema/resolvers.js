@@ -246,6 +246,10 @@ const resolvers = {
                         {
                             model: Answer,
                             attributes: ["id","answer_text"]
+                        },
+                        {
+                            model: User,
+                            attributes: ["id", "username"]
                         }
                     ]
                 })
@@ -256,8 +260,28 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in!')
         },
 
-        question: async (parent, { _id }) => {
-            return Question.findOne({ _id });
+        question: async (parent, { question_id }, context) => {
+            if(context.user.id) {
+                const data = await Question.findOne({
+                    where: {
+                        id: question_id
+                    },
+                    include: [
+                        {
+                            model: Answer,
+                            attributes: ["id","answer_text"]
+                        },
+                        {
+                            model: User,
+                            attributes: ["id", "username"]
+                        }
+                    ]
+                })
+
+                return data;
+            }
+
+            throw new AuthenticationError('You must be logged in!')
         }
     }, 
 
@@ -429,7 +453,13 @@ const resolvers = {
                 const userId = context.user.id;
                 const question = await Question.create({
                     question_text: question_text,
-                    user_id: userId
+                    user_id: userId,
+                    include: [
+                        {
+                            model: User,
+                            attributes: ['username']
+                        }
+                    ]
                 })
                 
                 return question.get({plain: true});;
