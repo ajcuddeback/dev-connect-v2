@@ -9,16 +9,21 @@ import { useMutation } from '@apollo/react-hooks';
 import { OWNER_GROUPS } from '../../utils/queries';
 import { CREATE_GROUP } from '../../utils/mutations';
 
+import { useForm } from 'react-hook-form';
+
 // styled comp
 import styled from 'styled-components';
 
 const MeetHome = ({ miles, setMiles, setZipCode }) => {
+
+    const { register, handleSubmit, watch, formState: {errors} } = useForm();
+
     // State
     const [createGroupForm, setCreateGroupForm] = useState({group_title: '', group_text: '', group_zip: 0});
 
     // gql
     const [ createGroup, {err} ] = useMutation(CREATE_GROUP);
-
+    console.log(err)
     // useHistory
     const history = useHistory();
 
@@ -53,12 +58,11 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
         setMiles(event.target.value)
     };
 
-    const handleZipChange = (e) => {
-        setZipCode(e.target.value)
-    };
 
-    const findGroupHandler = (e) => {
-        e.preventDefault();
+    const findGroupHandler = (e, j) => {
+        j.preventDefault();
+
+        setZipCode(e.zipCode);
 
         history.push('/meet/groups')
     };
@@ -93,19 +97,20 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
                 <div className="start-group-wrapper glass-background">
                     <h2>Create a group in your area!</h2>
                     <form onSubmit={createGroupHandler} className="create-group-form">
-                        <input onChange={handleFormChange} type="text" name="group_title" className="group-name" placeholder="Name of your group" required />
-                        <textarea onChange={handleFormChange} name="group_text" id="about-group" cols="30" rows="10"
+                        <input onChange={handleFormChange} aria-label="Name of your group" type="text" name="group_title" className="group-name" placeholder="Name of your group" required />
+                        <textarea onChange={handleFormChange} name="group_text" id="about-group" cols="30" rows="10" aria-label="What is your group about?"
                             placeholder="What is your group about?" required></textarea>
-                        <input onChange={handleFormChange} type="number" name="group_zip" className="zip" placeholder="Zip Code" required />
+                        <input onChange={handleFormChange} aria-label="Zip Code" type="number" name="group_zip" className="zip" placeholder="Zip Code" required />
                         <button type="submit" className="glass-button">Create Group</button>
                     </form>
                 </div>
                 <div className="find-group-wrapper glass-background">
                     <h2>Find a group near you!</h2>
-                    <form onSubmit={findGroupHandler} className="find-group-form">
-                        <input type="range" className="mile-slider" max="150" min="10" value={miles} onChange={handleRange} />
+                    <form onSubmit={handleSubmit(findGroupHandler)} className="find-group-form">
+                        <input type="range" aria-label="range" className="mile-slider" max="150" min="10" value={miles} onChange={handleRange} />
                         <p>Within <span className="miles-nr">{miles}</span> miles</p>
-                        <input onChange={handleZipChange} type="number" name="zip-code" placeholder="Zip Code" required />
+                        <input type="number" aria-label="Zip Code" {...register("zipCode", {minLength:5, maxLength: 5})} placeholder="Zip Code" required />
+                        {errors.zipCode && "You must enter a zip code!"}
                         <button type="submit" className="glass-button">Find a group!</button>
                     </form>
 
@@ -161,6 +166,9 @@ const StyledHome = styled.div`
                     margin-top: 1rem;
                     margin-bottom: 1rem;
                 }
+                input:focus {
+                    outline: auto 1px -webkit-focus-ring-color;
+                }   
                 /* Input styles by Natalie:  https://codemenatalie.com/blog/classy-slider-with-pure-css/*/
                 input[type="range"] {
                     -webkit-appearance: none;

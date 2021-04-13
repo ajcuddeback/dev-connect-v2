@@ -4,7 +4,7 @@ import Auth from '../../utils/auth';
 
 import { Link } from 'react-router-dom';
 
-import logo from '../../images/red-on-trans-logo.png';
+import logo from '../../images/red-on-trans-logo.webp';
 
 import styled from 'styled-components';
 
@@ -17,9 +17,13 @@ function Nav({navOpen, setNavOpen}) {
 
     return (
         <StyledHead>
-            <button onClick={() => setNavOpen(!navOpen)} className="toggleNav disabled">Open Nav</button>
+            <div onClick={() => setNavOpen(!navOpen)} className={`toggleNav disabled ${navOpen ? 'nav-open' : ''}`}>
+                <div className={`line1 ${navOpen ? 'nav-open1' : 'nav-close1'}`}></div>
+                <div className={`line2 ${navOpen ? 'nav-open2' : 'nav-close2'}`}></div>
+                <div className={`line3 ${navOpen ? 'nav-open3' : 'nav-close3'}`}></div>
+            </div>
             <StyledNav>
-                <section className={`${navOpen ? 'active-nav' : ''} `}>
+                <section className={`${navOpen ? '' : 'active-nav'} `}>
                     <div className="img-wrapper">
                         <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
                     </div>
@@ -46,7 +50,63 @@ const StyledHead = styled.header`
     display: flex;
     .toggleNav {
         position: relative;
-        left: 80vw;;
+        left: 80vw;
+        width: 3rem;
+        height: 2.1rem;
+        cursor: pointer;
+    }
+    
+    .line1,
+    .line2, 
+    .line3 {
+        width: 3rem;
+        height: .2rem;
+        margin: .5rem;
+        background: white;
+    }
+
+    .nav-open1 {
+        transform: translate(0px, 11px) rotate(45deg);
+        transition: 1s ease;
+    }
+    .nav-open2 {
+        animation: slideOut 1s forwards;
+    }
+    .nav-open3 {
+        transform: translate(0px, -11px) rotate(-45deg);
+        transition: 1s ease;
+    }
+    .nav-close1 {
+        transform: translate(0px, 0px) rotate(0deg);
+        transition: 1s ease;
+    }
+    .nav-close2 {
+        animation: slideIn 1s forwards
+    }
+    .nav-close3 {
+        transform: translate(0px, 0px) rotate(0deg);
+        transition: 1s ease;
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translateX(0px);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(-50px);
+            opacity: 0;  
+        }
+    }
+    @keyframes slideIn {
+        from {
+            transform: translateX(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0px);
+            opacity: 1;  
+        }
     }
 
     @media (max-width: 1050px) {
@@ -84,6 +144,10 @@ const StyledNav = styled.nav`
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            text-align: center;
+        }
+        button {
+            margin-top: 5rem;
         }
     }
 
@@ -92,6 +156,7 @@ const StyledNav = styled.nav`
         left: -400px;
         transition: all 0.9s ease;
     }
+    
     }
 `
 

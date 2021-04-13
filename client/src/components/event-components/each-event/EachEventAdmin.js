@@ -1,8 +1,8 @@
 import React, {  } from 'react';
 
 // gql
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import { GET_ME_EVENTS, GET_GROUP } from '../../../utils/queries';
+import { useMutation } from '@apollo/react-hooks';
+import {  GET_GROUP } from '../../../utils/queries';
 import { DELETE_EVENT } from '../../../utils/mutations';
 
 import { Link } from 'react-router-dom';
@@ -10,9 +10,8 @@ import { Link } from 'react-router-dom';
 const EachEventAdmin = ({ event, groupName }) => {
 
     // gql
-    const { loading, data } = useQuery(GET_ME_EVENTS);
-    const groupData = useQuery(GET_GROUP);
     const [deleteEvent, {err}] = useMutation(DELETE_EVENT);
+    console.log(err);
 
     // Functions
     const handleEventDelete = async () => {
@@ -41,6 +40,7 @@ const EachEventAdmin = ({ event, groupName }) => {
                 </div>
                 <div className="location">
                     <p>Location: {event.event_location}</p>
+                    <p>Users: {event.event_user.length}</p>
                 </div>
             </div>
             <div className="manage-event-buttons">

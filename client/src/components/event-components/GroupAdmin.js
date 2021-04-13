@@ -32,24 +32,21 @@ const GroupAdmin = () => {
             myGroups.map(group => {
                 if(group.id === data.group.id) {
                     setIsAdmin(true);
-                    return;
+                    return true;
                 }
+                return false;
             })
 
             setDataGroup(true);
         }
-    }, [data, userData]);
-
-    console.log(data)
-
-    
+    }, [data, userData, loading]);    
    
     // JSX
     if(loading) {
         return (
             <StyledLoader>
                 <h2>Loading...</h2>
-                <div class="loader"></div>
+                <div className="loader"></div>
             </StyledLoader>
         )
     }

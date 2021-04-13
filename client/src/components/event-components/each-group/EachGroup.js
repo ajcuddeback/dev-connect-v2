@@ -7,9 +7,10 @@ import { ADD_USER_GROUP } from '../../../utils/mutations';
 
 import { useHistory } from 'react-router-dom';
 
-const EachGroup = ({ group, setGroupFetchSuccess, groupFetchSuccess }) => {
+const EachGroup = ({ group, setGroupFetchSuccess }) => {
     // gql
     const [addUserGroup, {err}] = useMutation(ADD_USER_GROUP);
+    console.log(err);
 
     const history = useHistory();
 
@@ -17,7 +18,7 @@ const EachGroup = ({ group, setGroupFetchSuccess, groupFetchSuccess }) => {
     const joinGroupHandler = async (e) => {
         const id = parseInt(group.id)
         try {
-            const response = await addUserGroup({
+            await addUserGroup({
                 variables: { group_id: id },
                 refetchQueries: [{
                     query: GET_ME_GROUPS
