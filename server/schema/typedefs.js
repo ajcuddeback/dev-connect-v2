@@ -72,12 +72,15 @@ const typeDefs = gql`
 
     category: Category
   }
-
+  type Checkout {
+    session: ID
+  }
   type Order {
     id: ID
     user_id: Int
     purchase_date: String
-    products: [Product]
+    product_id: Int
+    product: Product
   }
 
   type Query {
@@ -95,6 +98,7 @@ const typeDefs = gql`
     order(id: Int!): Order
     orders: [Order]
     allProducts: [Product]
+    checkout(products: [ID]!): Checkout
   }
 
   type Mutation {

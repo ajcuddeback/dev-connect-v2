@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { pluralize } from "../../../utils/helpers";
 import "gestalt/dist/gestalt.css";
-
 import { Mask, Box, Text, Heading } from "gestalt";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { useLazyQuery } from "@apollo/react-hooks";
+const stripePromise = loadStripe(
+  "pk_test_51IJ8N2AIilHitPQW5U4lBgGOGRTR0UQja3OwPvN3BiRguzd67qgEjlrpUwS81i6SBZoPdPRiMF5s5o2K7BlPFadN002lkAwAdm"
+);
+
 const Cart = ({ cartItems }) => {
   const [total, setTotal] = useState(0);
 
