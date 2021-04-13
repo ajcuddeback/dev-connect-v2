@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const QuestionList = ({ questions }) => {
     if (!questions.length) {
+        console.log(questions);
         return <h3 className="questionList">No Questions Yet!</h3>;
     }
     
@@ -11,7 +12,7 @@ const QuestionList = ({ questions }) => {
             <h1 className="questionList">Developer Questions</h1>
             {questions &&
                 questions.map(question => (
-                <div key={question.id} className="card mb-3">
+                <div key={question.id} className="questionCard">
                     <p className="card-header">
                     question on {question.createdAt}
                     </p>

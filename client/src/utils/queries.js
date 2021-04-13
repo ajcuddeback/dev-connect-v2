@@ -78,16 +78,15 @@ export const GET_ME_GROUPS = gql`
 // question and answer queries
 export const GET_QUESTIONS = gql`
     query questions($username: String) {
-        questions {
+        questions (username: $username) {
             id
             question_text
-            username
             createdAt
+            username
             answers {
                 id
-                answer_text
                 username
-                createdAt
+                answer_text
             }
         }
     }

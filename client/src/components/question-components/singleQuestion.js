@@ -21,15 +21,15 @@ const SingleQuestion = props => {
   
     return (
       <div>
-        <div className="card mb-3">
+        <div className="questionCard">
           <p className="card-header">
-            <span style={{ fontWeight: 700 }} className="text-light">
+            <span style={{ fontWeight: 700 }}>
               {question.username}
             </span>{' '}
             question on {question.createdAt}
           </p>
           <div className="card-body">
-            <p>{question.questionText}</p>
+            <p>{question.question_text}</p>
           </div>
         </div>
   

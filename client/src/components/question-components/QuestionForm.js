@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { ADD_QUESTION } from '../../utils/mutations';
 import { GET_QUESTIONS } from '../../utils/queries';
 
-const QuestionForm = ({ questions }) => {
+const QuestionForm = () => {
     const [question_text, setText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
@@ -50,7 +50,7 @@ const QuestionForm = ({ questions }) => {
         <div>
         <p className={` characterCount ${characterCount === 280 || error ? 'text-error' : ''}`}>
             Character Count: {characterCount}/280
-            {error && <span>Something went wrong...</span>}
+            {error && <span> Something went wrong...</span>}
         </p>
         <div className="glass-background questionFormContainer">
             <form

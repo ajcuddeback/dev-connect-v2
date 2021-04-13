@@ -122,6 +122,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     textarea.form-input {
+        margin-top: 10px;
         height: 50px;
         width: 300px;
     }

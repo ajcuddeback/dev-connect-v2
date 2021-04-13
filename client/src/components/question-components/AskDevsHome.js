@@ -13,9 +13,9 @@ const AskDevsHome = () => {
     const loggedIn = Auth.loggedIn();
 
     return(
-        <main class="container">
+        <main className="container">
             <div className="titleDiv">
-                <h1 className="askDevsHeader">Ask Devs Home!</h1>
+                <h1 className="askDevsHeader">AskDevs Home!</h1>
                 <p>Ask or answer an outstanding question:</p>
             </div>
             <div>
@@ -25,7 +25,7 @@ const AskDevsHome = () => {
             </div>
             )}
             </div>
-            <div className={`${loggedIn}`}></div>
+            <div className={` questionList ${loggedIn}`}></div>
                 <div>
                 <div className={`${loggedIn}`}>
                     {loading ? (
