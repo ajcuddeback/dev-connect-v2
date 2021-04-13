@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 const QuestionList = ({ questions }) => {
     if (!questions.length) {
-        return <h3>No Questions Yet!</h3>;
+        return <h3 className="questionList">No Questions Yet!</h3>;
     }
     
     return (
         <div>
-            <h1>Developer Questions</h1>
+            <h1 className="questionList">Developer Questions</h1>
             {questions &&
                 questions.map(question => (
                 <div key={question.id} className="card mb-3">

@@ -48,20 +48,20 @@ const QuestionForm = ({ questions }) => {
 
     return (
         <div>
-        <p className={`m-0 ${characterCount === 280 || error ? 'text-error' : ''}`}>
+        <p className={` characterCount ${characterCount === 280 || error ? 'text-error' : ''}`}>
             Character Count: {characterCount}/280
-            {error && <span className="ml-2">Something went wrong...</span>}
+            {error && <span>Something went wrong...</span>}
         </p>
-        <div className="glass-background p-4">
-            <form className="flex-row justify-center justify-space-around-md align-stretch"
+        <div className="glass-background questionFormContainer">
+            <form
                 onSubmit={handleFormSubmit}>        
             <textarea
                 placeholder="I have a question..."
                 value={question_text}
-                className="form-input col-12"
+                className="form-input"
                 onChange={handleChange}
             ></textarea>
-                <button className="btn col-12 glass-button" type="submit">
+                <button className="questionBtn glass-button" type="submit">
                 Submit
                 </button>
             </form>

@@ -97,6 +97,39 @@ const GlobalStyle = createGlobalStyle`
         top: 3px;
     }
 
+
+
+    .container {
+        text-align: center;
+        padding: 4px;
+    }
+
+    textarea.form-input {
+        height: 50px;
+        width: 300px;
+    }
+
+    .questionFormContainer {
+        margin: 0 auto;
+        padding: 10px 15px;
+        max-width: 500px;
+    }
+
+    .questionList {
+        margin-top: 25px;
+    }
+
+    .characterCount {
+        margin-top: 25px;
+    }
+
+    .questionBtn {
+        display: flex;
+        margin-left: 42%;
+    }
+    
+
+
     .disabled {
         opacity: 0;
         pointer-events: none;
