@@ -634,7 +634,8 @@ const resolvers = {
            if (context.user.id) {
             return Comment.create({
                 comment_text,
-                post_id
+                post_id,
+                user_id: context.user.id
                
                 
               })

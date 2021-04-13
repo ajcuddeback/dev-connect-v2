@@ -129,24 +129,27 @@ export const GET_ME_FRIENDS = gql`
     }
 `
 export const GET_POSTS = gql`
-    query {
+query {
         posts {
             id
             post_content
-            createdAt
-            username
+            user{
+              id
+              username
+            }
             comments{
                 id
                 comment_text
             }
-            {
+            
             liked_posts{
-                user_id
-                post_id
-                }
+                	
+                  id 
+                  username
+                                
             }
         }
-    }
+}
 `
 export const COMMENT_BY_POST = gql`
     query {

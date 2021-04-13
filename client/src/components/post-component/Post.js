@@ -1,21 +1,25 @@
 import React from 'react';
 
 
-
-
-     
-    return (
-        <StyledFormPost>
-            <form class = "new-post-form ">
-                 <div class="input-group mb-3">
-                     <input
-                      type="text" class="form-control" name="post-content" placeholder="Write a post" aria-label="Write a post" aria-describedby="basic-addon2"
-                      />
-                     <div class="input-group-append">
-                     <button id = "post-btn" class="btn btn-outline-secondary" type="button">Post</button>
-                     </div>
+function Post({post}){
+    console.log(post);
+    return(
+        <div className="post">
+            <div className="postWrapper">
+                <div className="postTop">
+                    <div className="postTopLeft">
+                        <span className="postUsername">{post.username}</span>
+                        <span className="postDate">{}</span>
+                    </div>
                 </div>
-            </form>
-        </StyledFormPost>
+                <div className="postCenter">{post.post_content}</div>
+                <div className="postBottom">
+                    <div className="postBottomLeft">{}</div>
+                    <div className="postBottomRight">{}</div>
+                </div>
+            </div>
+        </div>
     )
+}
 
+export default Post;

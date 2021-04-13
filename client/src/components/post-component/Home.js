@@ -1,25 +1,27 @@
-import REACT from 'react';
+import React from 'react';
 
 import {useQuery} from '@apollo/react-hooks';
 import {GET_POSTS} from  '../../utils/queries';
+import PostForm from './PostForm';
+import Post from './Post';
 
-const {loading, data} = useQuery(GET_POSTS);
-    if (data){
+function Home(){
 
-    }
+    const {data} = useQuery(GET_POSTS);
+    console.log(data)
 
- function Home(){
      return (
-         <div className="solo-post">
-             {
-                 loading ? (
-                     <h1>loading posts...</h1>
-                 ) : (
-                     posts && posts.map(post)
-                 )
-             }
+        <div className="homeWrapper">
+            <div className="postWrapper">
+                <PostForm/>
+                {
+                    data.map((p) => (
+                        <Post key = {p.id} post={p}/>
+                    ))
+                }
 
-         </div>
+            </div>
+        </div>   
      )
 
 
