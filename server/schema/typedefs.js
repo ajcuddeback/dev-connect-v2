@@ -9,16 +9,18 @@ const typeDefs = gql`
     group_id: Int!
   }
 
-  type User {
-    id: ID
-    username: String
-    email: String
-    first_name: String
-    last_name: String
-    group_user: [Group]
-    event_user: [Event]
-    orders: [Order]
-  }
+    type User {
+        id: ID 
+        username: String
+        email: String 
+        first_name: String 
+        last_name: String 
+        group_user: [Group]
+        event_user: [Event]
+        questions: [Question]
+        friends: [User]
+        orders: [Order]
+    }
 
   type Group {
     id: ID
@@ -32,15 +34,16 @@ const typeDefs = gql`
     group_user: [User]
   }
 
-  type Event {
-    id: ID
-    event_title: String
-    event_text: String
-    event_location: String
-    event_time: String
-    group_id: Int
-    users: Int
-  }
+    type Event {
+        id: ID 
+        event_title: String 
+        event_text: String
+        event_location: String 
+        event_time: String 
+        group_id: Int
+        users: Int
+        event_user: [User]
+    }
 
   type Event_User {
     id: ID
@@ -54,11 +57,11 @@ const typeDefs = gql`
     group_id: Int
   }
 
-  type Auth {
-    token: ID!
-    user: User
-  }
-  type Category {
+    type Auth {
+        token: ID! 
+        user: User
+    }
+    type Category {
     id: ID
     category_name: String
   }
@@ -69,7 +72,6 @@ const typeDefs = gql`
     imgPath: String
     price: Int
     quantity: Int
-
     category: Category
   }
   type Checkout {
@@ -83,60 +85,74 @@ const typeDefs = gql`
     product: Product
   }
 
-  type Query {
-    me: User #done
-    users: [User] #done
-    myGroups: [Group] #done
-    groups: [Group] #done
-    events: [Event] #done
-    group(group_url: String!): Group #done
-    event(event_id: Int!): Event #done
-    groupByZip(group_zip: Int!, miles: Int!): [Group] #done
-    categories: [Category]
 
-    product(id: Int!): Product
-    order(id: Int!): Order
-    orders: [Order]
-    allProducts: [Product]
-    checkout(products: [ID]!): Checkout
-  }
 
-  type Mutation {
-    login(username: String!, password: String!): Auth #done
-    addUser(
-      username: String!
-      email: String!
-      first_name: String!
-      last_name: String!
-      password: String!
-    ): Auth #done
-    createGroup(
-      group_title: String!
-      group_url: String!
-      group_text: String!
-      group_zip: Int!
-    ): Group #done
-    addUserGroup(group_id: Int!): Group #done
-    updateGroup(
-      group_id: Int!
-      group_title: String
-      group_text: String
-      group_zip: Int
-    ): Group #done
-    deleteGroup(group_id: Int!): Group #done
-    createEvent(input: EventInput): Event #done
-    addUserEvent(event_id: Int!): Event #done
-    updateEvent(
-      event_id: Int!
-      event_title: String
-      event_text: String
-      event_location: String
-      event_time: String
-    ): Event #done
-    deleteEvent(event_id: Int!): Event #done
-    addOrder(product_id: Int!): Order
-    updateProduct(id: Int!, quantity: Int!): Product
+    
+    type Answer {
+        id: ID
+        answer_text: String
+        createdAt: String
+        user_id: Int
+        question_id: Int
+    }
+
+    # Question and Answer Types
+    type Question {
+        id: ID
+        question_text: String
+        createdAt: String
+        user_id: Int
+        answers: [Answer]
+    }
+
+    # Friend Type
+
+    type User_Friends {
+        id: ID
+        user_id: Int
+        friend_id: Int
+    }
+
+    type Query {
+        me: User #done
+        users: [User] #done
+        myGroups: [Group] #done
+        groups: [Group] #done
+        events: [Event] #done
+        group(group_url: String!): Group #done
+        event(event_id: Int!): Event #done
+        groupByZip(group_zip: Int!, miles: Int!): [Group] #done
+        questions(username: String): [Question]
+        question(_id: ID!): Question
+        categories: [Category]
+        product(id: Int!): Product
+        order(id: Int!): Order
+        orders: [Order]
+        allProducts: [Product]
+        checkout(products: [ID]!): Checkout
+    }
+
+
+    type Mutation {
+        login(username: String!, password: String!): Auth #done
+        addUser(username: String!, email: String!, first_name: String!, last_name: String!, password: String!): Auth #done
+        createGroup(group_title: String!, group_url: String! group_text: String!, group_zip: Int!): Group #done
+        addUserGroup(group_id: Int!): Group #done
+        updateGroup(group_id: Int!, group_title: String, group_text: String, group_zip: Int): Group #done
+        deleteGroup(group_id: Int!): Group #done
+        createEvent(input: EventInput): Event #done
+        addUserEvent(event_id: Int!): Event #done
+        updateEvent(event_id: Int!, event_title: String, event_text: String, event_location: String, event_time: String): Event #done
+        deleteEvent(event_id: Int!): Event #done
+        addQuestion(question_text: String!): Question
+        updateQuestion(question_id: ID!, question_text: String!): Question
+        addAnswer(question_id: ID!, answer_text: String!): Question
+        deleteQuestion(question_id: Int!): Question
+        addFriend(friend_id: Int!): User
+        addOrder(product_id: Int!): Order
+        updateProduct(id: Int!, quantity: Int!): Product
   }
+    }
 `;
 
 module.exports = typeDefs;

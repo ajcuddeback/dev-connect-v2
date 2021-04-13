@@ -1,20 +1,21 @@
 // resolvers
-const {
-  AuthenticationError,
-  addErrorLoggingToSchema,
-} = require("apollo-server-express");
-const { signToken } = require("../utils/auth");
 const sequelize = require("../config/connection");
 const Sequelize = require("sequelize");
 const stripe = require("stripe")("STRIPE_KEY");
+const { AuthenticationError } = require("apollo-server-express");
+const { signToken } = require("../utils/auth");
 
 const axios = require("axios");
+
 const {
   User,
   Group,
   Event,
   Event_Users,
   Group_Users,
+  Question,
+  Answer,
+  User_Friends,
   Product,
   Order,
   Category,
@@ -22,6 +23,7 @@ const {
 const { response } = require("express");
 
 const resolvers = {
+  // create, update, delete requests
   Query: {
     // ############################# User queries #############################
     me: async (parent, args, context) => {
@@ -34,7 +36,7 @@ const resolvers = {
           include: [
             {
               model: Group,
-              attributes: ["id", "group_title"],
+              attributes: ["id", "group_title", "group_url"],
               through: Group_Users,
               as: "group_user",
             },
@@ -45,21 +47,34 @@ const resolvers = {
               as: "event_user",
             },
             {
-              model: Product,
-              attributes: ["id", "product_name"],
-              through: Order,
-              as: "orders",
+              model: User,
+              attributes: ["id", "username"],
+              through: User_Friends,
+              as: "friends",
             },
           ],
         });
 
-        return userData;
+        return userData.get({ plain: true });
       }
 
       throw new AuthenticationError("You need to be logged in!");
     },
     users: async () => {
-      return User.findAll({});
+      return User.findAll({
+        include: [
+          {
+            model: Question,
+            attributes: ["id", "question_text"],
+          },
+          {
+            model: User,
+            attributes: ["id", "username"],
+            through: User_Friends,
+            as: "friends",
+          },
+        ],
+      });
     },
 
     // ############################# Group Queries #############################
@@ -73,6 +88,7 @@ const resolvers = {
           attributes: [
             "id",
             "group_title",
+            "group_url",
             "group_text",
             "group_zip",
             [
@@ -127,6 +143,12 @@ const resolvers = {
               "event_location",
               "event_time",
             ],
+            include: {
+              model: User,
+              attributes: ["id", "username", "first_name"],
+              through: Event_Users,
+              as: "event_user",
+            },
           },
         ],
       });
@@ -160,6 +182,12 @@ const resolvers = {
               "event_location",
               "event_time",
             ],
+            include: {
+              model: User,
+              attributes: ["id", "username", "first_name"],
+              through: Event_Users,
+              as: "event_user",
+            },
           },
           {
             model: User,
@@ -170,16 +198,17 @@ const resolvers = {
         ],
       });
 
-      return groupData;
+      return groupData.get({ plain: true });
     },
     groupByZip: async (parent, { group_zip, miles }) => {
-      const apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;
-      const intData = [];
+      let apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;
+      let intData = [];
       await axios
         .get(apiUrl)
         .then((response) => {
-          const zipArr = response.data.zip_codes;
+          let zipArr = response.data.zip_codes;
           intData = zipArr.map((zip_code) => parseInt(zip_code));
+          console.log(intData);
         })
         .catch((err) => {
           console.log(err);
@@ -215,6 +244,12 @@ const resolvers = {
               "event_location",
               "event_time",
             ],
+            include: {
+              model: User,
+              attributes: ["id", "username", "first_name"],
+              through: Event_Users,
+              as: "event_user",
+            },
           },
         ],
       });
@@ -223,7 +258,16 @@ const resolvers = {
     },
     events: async (parent, args, context) => {
       if (context.user.id) {
-        const data = await Event.findAll({});
+        const data = await Event.findAll({
+          include: [
+            {
+              model: User,
+              attributes: ["id", "username", "first_name"],
+              through: Event_Users,
+              as: "event_user",
+            },
+          ],
+        });
 
         return data;
       }
@@ -243,115 +287,137 @@ const resolvers = {
 
       throw new AuthenticationError("You must be logged in!");
     },
-    // ############################# Product Queries #############################
-    categories: async (parent, args, context) => {
+
+    // Question queries
+    questions: async (parent, args, context) => {
       if (context.user.id) {
-        const data = await Category.findAll({});
-        return data;
-      }
-      throw new AuthenticationError("You must be logged in!");
-    },
-    allProducts: async (parent, args, context) => {
-      if (context.user.id) {
-        const productData = await Product.findAll({
+        const questions = await Question.findAll({
           include: [
             {
-              model: Category,
-              attributes: ["id", "category_name"],
+              model: Answer,
+              attributes: ["id", "answer_text"],
             },
           ],
         });
-        return productData.map((data) => data.get({ plain: true }));
-      }
-      throw new AuthenticationError("You must be logged in!");
-    },
 
-    product: async (parent, { id }, context) => {
-      if (context.user.id) {
-        const data = await Product.findOne({ where: { id: id } });
-        return data;
+        return questions.map((item) => item.get({ plain: true }));
       }
 
       throw new AuthenticationError("You must be logged in!");
     },
 
-    order: async (parent, { id }, context) => {
-      if (context.user.id) {
-        const data = await Order.findOne({
-          where: {
-            id: id,
+    question: async (parent, { _id }) => {
+      return Question.findOne({ _id });
+    },
+  },
+  // ############################# Product Queries #############################
+  categories: async (parent, args, context) => {
+    if (context.user.id) {
+      const data = await Category.findAll({});
+      return data;
+    }
+    throw new AuthenticationError("You must be logged in!");
+  },
+  allProducts: async (parent, args, context) => {
+    if (context.user.id) {
+      const productData = await Product.findAll({
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "category_name"],
           },
-        });
+        ],
+      });
+      return productData.map((data) => data.get({ plain: true }));
+    }
+    throw new AuthenticationError("You must be logged in!");
+  },
 
-        return data;
-      }
+  product: async (parent, { id }, context) => {
+    if (context.user.id) {
+      const data = await Product.findOne({ where: { id: id } });
+      return data;
+    }
 
-      throw new AuthenticationError("You must be logged in!");
-    },
+    throw new AuthenticationError("You must be logged in!");
+  },
 
-    orders: async (parent, args, context) => {
-      if (context.user.id) {
-        const orderData = await Order.findAll({
-          include: [
-            {
-              model: Product,
-              attributes: [
-                "id",
-                "product_name",
-                "imgPath",
-                "price",
-                "quantity",
-                "category_id",
-              ],
-            },
-            {
-              model: User,
-              attributes: ["id", "username"],
-            },
-          ],
-        });
-
-        return orderData.map((data) => data.get({ plain: true }));
-      }
-
-      throw new AuthenticationError("You must be logged in!");
-    },
-    checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      const order = new Order({ products: args.products });
-      const line_items = [];
-
-      const { products } = await order.populate("products").execPopulate();
-
-      for (let i = 0; i < products.length; i++) {
-        const product = await stripe.products.create({
-          name: products[i].name,
-          description: products[i].description,
-          images: [`${url}/images/${products[i].image}`],
-        });
-
-        const price = await stripe.prices.create({
-          product: product.id,
-          unit_amount: products[i].price * 100,
-          currency: "usd",
-        });
-
-        line_items.push({
-          price: price.id,
-          quantity: 1,
-        });
-      }
-
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        line_items,
-        mode: "payment",
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`,
+  order: async (parent, { id }, context) => {
+    if (context.user.id) {
+      const data = await Order.findOne({
+        where: {
+          id: id,
+        },
       });
 
-      return { session: session.id };
-    },
+      return data;
+    }
+
+    throw new AuthenticationError("You must be logged in!");
+  },
+
+  orders: async (parent, args, context) => {
+    if (context.user.id) {
+      const orderData = await Order.findAll({
+        include: [
+          {
+            model: Product,
+            attributes: [
+              "id",
+              "product_name",
+              "imgPath",
+              "price",
+              "quantity",
+              "category_id",
+            ],
+          },
+          {
+            model: User,
+            attributes: ["id", "username"],
+          },
+        ],
+      });
+
+      return orderData.map((data) => data.get({ plain: true }));
+    }
+
+    throw new AuthenticationError("You must be logged in!");
+  },
+  checkout: async (parent, args, context) => {
+    const url = new URL(context.headers.referer).origin;
+    const order = new Order({ products: args.products });
+    const line_items = [];
+
+    const { products } = await order.populate("products").execPopulate();
+
+    for (let i = 0; i < products.length; i++) {
+      const product = await stripe.products.create({
+        name: products[i].name,
+        description: products[i].description,
+        images: [`${url}/images/${products[i].image}`],
+      });
+
+      const price = await stripe.prices.create({
+        product: product.id,
+        unit_amount: products[i].price * 100,
+        currency: "usd",
+      });
+
+      line_items.push({
+        price: price.id,
+        quantity: 1,
+      });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items,
+      mode: "payment",
+      success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${url}/`,
+    });
+
+    return { session: session.id };
   },
 
   // ############################# Mutations #############################
@@ -407,6 +473,7 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be signed in!");
     },
+
     addUserGroup: async (parent, { group_id }, context) => {
       if (context.user.id) {
         const user_id = context.user.id;
@@ -422,6 +489,7 @@ const resolvers = {
 
       throw new AuthenticationError("You must be logged in@");
     },
+
     updateGroup: async (
       parent,
       { group_id, group_title, group_url, group_text, group_zip },
@@ -467,7 +535,7 @@ const resolvers = {
           event_title: input.event_title,
           event_text: input.event_text,
           event_location: input.event_location,
-          event_time: input.event_location,
+          event_time: input.event_time,
           group_id: input.group_id,
         });
 
@@ -476,6 +544,7 @@ const resolvers = {
 
       throw new AuthenticationError("You must be logged in!");
     },
+
     addUserEvent: async (parent, { event_id }, context) => {
       if (context.user.id) {
         const user_id = context.user.id;
@@ -491,6 +560,7 @@ const resolvers = {
 
       throw new AuthenticationError("You must be logged in!");
     },
+
     updateEvent: async (
       parent,
       { event_id, event_title, event_text, event_location, event_time },
@@ -524,6 +594,7 @@ const resolvers = {
 
       throw new AuthenticationError("You must be logged in!");
     },
+
     deleteEvent: async (parent, { event_id }, context) => {
       if (context.user.id) {
         const data = await Event.destroy({
@@ -538,6 +609,84 @@ const resolvers = {
       throw new AuthenticationError("You must be logged in!");
     },
 
+    // question and answer mutations
+    addQuestion: async (parent, { question_text }, context) => {
+      if (context.user) {
+        const userId = context.user.id;
+        const question = await Question.create({
+          question_text: question_text,
+          user_id: userId,
+        });
+
+        return question.get({ plain: true });
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
+    updateQuestion: async (parent, { question_id, question_text }, context) => {
+      if (context.user.id) {
+        const question = await Question.update(
+          {
+            question_text: question_text,
+            user_id: context.user.id,
+          },
+          {
+            where: {
+              id: question_id,
+            },
+            attributes: ["id", "question_text"],
+          }
+        );
+
+        return question;
+      }
+
+      throw new AuthenticationError("You must be logged in!");
+    },
+
+    deleteQuestion: async (parent, { question_id }, context) => {
+      if (context.user.id) {
+        const data = await Question.destroy({
+          where: {
+            id: question_id,
+          },
+        });
+
+        return data;
+      }
+
+      throw new AuthenticationError("You must be logged in!");
+    },
+
+    addAnswer: async (parent, { question_id, answer_text }, context) => {
+      if (context.user.id) {
+        const updatedQuestion = await Answer.create({
+          answer_text: answer_text,
+          user_id: context.user.id,
+          question_id: question_id,
+        });
+
+        return updatedQuestion.get({ plain: true });
+      }
+
+      throw new AuthenticationError("You must be logged in!");
+    },
+
+    // Friend Mutations
+    addFriend: async (parent, { friendId }, context) => {
+      if (context.user) {
+        const updatedUser = await User_Friends.create({
+          user_id: context.user.id,
+          friend_id: friendId,
+        });
+        return updatedUser.get({ plain: true });
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
+    // Store Mutations
     addOrder: async (parent, { product_id }, context) => {
       if (context.user.id) {
         const user_id = context.user.id;

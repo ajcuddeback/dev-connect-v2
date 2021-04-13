@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
+=======
+import React, { useState } from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+>>>>>>> 57bcfd4a8d889a48e0915797b42bbf7e4d7c1db3
 
 // Apollo
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -19,12 +25,21 @@ import MeetDashboard from "./components/event-components/MeetDashboard";
 import MyGroups from "./components/event-components/MyGroups";
 import MyEvents from "./components/event-components/MyEvents";
 
+<<<<<<< HEAD
 import Home from "./components/store-components/Home";
 import Detail from "./components/store-components/Detail";
 import OrderHistory from "./components/store-components/OrderHistory";
 // Styled Component
 import GlobalStyle from "./components/GlobalStyles";
 import styled from "styled-components";
+=======
+// Question Components
+import AskDevsHome from './components/question-components/AskDevsHome';
+
+// Styled Component
+import GlobalStyle from './components/GlobalStyles';
+import styled from 'styled-components';
+>>>>>>> 57bcfd4a8d889a48e0915797b42bbf7e4d7c1db3
 
 // Utils
 import Auth from "./utils/auth";
@@ -57,6 +72,7 @@ function App() {
           <Router>
             <Nav navOpen={navOpen} setNavOpen={setNavOpen} />
             <Switch>
+<<<<<<< HEAD
               <Route
                 exact
                 path="/meet"
@@ -111,6 +127,26 @@ function App() {
               <Route exact path="/shop" component={Home} />
               <Route exact path="/orderHistory" component={OrderHistory} />
               <Route exact path="/products/:id" component={Detail} />
+=======
+              <Route exact path='/meet' render={() => (
+                <MeetHome miles={miles} setMiles={setMiles} zipCode={zipCode} setZipCode={setZipCode} navOpen={navOpen} />
+              )}></Route>
+              <Route exact path='/meet/groups' render={() => (
+                <ZipGroups miles={miles} zipCode={zipCode} navOpen={navOpen} />
+              )}  ></Route>
+              <Route exact path='/meet/dashboard' component={MeetDashboard}></Route>
+              <Route exact path='/askDevs' component={AskDevsHome}></Route>
+              <Route exact path='/meet/my-groups' component={MyGroups}></Route>
+              <Route exact path='/meet/my-events' component={MyEvents}></Route>
+              <Route exact path='/meet/groups/:groupName' render={() => (
+                <GroupHome navOpen={navOpen} />
+              )} ></Route>
+              <Route exact path='/meet/edit-event/:groupName/:eventId' component={EditEvent}></Route>
+              <Route exact path='/meet/add-event/:groupName' component={AddEvent}></Route>
+              <Route exact path='/meet/admin/:groupName' render={() => (
+                <GroupAdmin navOpen={navOpen} />
+              )}></Route>
+>>>>>>> 57bcfd4a8d889a48e0915797b42bbf7e4d7c1db3
             </Switch>
           </Router>
         </>

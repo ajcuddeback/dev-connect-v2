@@ -21,6 +21,8 @@ const GroupHome = () => {
     const [dataGroup, setDataGroup] = useState(false);
     const [addUserGroup, {err}] = useMutation(ADD_USER_GROUP);
 
+    console.log(err);
+
     // Get the groupName from params
     let { groupName } = useParams();
     // use query to get the groups data
@@ -50,20 +52,27 @@ const GroupHome = () => {
                 return;
             }
             const groupUsers = data.group.group_user;
-            console.log(groupUsers)
             groupUsers.forEach(user => {
                 const userid = Auth.getProfile().data.id;
-                console.log(user.id, userid)
                 
                 if(parseInt(user.id) === userid) {
-                    console.log('yes')
-                    setIsMemeber(true);
-                    return;
+                    if(!isMember) {
+                        setIsMemeber(true);
+                        return;
+                    }
+                    
                 } else {
-                    setIsMemeber(false);
+                    if(isMember) {
+                        setIsMemeber(false);
+                    }
                 }
             });
-            setDataGroup(true);
+
+            if(!dataGroup) {
+                setDataGroup(true);
+                
+                // return;
+            }
         }
     }, [data])
 
@@ -76,7 +85,7 @@ const GroupHome = () => {
         )
     };
 
-    if(dataGroup === false) {
+    if(!dataGroup) {
         return(
             <StyledError>
                 <h2>No group exists at this url! Go back to the <Link to={`/meet`}>events page</Link>  to find a group in your area!</h2>
@@ -98,7 +107,7 @@ const GroupHome = () => {
                 </div>
                 <div className="group-event-wrapper">
                     <ol>
-                        {data.group.events.map(event => (<EachEvent event={event} isMember={isMember} ></EachEvent>))}
+                        {data.group.events.map(event => (<EachEvent event={event} isMember={isMember} key={event.id} ></EachEvent>))}
                     </ol>
                 </div>
             </section>

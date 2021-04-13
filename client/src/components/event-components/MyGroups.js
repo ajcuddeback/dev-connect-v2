@@ -25,8 +25,6 @@ const MyGroups = () => {
     const userData = Auth.getProfile();
     const username = userData.data.username;
 
-    console.log(data)
-
     useEffect(() => {
         if(loading) {
           return;
@@ -37,14 +35,14 @@ const MyGroups = () => {
         } else {
           setGroupData(true)
         }
-      }, [data])
+      }, [data, loading])
 
     // JSX
     if(loading) {
         return (
             <StyledLoader>
                 <h2>Loading...</h2>
-                <div class="loader"></div>
+                <div className="loader"></div>
             </StyledLoader>
         )
     }
@@ -63,7 +61,7 @@ const MyGroups = () => {
             <h2>{username}'s Groups</h2>
             <div className="groups">
                 <ol>
-                    {data.me.group_user.map(group => (<EachMyGroups group={group} />))}
+                    {data.me.group_user.map(group => (<EachMyGroups group={group} key={group.id} />))}
                 </ol>
             </div>
         </StyledGroups>

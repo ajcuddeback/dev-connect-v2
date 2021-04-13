@@ -14,6 +14,7 @@ export const GROUPS_BY_ZIP = gql`
 `;
 
 export const GET_GROUP = gql`
+<<<<<<< HEAD
   query group($group_url: String!) {
     group(group_url: $group_url) {
       id
@@ -32,6 +33,31 @@ export const GET_GROUP = gql`
         id
         first_name
       }
+=======
+    query group($group_url: String!) {
+        group(group_url: $group_url) {
+            id
+            group_title
+            group_text
+            group_zip
+            users_count
+            events {
+                id
+                event_title
+                event_text
+                event_location
+                event_time
+                event_user {
+                    id
+                    username
+                }
+            }
+            group_user {
+                id
+                first_name
+            }
+        }
+>>>>>>> 57bcfd4a8d889a48e0915797b42bbf7e4d7c1db3
     }
   }
 `;
@@ -119,5 +145,62 @@ export const QUERY_USER = gql`
         }
       }
     }
+<<<<<<< HEAD
   }
 `;
+=======
+`
+
+// question and answer queries
+export const GET_QUESTIONS = gql`
+    query questions($username: String) {
+        questions {
+            id
+            question_text
+            username
+            createdAt
+            answers {
+                id
+                answer_text
+                username
+                createdAt
+            }
+        }
+    }
+    
+`
+
+export const GET_ME_QUESTIONS = gql`
+    query {
+        me {
+            id
+            questions {
+                id
+                question_text
+                username
+                createdAt
+                answers {
+                    id
+                    answer_text
+                    username
+                    createdAt
+                }
+            }
+        }
+    }
+`
+
+// friend queries
+export const GET_ME_FRIENDS = gql`
+    query {
+        me {
+            id
+            username
+            friends {
+                id
+                username
+            }
+        }
+    }
+`
+>>>>>>> 57bcfd4a8d889a48e0915797b42bbf7e4d7c1db3

@@ -80,3 +80,43 @@ export const ADD_EVENT = gql`
     }
 
 `
+
+// Question and Answer Mutations
+
+export const ADD_QUESTION = gql`
+    mutation addQuestion($question_id: Int!, $question_text: String!, $username: String!) {
+        addQuestion(question_id: $question_id, username: $username, question_text: $question_text) {
+            id
+            username
+            question_text
+    }
+}
+`
+
+export const UPDATE_QUESTION = gql`
+    mutation updateQuestion($question_id: Int!, $question_text: String!, $username: String!) {
+        updateQuestion(question_id: $question_id, username: $username, question_text: $question_text) {
+            id
+            username
+            question_text
+    }
+}
+`
+
+export const DELETE_QUESTION = gql`
+    mutation deleteQuestion($question_id: Int!) {
+        updateQuestion(question_id: $question_id) {
+            id
+    }
+}
+`
+
+// Friend Mutations
+
+export const ADD_FRIEND = gql`
+    mutation addFriend($friend_id: Int!) {
+        addFriend(friend_id: $friend_id) {
+            id
+    }
+}
+`

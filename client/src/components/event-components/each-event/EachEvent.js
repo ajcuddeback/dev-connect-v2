@@ -10,13 +10,14 @@ const EachEvent = ({ event, isMember }) => {
 
     // gql
     const [addUserEvent, { err }] = useMutation(ADD_USER_EVENT);
+    console.log(err)
     const { loading, data } = useQuery(GET_ME_EVENTS);
 
     // Functions
     const joinEventHandler = async (e) => {
         const eventId = parseInt(event.id);
         try {
-            const response = await addUserEvent({
+            await addUserEvent({
                 variables: { event_id: eventId },
                 refetchQueries: [{ query: GET_ME_EVENTS }]
             });
@@ -26,14 +27,18 @@ const EachEvent = ({ event, isMember }) => {
         }
     }
     useEffect(() => {
+        if(loading) {
+            return;
+        }
         if(data) {
             const eventIdArr = [];
             data.me.event_user.map(myEvent => {
                 eventIdArr.push(myEvent.id);
+                return true;
             })
             setEventIds(eventIdArr);
         }
-    }, [data, eventIds, isMember])
+    }, [data, isMember, loading])
 
     
     
