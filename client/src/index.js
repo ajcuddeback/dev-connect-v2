@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-=======
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from "./serviceWorker";
-import reportWebVitals from './reportWebVitals';
->>>>>>> 57bcfd4a8d889a48e0915797b42bbf7e4d7c1db3
+import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -34,13 +34,6 @@ app.get("*", (req, res) => {
 });
 
 sequelize.sync({ force: false }).then(() => {
-<<<<<<< HEAD
-  app.listen(PORT, () => {
-    console.log(`App is listening on port ${PORT}!`);
-    console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
-  });
-=======
   app.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
   console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
->>>>>>> 57bcfd4a8d889a48e0915797b42bbf7e4d7c1db3
 });

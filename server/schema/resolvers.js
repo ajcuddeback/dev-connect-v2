@@ -309,115 +309,116 @@ const resolvers = {
     question: async (parent, { _id }) => {
       return Question.findOne({ _id });
     },
-  },
-  // ############################# Product Queries #############################
-  categories: async (parent, args, context) => {
-    if (context.user.id) {
-      const data = await Category.findAll({});
-      return data;
-    }
-    throw new AuthenticationError("You must be logged in!");
-  },
-  allProducts: async (parent, args, context) => {
-    if (context.user.id) {
-      const productData = await Product.findAll({
-        include: [
-          {
-            model: Category,
-            attributes: ["id", "category_name"],
+
+    // ############################# Product Queries #############################
+    categories: async (parent, args, context) => {
+      if (context.user.id) {
+        const data = await Category.findAll({});
+        return data;
+      }
+      throw new AuthenticationError("You must be logged in!");
+    },
+    allProducts: async (parent, args, context) => {
+      if (context.user.id) {
+        const productData = await Product.findAll({
+          include: [
+            {
+              model: Category,
+              attributes: ["id", "category_name"],
+            },
+          ],
+        });
+        return productData.map((data) => data.get({ plain: true }));
+      }
+      throw new AuthenticationError("You must be logged in!");
+    },
+
+    product: async (parent, { id }, context) => {
+      if (context.user.id) {
+        const data = await Product.findOne({ where: { id: id } });
+        return data;
+      }
+
+      throw new AuthenticationError("You must be logged in!");
+    },
+
+    order: async (parent, { id }, context) => {
+      if (context.user.id) {
+        const data = await Order.findOne({
+          where: {
+            id: id,
           },
-        ],
-      });
-      return productData.map((data) => data.get({ plain: true }));
-    }
-    throw new AuthenticationError("You must be logged in!");
-  },
+        });
 
-  product: async (parent, { id }, context) => {
-    if (context.user.id) {
-      const data = await Product.findOne({ where: { id: id } });
-      return data;
-    }
+        return data;
+      }
 
-    throw new AuthenticationError("You must be logged in!");
-  },
+      throw new AuthenticationError("You must be logged in!");
+    },
 
-  order: async (parent, { id }, context) => {
-    if (context.user.id) {
-      const data = await Order.findOne({
-        where: {
-          id: id,
-        },
-      });
+    orders: async (parent, args, context) => {
+      if (context.user.id) {
+        const orderData = await Order.findAll({
+          include: [
+            {
+              model: Product,
+              attributes: [
+                "id",
+                "product_name",
+                "imgPath",
+                "price",
+                "quantity",
+                "category_id",
+              ],
+            },
+            {
+              model: User,
+              attributes: ["id", "username"],
+            },
+          ],
+        });
 
-      return data;
-    }
+        return orderData.map((data) => data.get({ plain: true }));
+      }
 
-    throw new AuthenticationError("You must be logged in!");
-  },
+      throw new AuthenticationError("You must be logged in!");
+    },
+    checkout: async (parent, args, context) => {
+      const url = new URL(context.headers.referer).origin;
+      const order = new Order({ products: args.products });
+      const line_items = [];
 
-  orders: async (parent, args, context) => {
-    if (context.user.id) {
-      const orderData = await Order.findAll({
-        include: [
-          {
-            model: Product,
-            attributes: [
-              "id",
-              "product_name",
-              "imgPath",
-              "price",
-              "quantity",
-              "category_id",
-            ],
-          },
-          {
-            model: User,
-            attributes: ["id", "username"],
-          },
-        ],
-      });
+      const { products } = await order.populate("products").execPopulate();
 
-      return orderData.map((data) => data.get({ plain: true }));
-    }
+      for (let i = 0; i < products.length; i++) {
+        const product = await stripe.products.create({
+          name: products[i].name,
+          description: products[i].description,
+          images: [`${url}/images/${products[i].image}`],
+        });
 
-    throw new AuthenticationError("You must be logged in!");
-  },
-  checkout: async (parent, args, context) => {
-    const url = new URL(context.headers.referer).origin;
-    const order = new Order({ products: args.products });
-    const line_items = [];
+        const price = await stripe.prices.create({
+          product: product.id,
+          unit_amount: products[i].price * 100,
+          currency: "usd",
+        });
 
-    const { products } = await order.populate("products").execPopulate();
+        line_items.push({
+          price: price.id,
+          quantity: 1,
+        });
+      }
 
-    for (let i = 0; i < products.length; i++) {
-      const product = await stripe.products.create({
-        name: products[i].name,
-        description: products[i].description,
-        images: [`${url}/images/${products[i].image}`],
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items,
+        mode: "payment",
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`,
       });
 
-      const price = await stripe.prices.create({
-        product: product.id,
-        unit_amount: products[i].price * 100,
-        currency: "usd",
-      });
-
-      line_items.push({
-        price: price.id,
-        quantity: 1,
-      });
-    }
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items,
-      mode: "payment",
-      success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${url}/`,
-    });
-
-    return { session: session.id };
+      return { session: session.id };
+    },
   },
 
   // ############################# Mutations #############################
