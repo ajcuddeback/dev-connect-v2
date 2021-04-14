@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import AnswerList from '../question-components/AnswerList'
+import AnswerList from '../question-components/AnswerList';
+import AnswerForm from './AnswerForm'
 
 const QuestionList = ({ questions }) => {
    
@@ -8,24 +9,19 @@ const QuestionList = ({ questions }) => {
     useEffect(() => {
         const questionsObject = {};
         questions.forEach(question => {
-            console.log(question)
-            
             questionsObject[question.id]=false;
         })
 
         setAnswersOpen(questionsObject)
-        console.log(answerOpen)
     },[questions])
-    //console.log(answerOpen);
 
     const handleAnswerClick = (id) => {
         let questionObject = {...answerOpen};
         let currentState = questionObject[id];
 
         questionObject[id] = !currentState;
-        console.log("clicked")
+
         setAnswersOpen(questionObject);
-        console.log(answerOpen)
     }
 
     if (!questions.length) {
@@ -47,6 +43,7 @@ const QuestionList = ({ questions }) => {
                         <div className="questionDiv">
                             <p className="questions">{question.question_text}</p>
                         </div>
+                        <AnswerForm />
                         <div>
                             <p className="answerDrop" value={answerOpen[question.id]} onClick={()=>handleAnswerClick(question.id)}>Click to get answers</p>
                         </div>

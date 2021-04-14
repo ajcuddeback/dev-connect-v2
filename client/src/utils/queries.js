@@ -90,11 +90,11 @@ export const GET_QUESTIONS = gql`
             answers {
                 id
                 answer_text
-                user_id
+                createdAt
                 user{
-                id
-                username
-            }
+                    id
+                    username
+                }
             }
         }
     }

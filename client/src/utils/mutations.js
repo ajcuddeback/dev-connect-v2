@@ -110,6 +110,15 @@ export const DELETE_QUESTION = gql`
 }
 `
 
+export const ADD_ANSWER = gql`
+    mutation addAnswer($question_id: ID!, $answer_text: String!) {
+        addAnswer(question_id: $question_id, answer_text: $answer_text) {
+            id
+            answer_text
+    }
+}
+`
+
 // Friend Mutations
 
 export const ADD_FRIEND = gql`

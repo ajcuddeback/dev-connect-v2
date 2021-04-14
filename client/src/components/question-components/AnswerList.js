@@ -1,14 +1,12 @@
 import React from 'react';
 
 const AnswerList = ({ answer, answerCount }) => {
-  if(answerCount >= 5){
-    
-  }
+  console.log(answer)
 
   return (
     <div className="eachAnswer">
       <div className="usernameAnswerWrapper">
-        <p>{answer.username}</p>
+        <p>{answer.user.username} on {answer.createdAt}</p>
         <p>{answer.answer_text}</p>
       </div>
     </div>
