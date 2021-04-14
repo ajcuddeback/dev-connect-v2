@@ -1,8 +1,9 @@
 import React from 'react';
 import Comment from './Comment';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
+import './post.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faHeart, faComment} from '@fortawesome/free-solid-svg-icons';
+import {faHeart, faComment, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useQuery} from '@apollo/react-hooks';
 import {COMMENT_BY_POST} from  '../../utils/queries';
 
@@ -11,6 +12,8 @@ import {COMMENT_BY_POST} from  '../../utils/queries';
 function Post({post}){
     const like = <FontAwesomeIcon icon={faHeart} />
     const commentSymbol = <FontAwesomeIcon icon ={faComment} />
+    const editPost = <FontAwesomeIcon icon ={faEdit} />
+    const deletePost = <FontAwesomeIcon icon ={faTrash} />
     const {loading, data} = useQuery(COMMENT_BY_POST);
     console.log(data)
     if(loading) {
@@ -36,13 +39,13 @@ function Post({post}){
                         {like}
                     </div>
                     <div className="postBottomRight">{
-                        commentSymbol
+                        commentSymbol   
 
                         //  data.comments.map((comment) => (
                         //     <Comment key = {comment.id} comment={c}/>
                         // ))
 
-                    }</div>
+                    }{ editPost}{deletePost}</div>
                 </div>
             </div>
             <div className="commentsByPost">

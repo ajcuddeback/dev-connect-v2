@@ -1,20 +1,19 @@
 import React from 'react';
+import './post.css';
+import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 
 
 
 function PostForm (){
+    const send = <FontAwesomeIcon icon={faPaperPlane} />
     return (
-        
             <form className= "new-post-form ">
-                 <div className="input-group mb-3">
-                     <input
-                      type="text" className="form-control" name="post-content" placeholder="Write a post" aria-label="Write a post" aria-describedby="basic-addon2"
-                      />
-                     <div className="input-group-append">
-                     <button id = "post-btn" className="btn btn-outline-secondary" type="button">Post</button>
-                     </div>
-                </div>
+                 <input type="text" placeholder="Write a post..." name="post"/>
+                 <button type="submit">{send}</button>
             </form>
+
        
     )
 
