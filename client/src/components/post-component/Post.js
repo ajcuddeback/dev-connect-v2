@@ -32,6 +32,7 @@ function Post({post}){
     // });
     const [removeLike, {error}] = useMutation(REMOVE_LIKE);   
     const [deletePost,{err}]= useMutation(DELETE_POST);
+    
     // useEffect(()=>{
         
     //     console.log(user)
