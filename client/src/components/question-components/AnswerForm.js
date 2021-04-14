@@ -3,12 +3,11 @@ import { useMutation } from '@apollo/react-hooks';
 import { GET_QUESTIONS } from '../../utils/queries';
 import { ADD_ANSWER } from '../../utils/mutations';
 
-const AnswerForm = ({ question_id }) => {
+const AnswerForm = ({ id }) => {
   const [formAnswerText, setFormAnswerText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
   const [addAnswer, { error }] = useMutation(ADD_ANSWER, {
-    query: GET_QUESTIONS,
     refetchQueries: [{ query: GET_QUESTIONS }]
   });
 
@@ -24,7 +23,7 @@ const AnswerForm = ({ question_id }) => {
     
     try {
       await addAnswer({
-        variables: { answer_text: formAnswerText }
+        variables: { answer_text: formAnswerText, question_id: id }
       });
     
       // clear form value

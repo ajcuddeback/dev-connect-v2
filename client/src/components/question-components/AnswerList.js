@@ -1,7 +1,6 @@
 import React from 'react';
 
 const AnswerList = ({ answer, answerCount }) => {
-  console.log(answer)
 
   return (
     <div className="eachAnswer">

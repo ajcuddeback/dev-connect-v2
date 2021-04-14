@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AnswerList from '../question-components/AnswerList';
 import AnswerForm from './AnswerForm'
-import { FaChevronDown } from "react-icons/fa";
+import { FaComment } from "react-icons/fa";
 
 const QuestionList = ({ questions }) => {
    
@@ -44,9 +44,9 @@ const QuestionList = ({ questions }) => {
                         <div className="questionDiv">
                             <p className="questions">{question.question_text}</p>
                         </div>
-                        <AnswerForm />
+                        <AnswerForm id={question.id}/>
                         <div>
-                            <p className="answerDrop" value={answerOpen[question.id]} onClick={()=>handleAnswerClick(question.id)}><span FaChevronDown>Click to get answers</span></p>
+                            <p className="answerDrop" value={answerOpen[question.id]} onClick={()=>handleAnswerClick(question.id)}><FaComment></FaComment> Click to get answers</p>
                         </div>
                     </div>
                     {(answerOpen[question.id] === true) &&

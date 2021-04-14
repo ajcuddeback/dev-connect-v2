@@ -93,8 +93,8 @@ export const ADD_QUESTION = gql`
 `
 
 export const UPDATE_QUESTION = gql`
-    mutation updateQuestion($question_id: Int!, $question_text: String!, $username: String!) {
-        updateQuestion(question_id: $question_id, username: $username, question_text: $question_text) {
+    mutation updateQuestion($question_id: Int!, $question_text: String!) {
+        updateQuestion(question_id: $question_id, question_text: $question_text) {
             id
             username
             question_text
@@ -114,7 +114,10 @@ export const ADD_ANSWER = gql`
     mutation addAnswer($question_id: ID!, $answer_text: String!) {
         addAnswer(question_id: $question_id, answer_text: $answer_text) {
             id
-            answer_text
+            answers {
+                id
+                answer_text
+            }
     }
 }
 `

@@ -123,7 +123,6 @@ export const GET_ME_QUESTIONS = gql`
                         id
                         username
                     }
-                    createdAt
                 }
             }
         }

@@ -48,10 +48,8 @@ const resolvers = {
                             as: "friends"
                         },
                         {
-                            model: User,
-                            attributes: ["id", "username"],
-                            through: Question,
-                            as: "questions"
+                            model: Question,
+                            attributes: ["id", "question_text"]
                         }
                     ]
                 })

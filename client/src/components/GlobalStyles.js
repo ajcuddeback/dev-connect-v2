@@ -169,9 +169,9 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .eachAnswer {
-        margin: 0 auto 5px;
+        margin: 0 auto 10px;
         padding: 10px 15px;
-        max-width: 75%;
+        max-width: 70%;
         border: none;
         border-radius: 5px;
         background: rgba(255,255,255,0.2);
