@@ -127,7 +127,6 @@ export const QUERY_USER = gql`
 `;
 
 export const GET_QUESTIONS = gql`
-<<<<<<< HEAD
     query questions($username: String) {
         questions (username: $username) {
             id
@@ -148,26 +147,11 @@ export const GET_QUESTIONS = gql`
                 }
             }
         }
-=======
-  query questions($username: String) {
-    questions {
-      id
-      question_text
-      username
-      createdAt
-      answers {
-        id
-        answer_text
-        username
-        createdAt
-      }
->>>>>>> develop
     }
   }
 `;
 
 export const GET_ME_QUESTIONS = gql`
-<<<<<<< HEAD
     query {
         me {
             id
@@ -191,21 +175,6 @@ export const GET_ME_QUESTIONS = gql`
                     }
                 }
             }
-=======
-  query {
-    me {
-      id
-      questions {
-        id
-        question_text
-        username
-        createdAt
-        answers {
-          id
-          answer_text
-          username
-          createdAt
->>>>>>> develop
         }
       }
     }
@@ -214,7 +183,6 @@ export const GET_ME_QUESTIONS = gql`
 
 // friend queries
 export const GET_ME_FRIENDS = gql`
-<<<<<<< HEAD
     query {
         me {
             id
@@ -225,16 +193,6 @@ export const GET_ME_FRIENDS = gql`
                 username
             }
         }
-=======
-  query {
-    me {
-      id
-      username
-      friends {
-        id
-        username
-      }
->>>>>>> develop
     }
   }
 `;
