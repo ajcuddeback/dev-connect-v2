@@ -1,0 +1,48 @@
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+
+import { QUERY_PRODUCTS } from "../../utils/queries";
+import spinner from "../../assets/spinner.gif";
+
+const Detail = () => {
+  const { id } = useParams();
+
+  const [currentProduct, setCurrentProduct] = useState({});
+
+  const { loading, data } = useQuery(QUERY_PRODUCTS);
+
+  const products = data?.products || [];
+
+  useEffect(() => {
+    if (products.length) {
+      setCurrentProduct(products.find((product) => product.id === id));
+    }
+  }, [products, id]);
+
+  return (
+    <>
+      {currentProduct ? (
+        <div className="container my-1">
+          <Link to="/">← Back to Products</Link>
+
+          <h2>{currentProduct.name}</h2>
+
+          <p>
+            <strong>Price:</strong>${currentProduct.price}{" "}
+            <button>Add to Cart</button>
+            <button>Remove from Cart</button>
+          </p>
+
+          <img
+            src={`/images/${currentProduct.imgPath}`}
+            alt={currentProduct.name}
+          />
+        </div>
+      ) : null}
+      {loading ? <img src={spinner} alt="loading" /> : null}
+    </>
+  );
+};
+
+export default Detail;
