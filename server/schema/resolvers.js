@@ -1,21 +1,26 @@
 // resolvers
-const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth');
-const sequelize = require('../config/connection');
-const Sequelize = require('sequelize');
-const axios = require('axios');
+const sequelize = require("../config/connection");
+const Sequelize = require("sequelize");
+const stripe = require("stripe")("STRIPE_KEY");
+const { AuthenticationError } = require("apollo-server-express");
+const { signToken } = require("../utils/auth");
 
-const { 
-    User,
-    Group, 
-    Event, 
-    Event_Users, 
-    Group_Users,
-    Question,
-    Answer,
-    User_Friends
-} = require('../models');
-const { response } = require('express');
+const axios = require("axios");
+
+const {
+  User,
+  Group,
+  Event,
+  Event_Users,
+  Group_Users,
+  Question,
+  Answer,
+  User_Friends,
+  Product,
+  Order,
+  Category,
+} = require("../models");
+const { response } = require("express");
 
 const resolvers = {
     // create, update, delete requests
@@ -58,23 +63,204 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You need to be logged in!')
+          },
+  // create, update, delete requests
+ 
+    users: async () => {
+      return User.findAll({
+        include: [
+          {
+            model: Question,
+            attributes: ["id", "question_text"],
+          },
+          {
+            model: User,
+            attributes: ["id", "username"],
+            through: User_Friends,
+            as: "friends",
+          },
+        ],
+      });
+    },
+
+    // ############################# Group Queries #############################
+    myGroups: async (parent, args, context) => {
+      console.log(context.user);
+      if (context.user) {
+        const userData = await Group.findAll({
+          where: {
+            user_id: context.user.id,
+          },
+          attributes: [
+            "id",
+            "group_title",
+            "group_url",
+            "group_text",
+            "group_zip",
+            [
+              sequelize.literal(
+                "(SELECT COUNT(*) AS users_count FROM group_users WHERE group.id = group_users.group_id)"
+              ),
+              "users_count",
+            ],
+          ],
+          include: [
+            {
+              model: Event,
+              attributes: [
+                "id",
+                "event_title",
+                "event_text",
+                "event_location",
+                "event_time",
+              ],
+            },
+          ],
+        });
+        console.log(userData);
+
+        return userData.map((item) => item.get({ plain: true }));
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    groups: async () => {
+      const groupData = await Group.findAll({
+        attributes: [
+          "id",
+          "group_title",
+          "group_url",
+          "group_text",
+          "group_zip",
+          [
+            sequelize.literal(
+              "(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)"
+            ),
+            "users_count",
+          ],
+        ],
+        include: [
+          {
+            model: Event,
+            attributes: [
+              "id",
+              "event_title",
+              "event_text",
+              "event_location",
+              "event_time",
+            ],
+            include: {
+              model: User,
+              attributes: ["id", "username", "first_name"],
+              through: Event_Users,
+              as: "event_user",
+            },
+          },
+        ],
+      });
+      return groupData.map((item) => item.get({ plain: true }));
+    },
+    group: async (parent, { group_url }) => {
+      const groupData = await Group.findOne({
+        where: {
+          group_url: group_url,
         },
-        users: async () => {
-           return User.findAll({
-               include: [
-                    {
-                        model: Question,
-                        attributes: ["id","question_text"]
-                    },
-                    {
-                        model: User,
-                        attributes: ["id","username"],
-                        through: User_Friends,
-                        as: "friends"
-                    }
-               ]
-           })
-        },
+        attributes: [
+          "id",
+          "group_title",
+          "group_url",
+          "group_text",
+          "group_zip",
+          [
+            sequelize.literal(
+              "(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)"
+            ),
+            "users_count",
+          ],
+        ],
+        include: [
+          {
+            model: Event,
+            attributes: [
+              "id",
+              "event_title",
+              "event_text",
+              "event_location",
+              "event_time",
+            ],
+            include: {
+              model: User,
+              attributes: ["id", "username", "first_name"],
+              through: Event_Users,
+              as: "event_user",
+            },
+          },
+          {
+            model: User,
+            attributes: ["id", "first_name"],
+            through: Group_Users,
+            as: "group_user",
+          },
+        ],
+      });
+
+      return groupData.get({ plain: true });
+    },
+    groupByZip: async (parent, { group_zip, miles }) => {
+      let apiUrl = `https://www.zipcodeapi.com/rest/${process.env.ZIPRADIUSKEY}/radius.json/${group_zip}/${miles}/miles?minimal`;
+      let intData = [];
+      await axios
+        .get(apiUrl)
+        .then((response) => {
+          let zipArr = response.data.zip_codes;
+          intData = zipArr.map((zip_code) => parseInt(zip_code));
+          console.log(intData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      const Op = Sequelize.Op;
+      const data = await Group.findAll({
+        where: {
+          group_zip: {
+            [Op.or]: intData,
+          },
+        },attributes: [
+          "id",
+          "group_title",
+          "group_url",
+          "group_text",
+          "group_zip",
+          [
+            sequelize.literal(
+              "(SELECT COUNT(*) FROM group_users WHERE group.id = group_users.group_id)"
+            ),
+            "users_count",
+          ],
+        ],
+        include: [
+          {
+            model: Event,
+            attributes: [
+              "id",
+              "event_title",
+              "event_text",
+              "event_location",
+              "event_time",
+            ],
+            include: {
+              model: User,
+              attributes: ["id", "username", "first_name"],
+              through: Event_Users,
+              as: "event_user",
+            },
+          },
+        ],
+      });
+
+      return data.map((item) => item.get({ plain: true }));
+    },
 
         // ############################# Group Queries #############################
         myGroups: async (parent, args, context) => {
@@ -290,7 +476,115 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You must be logged in!')
-        }
+        },
+        categories: async (parent, args, context) => {
+          if (context.user.id) {
+            const data = await Category.findAll({});
+            return data;
+          }
+          throw new AuthenticationError("You must be logged in!");
+        },
+        allProducts: async (parent, args, context) => {
+          if (context.user.id) {
+            const productData = await Product.findAll({
+              include: [
+                {
+                  model: Category,
+                  attributes: ["id", "category_name"],
+                },
+              ],
+            });
+            return productData.map((data) => data.get({ plain: true }));
+          }
+          throw new AuthenticationError("You must be logged in!");
+        },
+    
+        product: async (parent, { id }, context) => {
+          if (context.user.id) {
+            const data = await Product.findOne({ where: { id: id } });
+            return data;
+          }
+    
+          throw new AuthenticationError("You must be logged in!");
+        },
+    
+        order: async (parent, { id }, context) => {
+          if (context.user.id) {
+            const data = await Order.findOne({
+              where: {
+                id: id,
+              },
+            });
+    
+            return data;
+          }
+    
+          throw new AuthenticationError("You must be logged in!");
+        },
+    
+        orders: async (parent, args, context) => {
+          if (context.user.id) {
+            const orderData = await Order.findAll({
+              include: [
+                {
+                  model: Product,
+                  attributes: [
+                    "id",
+                    "product_name",
+                    "imgPath",
+                    "price",
+                    "quantity",
+                    "category_id",
+                  ],
+                },
+                {
+                  model: User,
+                  attributes: ["id", "username"],
+                },
+              ],
+            });
+    
+            return orderData.map((data) => data.get({ plain: true }));
+          }
+    
+          throw new AuthenticationError("You must be logged in!");
+        },
+        checkout: async (parent, args, context) => {
+          const url = new URL(context.headers.referer).origin;
+          const order = new Order({ products: args.products });
+          const line_items = [];
+    
+          const { products } = await order.populate("products").execPopulate();
+    
+          for (let i = 0; i < products.length; i++) {
+            const product = await stripe.products.create({
+              name: products[i].name,
+              description: products[i].description,
+              images: [`${url}/images/${products[i].image}`],
+            });
+    
+            const price = await stripe.prices.create({
+              product: product.id,
+              unit_amount: products[i].price * 100,
+              currency: "usd",
+            });
+    
+            line_items.push({
+              price: price.id,
+              quantity: 1,
+            });
+          }
+    
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items,
+            mode: "payment",
+            success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${url}/`,
+          });
+    
+          return { session: session.id };
+        },
     }, 
 
         // ############################# Mutations #############################
@@ -536,8 +830,38 @@ const resolvers = {
             }
           
             throw new AuthenticationError('You need to be logged in!');
+        },
+        // Store Mutations
+      addOrder: async (parent, { product_id }, context) => {
+        if (context.user.id) {
+          const user_id = context.user.id;
+          const orderData = await Order.create({
+            product_id,
+            user_id,
+            include: [
+              {
+                model: Product,
+                attributes: [
+                  "id",
+                  "product_name",
+                  "imgPath",
+                  "price",
+                  "quantity",
+                ],
+              },
+              {
+                model: User,
+                attributes: ["user_id"],
+              },
+            ],
+          });
+          return orderData.get({ plain: true });
         }
-    }
-}
 
-module.exports = resolvers;
+        throw new AuthenticationError("You must be logged in!");
+      },
+    },
+    
+  },
+
+  module.exports = resolvers

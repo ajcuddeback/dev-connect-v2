@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 // Apollo
-import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from "@apollo/react-hooks";
+import ApolloClient from "apollo-boost";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Components
 // Events
@@ -23,26 +24,29 @@ import MyEvents from './components/event-components/MyEvents';
 import AskDevsHome from './components/question-components/AskDevsHome';
 import MyQuestions from './components/question-components/MyQuestions';
 
+import Home from "./components/store-components/Home";
+import Detail from "./components/store-components/Detail";
+import OrderHistory from "./components/store-components/OrderHistory";
 // Styled Component
-import GlobalStyle from './components/GlobalStyles';
-import styled from 'styled-components';
+import GlobalStyle from "./components/GlobalStyles";
+import styled from "styled-components";
 
 // Utils
-import Auth from './utils/auth'
+import Auth from "./utils/auth";
 
 // Client
 const client = new ApolloClient({
-  request: operation => {
-    const token = localStorage.getItem('id_token');
+  request: (operation) => {
+    const token = localStorage.getItem("id_token");
 
     operation.setContext({
       headers: {
-        authorization: token ? `Bearer ${token}`: ''
-      }
-    })
-  }, 
-  uri: '/graphql'
-})
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  uri: "/graphql",
+});
 
 function App() {
   // State
@@ -77,9 +81,11 @@ function App() {
               <Route exact path='/meet/admin/:groupName' render={() => (
                 <GroupAdmin navOpen={navOpen} />
               )}></Route>
+              <Route exact path="/shop" component={Home} />
+              <Route exact path="/orderHistory" component={OrderHistory} />
+              <Route exact path="/products/:id" component={Detail} />
             </Switch>
           </Router>
-            
         </>
       ) : (
         <StyledLoginBack>
@@ -93,7 +99,7 @@ function App() {
 
 const StyledLoginBack = styled.div`
   min-height: 100vh;
-  background: linear-gradient( #090718,  #28bad6);
-`
+  background: linear-gradient(#090718, #28bad6);
+`;
 
 export default App;
