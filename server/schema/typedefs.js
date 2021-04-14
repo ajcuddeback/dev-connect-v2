@@ -20,6 +20,7 @@ const typeDefs = gql`
     questions: [Question]
     friends: [User]
     orders: [Order]
+    user_order: [Product]
   }
 
   type Group {
@@ -170,6 +171,7 @@ const typeDefs = gql`
     addFriend(friend_id: Int!): User
     addOrder(product_id: Int!): Order
     updateProduct(id: Int!, quantity: Int!): Product
+    deleteProduct(id: Int!): Product
   }
 `;
 

@@ -1,10 +1,10 @@
 // resolvers
 const sequelize = require("../config/connection");
 const Sequelize = require("sequelize");
-const stripe = require("stripe")("STRIPE_KEY");
+
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
-
+const stripe = require("stripe")("STRIPE_KEY");
 const axios = require("axios");
 
 const {
@@ -52,9 +52,15 @@ const resolvers = {
               through: User_Friends,
               as: "friends",
             },
+            {
+              model: Product,
+              attributes: ["id", "product_name", "price", "imgPath"],
+              through: Order,
+              as: "user_order",
+            },
           ],
         });
-
+        console.log(userData.get({ plain: true }));
         return userData.get({ plain: true });
       }
 
@@ -385,21 +391,37 @@ const resolvers = {
     },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      const order = new Order({ products: args.products });
+      if (context.user) {
+        const userData = await User.findOne({
+          where: {
+            id: context.user.id,
+          },
+          include: [
+            {
+              model: Product,
+              attributes: ["id", "product_name", "price", "imgPath"],
+              through: Order,
+              as: "user_order",
+            },
+          ],
+        });
+
+        return userData.get({ plain: true });
+      }
+
       const line_items = [];
 
-      const { products } = await order.populate("products").execPopulate();
+      const products = userData.user_order;
 
       for (let i = 0; i < products.length; i++) {
         const product = await stripe.products.create({
-          name: products[i].name,
-          description: products[i].description,
-          images: [`${url}/images/${products[i].image}`],
+          name: products[i].product_name,
+          // images: [`${url}/images/${products[i].imgPath}`],
         });
 
         const price = await stripe.prices.create({
           product: product.id,
-          unit_amount: products[i].price * 100,
+          unit_amount: products[i].price,
           currency: "usd",
         });
 
@@ -712,6 +734,19 @@ const resolvers = {
           ],
         });
         return orderData.get({ plain: true });
+      }
+
+      throw new AuthenticationError("You must be logged in!");
+    },
+    deleteProduct: async (parent, { id }, context) => {
+      if (context.user.id) {
+        const data = await Product.destroy({
+          where: {
+            id: id,
+          },
+        });
+
+        return data;
       }
 
       throw new AuthenticationError("You must be logged in!");

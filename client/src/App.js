@@ -21,7 +21,6 @@ import MyEvents from "./components/event-components/MyEvents";
 
 import Home from "./components/store-components/Home";
 import Detail from "./components/store-components/Detail";
-import OrderHistory from "./components/store-components/OrderHistory";
 import AskDevsHome from "./components/question-components/AskDevsHome";
 // Styled Component
 import GlobalStyle from "./components/GlobalStyles";
@@ -110,8 +109,11 @@ function App() {
                 path="/meet/admin/:groupName"
                 render={() => <GroupAdmin navOpen={navOpen} />}
               ></Route>
-              <Route exact path="/shop" component={Home} />
-              <Route exact path="/orderHistory" component={OrderHistory} />
+              <Route
+                exact
+                path="/shop"
+                render={() => <Home navOpen={navOpen} />}
+              ></Route>
               <Route exact path="/products/:id" component={Detail} />
             </Switch>
           </Router>

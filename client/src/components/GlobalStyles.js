@@ -1,9 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 // fonts
-import HindMadurai from '../fonts/HindMadurai-Regular.ttf';
-import Philosopher from '../fonts/Philosopher-Regular.ttf';
-import orientalTiles from '../images/oriental-tiles.png'
+import HindMadurai from "../fonts/HindMadurai-Regular.ttf";
+import Philosopher from "../fonts/Philosopher-Regular.ttf";
+import orientalTiles from "../images/oriental-tiles.png";
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -140,6 +140,6 @@ const GlobalStyle = createGlobalStyle`
     100% { transform: rotate(360deg); }
     }
     
-`
+`;
 
 export default GlobalStyle;

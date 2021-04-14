@@ -176,3 +176,18 @@ export const GET_ME_FRIENDS = gql`
     }
   }
 `;
+
+export const QUERY_PRODUCT = gql`
+  query($id: Int!) {
+    product(id: $id) {
+      id
+      product_name
+      price
+      quantity
+      imgPath
+      category {
+        category_name
+      }
+    }
+  }
+`;

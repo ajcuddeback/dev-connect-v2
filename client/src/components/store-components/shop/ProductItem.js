@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { pluralize } from "../../../utils/helpers";
-import styled from "styled-components";
+import { QUERY_PRODUCTS } from "../../../utils/queries";
+
 import "gestalt/dist/gestalt.css";
-import { Box, Image, Text, Card, Button } from "gestalt";
+import { Box, Image, Text, Card, Button, ButtonGroup } from "gestalt";
 
 function ProductItem({
   image,
@@ -103,19 +104,19 @@ function ProductItem({
             >
               <Box paddingX={1} paddingY={1}>
                 <Button
-                  size="sm"
                   inline
+                  size="sm"
                   onClick={addToCart}
-                  color="blue"
+                  color="red"
                   text="To Cart"
                 ></Button>{" "}
               </Box>
               <Box paddingX={1} paddingY={1}>
                 <Button
-                  text="Remove"
-                  color="watermelon"
-                  onClick={removeFromCart}
                   size="sm"
+                  text="Remove"
+                  onClick={removeFromCart}
+                  inline
                 />
               </Box>
             </Box>
