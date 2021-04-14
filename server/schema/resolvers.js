@@ -245,7 +245,11 @@ const resolvers = {
                     include: [
                         {
                             model: Answer,
-                            attributes: ["id","answer_text"]
+                            attributes: ["id","answer_text"],
+                            include: {
+                                model: User,
+                                attributes: ["id", "username"]
+                            }
                         },
                         {
                             model: User,

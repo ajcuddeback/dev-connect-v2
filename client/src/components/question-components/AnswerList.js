@@ -1,19 +1,16 @@
 import React from 'react';
 
-const AnswerList = ({ answers }) => {
+const AnswerList = ({ answer, answerCount }) => {
+  if(answerCount >= 5){
+    
+  }
+
   return (
-    <div className="card mb-3">
-        <div className="card-header">
-            <span className="text-light">Answers from other Devs: </span>
-        </div>
-        <div className="card-body">
-            {answers &&
-            answers.map(answer => (
-                <p className="pill mb-3" key={answer.id}>
-                {answer.answer_text} {'// '}
-                </p>
-            ))}
-        </div>
+    <div className="eachAnswer">
+      <div className="usernameAnswerWrapper">
+        <p>{answer.username}</p>
+        <p>{answer.answer_text}</p>
+      </div>
     </div>
   );
 };

@@ -133,8 +133,39 @@ const GlobalStyle = createGlobalStyle`
         max-width: 500px;
     }
 
+    .questionCardContainer {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin: 0 auto 10px;
+        border: none;
+        border-radius: 5px;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(5px);
+        padding: 10px 15px;
+        max-width: 80%;
+        min-height: 25px;
+    }
+
     .questionList {
         margin-top: 25px;
+    }
+
+    .questionHeaderDiv {
+        margin: 5px auto;
+    }
+
+    .questionDiv {
+        margin: 0 auto;
+    }
+
+    .answerDiv {
+        margin: 0 auto;
+    }
+
+    .questionListTitle {
+        margin-bottom: 25px;
+        text-align: center;
     }
 
     .characterCount {
