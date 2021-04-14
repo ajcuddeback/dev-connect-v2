@@ -1,19 +1,25 @@
 import React from "react";
 
-const Comment = () => {
+const Comment = (c) => {
   return (
-    <StyledFormComment>
-      <form class="comment-form">
-        <div>
-          <input class="ml-5" name="comment-text" placeholder="Write a Comment"/>
-        </div>
+    <div className="comment_content">
+      <div className="comment_username">
+        {
+          c.username
+        }
+      </div>
+      <div className="comment_date">
+        {
+          c.createdAt
+        }
+      </div>
+      <div className="comment_text">
+        {
+          c.comment_text
+        }
+      </div>
+    </div>
 
-        <div>
-          <button class="" type="submit">
-            Reply
-          </button>
-        </div>
-      </form>
-    </StyledFormComment>
   );
 };
+export default Comment;

@@ -7,19 +7,27 @@ import Post from './Post';
 
 function Home(){
 
-    const {data} = useQuery(GET_POSTS);
+    const {loading, data} = useQuery(GET_POSTS);
     console.log(data)
+
+    if(loading) {
+        return (
+            <>
+                <p>Posts Loading...</p>
+                <div className="loader"></div>
+            </>
+        )
+    }
 
      return (
         <div className="homeWrapper">
             <div className="postWrapper">
                 <PostForm/>
                 {
-                    // this.data.map((p) => (
-                    //     <Post key = {p.id} post={p}/>
-                    // ))
+                    data.posts.map((p) => (
+                        <Post key = {p.id} post={p}/>
+                    ))
                 }
-
             </div>
         </div>   
      )
