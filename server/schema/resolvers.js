@@ -1,10 +1,10 @@
 // resolvers
 const sequelize = require("../config/connection");
 const Sequelize = require("sequelize");
-
+require("dotenv").config();
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
-const stripe = require("stripe")("STRIPE_KEY");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 const axios = require("axios");
 
 const {
@@ -389,54 +389,22 @@ const resolvers = {
 
       throw new AuthenticationError("You must be logged in!");
     },
-    checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      if (context.user) {
-        const userData = await User.findOne({
-          where: {
-            id: context.user.id,
-          },
-          include: [
-            {
-              model: Product,
-              attributes: ["id", "product_name", "price", "imgPath"],
-              through: Order,
-              as: "user_order",
-            },
-          ],
-        });
-
-        return userData.get({ plain: true });
-      }
-
-      const line_items = [];
-
-      const products = userData.user_order;
-
-      for (let i = 0; i < products.length; i++) {
-        const product = await stripe.products.create({
-          name: products[i].product_name,
-          // images: [`${url}/images/${products[i].imgPath}`],
-        });
-
-        const price = await stripe.prices.create({
-          product: product.id,
-          unit_amount: products[i].price,
-          currency: "usd",
-        });
-
-        line_items.push({
-          price: price.id,
-          quantity: 1,
-        });
-      }
-
+    checkout: async (parent, { amount }, context) => {
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
-        line_items,
         mode: "payment",
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`,
+
+        line_items: [
+          {
+            currency: "usd",
+            name: "total",
+            amount: amount * 100,
+            quantity: 1,
+          },
+        ],
+
+        success_url: "https://dev-connect-ac.herokuapp.com/shop",
+        cancel_url: "https://dev-connect-ac.herokuapp.com/shop",
       });
 
       return { session: session.id };

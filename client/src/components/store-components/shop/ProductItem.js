@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { pluralize } from "../../../utils/helpers";
-import { QUERY_PRODUCTS } from "../../../utils/queries";
 
 import "gestalt/dist/gestalt.css";
 import { Box, Image, Text, Card, Button, ButtonGroup } from "gestalt";
@@ -17,6 +16,7 @@ function ProductItem({
 }) {
   function addToCart() {
     const product = {
+      id: id,
       product_name: product_name,
       price: price,
       image: image,
@@ -24,32 +24,39 @@ function ProductItem({
 
     let cartProducts = cartItems;
     let productArr = [];
-    if (cartProducts.length < 1) {
+    if (cartProducts.length === 0) {
       productArr.push(product);
       setCartItems(productArr);
     } else {
       productArr.push(...cartProducts);
       productArr.push(product);
-
+      console.log(product);
       setCartItems(productArr);
     }
   }
-  console.log(image);
-  function removeFromCart() {
-    setCartItems((cartItems) => {
-      const indexOfItemToRemove = cartItems.findIndex(
-        (cartItem) => cartItem.id === cartItems.id
-      );
-      if (indexOfItemToRemove === -1) {
-        return cartItems;
-      }
+  function handleRemove(id) {
+    const newList = cartItems.filter((item) => item.id !== id);
 
-      return [
-        ...cartItems.slice(0, indexOfItemToRemove),
-        ...cartItems.slice(indexOfItemToRemove + 1),
-      ];
-    });
+    setCartItems(newList);
   }
+  // function removeFromCart() {
+  //   const product = {
+  //     id: id,
+  //   };
+  //   setCartItems((cartItems) => {
+  //     const indexOfItemToRemove = cartItems.findIndex(
+  //       (cartItem) => cartItem.id === product.id
+  //     );
+  //     if (indexOfItemToRemove === -1) {
+  //       return cartItems;
+  //     }
+
+  //     return [
+  //       ...cartItems.slice(0, indexOfItemToRemove),
+  //       ...cartItems.slice(indexOfItemToRemove + 1),
+  //     ];
+  //   });
+  // }
 
   return (
     <Box
@@ -115,7 +122,7 @@ function ProductItem({
                 <Button
                   size="sm"
                   text="Remove"
-                  onClick={removeFromCart}
+                  onClick={() => handleRemove(id, price)}
                   inline
                 />
               </Box>

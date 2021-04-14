@@ -128,7 +128,7 @@ const typeDefs = gql`
     order(id: Int!): Order
     orders: [Order]
     allProducts: [Product]
-    checkout(products: [ID]!): Checkout
+    checkout(amount: Int): Checkout
   }
 
   type Mutation {

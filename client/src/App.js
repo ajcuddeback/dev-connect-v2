@@ -18,6 +18,7 @@ import AddEvent from "./components/event-components/AddEvent";
 import MeetDashboard from "./components/event-components/MeetDashboard";
 import MyGroups from "./components/event-components/MyGroups";
 import MyEvents from "./components/event-components/MyEvents";
+import { loadStripe } from "@stripe/stripe-js";
 
 import Home from "./components/store-components/Home";
 import Detail from "./components/store-components/Detail";

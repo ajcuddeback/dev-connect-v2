@@ -91,8 +91,8 @@ export const QUERY_PRODUCTS = gql`
   }
 `;
 export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ID]!) {
-    checkout(products: $products) {
+  query getCheckout($amount: Int!) {
+    checkout(amount: $amount) {
       session
     }
   }

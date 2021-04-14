@@ -52,7 +52,7 @@ const ProductList = ({ currentCategory, setCartItems, cartItems }) => {
           justifyContent="center"
           padding={4}
         >
-          {filterProducts().map((product) => (
+          {filterProducts().map((product, index) => (
             <ProductItem
               key={product.id}
               id={product.id}
