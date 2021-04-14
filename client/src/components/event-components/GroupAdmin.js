@@ -13,6 +13,7 @@ import EachEventAdmin from './each-event/EachEventAdmin';
 import styled from 'styled-components';
 
 const GroupAdmin = () => {
+    // State
    const [isAdmin, setIsAdmin] = useState(false);
    const [dataGroup, setDataGroup] = useState(false);
 
