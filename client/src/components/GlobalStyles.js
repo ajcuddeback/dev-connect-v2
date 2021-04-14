@@ -168,6 +168,20 @@ const GlobalStyle = createGlobalStyle`
         text-align: center;
     }
 
+    .eachAnswer {
+        margin: 0 auto 5px;
+        padding: 10px 15px;
+        max-width: 75%;
+        border: none;
+        border-radius: 5px;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(5px);
+    }
+
+    .answerInfoWrapper {
+
+    }
+
     .characterCount {
         margin-top: 25px;
     }

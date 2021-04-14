@@ -8,6 +8,7 @@ const AnswerForm = ({ question_id }) => {
   const [characterCount, setCharacterCount] = useState(0);
 
   const [addAnswer, { error }] = useMutation(ADD_ANSWER, {
+    query: GET_QUESTIONS,
     refetchQueries: [{ query: GET_QUESTIONS }]
   });
 
@@ -32,7 +33,6 @@ const AnswerForm = ({ question_id }) => {
     } catch (e) {
       console.error(e);
     }
-    console.log(formAnswerText)
   };
 
   return (
@@ -42,16 +42,16 @@ const AnswerForm = ({ question_id }) => {
       </p>
       <div>
         <form
-          className="flex-row justify-center justify-space-between-md align-stretch"
+          className="questionFormContainer"
           onSubmit={handleFormSubmit}
           >
           <textarea
             placeholder="Provide an answer..."
             value={formAnswerText}
-            className="form-input col-12"
+            className="form-input"
             onChange={handleChange}
             ></textarea>
-              <button className="btn col-12" type="submit">
+              <button className="questionBtn glass-button" type="submit">
                 Submit
               </button>
         </form>

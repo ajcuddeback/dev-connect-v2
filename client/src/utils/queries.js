@@ -105,6 +105,7 @@ export const GET_ME_QUESTIONS = gql`
     query {
         me {
             id
+            username
             questions {
                 id
                 question_text

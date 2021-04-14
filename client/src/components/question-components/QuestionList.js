@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AnswerList from '../question-components/AnswerList';
 import AnswerForm from './AnswerForm'
+import { FaChevronDown } from "react-icons/fa";
 
 const QuestionList = ({ questions }) => {
    
@@ -45,10 +46,9 @@ const QuestionList = ({ questions }) => {
                         </div>
                         <AnswerForm />
                         <div>
-                            <p className="answerDrop" value={answerOpen[question.id]} onClick={()=>handleAnswerClick(question.id)}>Click to get answers</p>
+                            <p className="answerDrop" value={answerOpen[question.id]} onClick={()=>handleAnswerClick(question.id)}><span FaChevronDown>Click to get answers</span></p>
                         </div>
                     </div>
-                    {console.log("test " + answerOpen[question.id])}
                     {(answerOpen[question.id] === true) &&
                         question.answers.map(answer => (<AnswerList answer = {answer} 
                         answerCount = {question.answers.length}/>) ) 
