@@ -41,7 +41,7 @@ const MyQuestions = () => {
         }],
     });
   }
-  console.log(data.me)
+  console.log()
 
   // JSX
   if(loading) {
