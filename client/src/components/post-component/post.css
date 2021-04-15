@@ -63,4 +63,51 @@
     cursor: pointer;
 }
 
+.postCenter{
+  width:100%;
+  font-size: 1rem;
+}
+
+/* comments styling */
+.comment_content{
+  margin: 1rem 0;
+  min-width: 30rem;
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px #4765ab;
+}
+.name-date{
+  margin: 1rem 0;
+  color: #4765ab;
+}
+
+
+
+
+
+
+@media  screen and (max-width: 630px) {
+  .comments-by-post, .commentInput{
+    width:80%;
+    
+  }
+  .postWrapper{
+    width:80%;
+  }
+  
+}
+
+@media creen and (max-width:535px){
+  .comments-by-post, .commentInput{
+    width:70%;
+    font-size:.8rem
+    
+  }
+
+}
+.postCenter{
+  width:70%;
+  font-size:.8rem;
+}
+
  

@@ -232,7 +232,7 @@ p {
 }
     .commentInput {
         input {
-            width: 5rem;
+            width: 20rem;
         }
 
     }
