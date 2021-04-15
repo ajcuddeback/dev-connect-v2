@@ -97,17 +97,13 @@
   
 }
 
-@media creen and (max-width:535px){
+@media creen and (min-width:630px){
   .comments-by-post, .commentInput{
     width:70%;
     font-size:.8rem
-    
   }
 
 }
-.postCenter{
-  width:70%;
-  font-size:.8rem;
-}
+
 
  
