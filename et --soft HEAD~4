@@ -1,0 +1,261 @@
+[33mcommit 1d6ead842048cb195603bc79a488417d70ce33c1[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/graphql-friends[m[33m, [m[1;31morigin/feature/graphql-friends[m[33m)[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Wed Apr 14 19:52:31 2021 -0400
+
+    f
+
+[33mcommit 20d6434dc5bf6a6e26fcec10c1be903a50688200[m
+Merge: 5aaaa21 9a804be
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Wed Apr 14 19:47:52 2021 -0400
+
+    f
+
+[33mcommit 9a804be9b94bb7e0c4e36680c39cf7bd7653335a[m
+Merge: 0b54544 a317e46
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Wed Apr 14 19:24:24 2021 -0400
+
+    fixing conflicts
+
+[33mcommit 0b54544fead97301a9dd9d9d9c33418f374e015f[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Wed Apr 14 19:22:51 2021 -0400
+
+    pushing
+
+[33mcommit 5aaaa212e5ed5b6bbd45181d12a7c6cefeafb9d2[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Wed Apr 14 19:19:30 2021 -0400
+
+    feature/graphql-friends
+
+[33mcommit 838dfa104d37a0963dbf756e247cfda784ce13e4[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Wed Apr 14 18:21:56 2021 -0400
+
+    Added some base styling to answer list
+
+[33mcommit a317e465687a55ca54327fecb31d51def281ce14[m
+Merge: 57bcfd4 373df62
+Author: Austin Cuddeback <57537414+ajcuddeback@users.noreply.github.com>
+Date:   Tue Apr 13 20:56:55 2021 -0400
+
+    Merge pull request #4 from ajcuddeback/store/GraphQL
+    
+    Store/graph ql
+
+[33mcommit 0f68429ea8ab8d5e2f1403b7bcefb828a69c7b0b[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Tue Apr 13 20:54:17 2021 -0400
+
+    working answer submit form
+
+[33mcommit 1cb0a5112b632cb84ea11984f2244cade4c06aa0[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Tue Apr 13 20:20:04 2021 -0400
+
+    added correct logic to display answers on click
+
+[33mcommit 373df62b12ebc6d659ef9ca2fb6e25194a3e860c[m
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Tue Apr 13 18:47:23 2021 -0400
+
+    added remove items functionality
+
+[33mcommit ce873884e43e8b6a3d6e3285156a9e60623be389[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Tue Apr 13 16:05:02 2021 -0400
+
+    fixed questionForm working on styling and single question
+
+[33mcommit 7e738d95ece46d8981c907efc881956a0152dd01[m
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Tue Apr 13 13:57:55 2021 -0400
+
+    bug fixes
+
+[33mcommit 814ca1d359d8ed48e50ee41d638b77fd7737fd3a[m
+Merge: be2e1a2 57bcfd4
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Tue Apr 13 13:22:56 2021 -0400
+
+    added stripe data
+
+[33mcommit be2e1a253fe8e994bcdaf7c011996d7367f349c3[m
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Tue Apr 13 12:57:29 2021 -0400
+
+    added stripe data
+
+[33mcommit b7fc6844d71da758f88ce649cfa4e224c156f989[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Mon Apr 12 20:54:07 2021 -0400
+
+    confirmed questions are returned as array working on question submit
+
+[33mcommit eb0ca1969f51e8054ac65f8731647dc7cc03aa72[m
+Merge: 8e428d3 57bcfd4
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Mon Apr 12 20:14:11 2021 -0400
+
+    Merge branch 'develop' of github.com:ajcuddeback/dev-connect-v2 into feature/graphql-friends
+
+[33mcommit 8e428d3399395a380ffdc59d118f0fc8bd8e2a51[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Mon Apr 12 20:13:45 2021 -0400
+
+    removed bootstrap and added manual styling for questions
+
+[33mcommit 57bcfd4a8d889a48e0915797b42bbf7e4d7c1db3[m
+Merge: bce265b e75c84c
+Author: Austin Cuddeback <57537414+ajcuddeback@users.noreply.github.com>
+Date:   Mon Apr 12 09:44:45 2021 -0400
+
+    Merge pull request #3 from ajcuddeback/feature/graphql-friends
+    
+    Feature/graphql friends
+
+[33mcommit e75c84c18375c47a829573e1ff005e85f212a767[m
+Merge: 5ad0f6e bce265b
+Author: Austin Cuddeback <57537414+ajcuddeback@users.noreply.github.com>
+Date:   Mon Apr 12 09:44:39 2021 -0400
+
+    Merge branch 'develop' into feature/graphql-friends
+
+[33mcommit bb402037fb0d9e5d313389585a4e8bafd80ab707[m
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Sun Apr 11 21:08:40 2021 -0400
+
+    added functions and cart
+
+[33mcommit 5ad0f6e6a2e9f4df2a8c26e7c923b6a8421433fa[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Sun Apr 11 21:00:28 2021 -0400
+
+    added base stylings for askdevs home page working on getting questions
+
+[33mcommit 1c0e1c6058fd53bca4b18ac9f896e784d761b52b[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Sun Apr 11 20:36:07 2021 -0400
+
+    Added base code working on functinality for pages
+
+[33mcommit efc4999b1d1443dd1a05bd763f7516c95f6f41a1[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Sun Apr 11 17:55:33 2021 -0400
+
+    added beginning code to askdevs home
+
+[33mcommit d6624919229be6f0a3e6cd7d6a3479e581c248a3[m
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Sun Apr 11 17:00:33 2021 -0400
+
+    added react components and styles
+
+[33mcommit bce265b735c3a79095ad2efca97d1ab1f7a8156e[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Sat Apr 10 11:15:25 2021 -0400
+
+    fixed warnings and errors in console
+
+[33mcommit 9fef6e63dd49cd14b6cadda384f1eb7836ae7838[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Sat Apr 10 10:36:28 2021 -0400
+
+    added service worker
+
+[33mcommit a934ce888ee056f3b03a662bd4c68b3265a02191[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Sat Apr 10 09:50:30 2021 -0400
+
+    added form validation
+
+[33mcommit 94d55964e7e68f49968cdb5f266c408e7f4dfc4d[m
+Merge: ea3c793 3d65897
+Author: Austin Cuddeback <57537414+ajcuddeback@users.noreply.github.com>
+Date:   Fri Apr 9 22:36:12 2021 -0400
+
+    Merge pull request #2 from ajcuddeback/feature/graphql-friends
+    
+    Feature/graphql friends
+
+[33mcommit ea3c79324628bbe911a2188d92a6786f91e9996e[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Fri Apr 9 22:34:22 2021 -0400
+
+    added better accesability and smaller image sizes
+
+[33mcommit cd888a03f2492cb1e3468bf0ca8f70c50aa6cfc6[m
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Fri Apr 9 16:45:33 2021 -0400
+
+    react components
+
+[33mcommit 775fe86d2cc429733c767199144c8f5102aa65e8[m
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Fri Apr 9 12:28:22 2021 -0400
+
+    added queries/client
+
+[33mcommit e236374bc6f071c657168ac749836ce81750f7fe[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Fri Apr 9 11:45:53 2021 -0400
+
+    deleted extrenous code
+
+[33mcommit c455eec5532c81ffa8f0bb8018f1e06f4fd7ba2b[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Fri Apr 9 11:43:55 2021 -0400
+
+    added user count to events
+
+[33mcommit f26d92627cf2f35a53c2f2b53db4d7e9083105c8[m[33m ([m[1;31morigin/feature/mainstyles[m[33m, [m[1;32mfeature/mainstyles[m[33m)[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Fri Apr 9 11:26:50 2021 -0400
+
+    add custom scroll
+
+[33mcommit 38bff2a3a017ea465eb6e18644c37c881dbb5eb0[m[33m ([m[1;31morigin/events/bug-fixes[m[33m, [m[1;32mevents/bug-fixes[m[33m)[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Fri Apr 9 10:38:15 2021 -0400
+
+    fixed bugs
+
+[33mcommit 2919637bb97f524141db4f84ef2eec1aa3d66697[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Fri Apr 9 10:30:35 2021 -0400
+
+    added css hamburger menu
+
+[33mcommit 3d65897fe83d2d61984e0e1617bd25fc582131c6[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Thu Apr 8 20:20:56 2021 -0400
+
+    feature/graphql-friends
+
+[33mcommit 6f37633a2f25382098f5bf10a000cd6bf5565a3d[m
+Merge: 4a94864 74f7a1e
+Author: Irina Skitayeva <irina.skitayeva@gmail.com>
+Date:   Thu Apr 8 20:17:56 2021 -0400
+
+    Merge branch 'develop' of github.com:ajcuddeback/dev-connect-v2 into store/GraphQL
+
+[33mcommit 0030840fb0b09977acc4939aa10efd93b206ecbd[m
+Author: ajcudd <ajcuddeback@gmail.com>
+Date:   Thu Apr 8 20:06:13 2021 -0400
+
+    added form validationg
+
+[33mcommit 80f30928fa30a9df68744ef2b3a3b660f5cd3313[m
+Merge: 77edb37 cce203e
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Thu Apr 8 19:29:14 2021 -0400
+
+    Merge branch 'develop' of github.com:ajcuddeback/dev-connect-v2 into feature/graphql-friends
+
+[33mcommit 77edb37553d883107bd69fcedc7907f6e5654319[m
+Author: jasmineakbari <jasmineakbari@yahoo.com>
+Date:   Thu Apr 8 19:28:22 2021 -0400
+
+    st

@@ -111,7 +111,6 @@ const StyledMyQuestions = styled.div`
   width: 100%;
   flex-direction: column;
   align-items: center;
-
   .event-wrapper {
     width: 20rem;
     margin-top: 1rem;
