@@ -328,22 +328,27 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in!')
         },
        
-        commentsByPost: async (parent, args, context) => {
-            if (context.post.id){
-                return Comment.findAll(
+        commentsByPost: async (parent, {post_id}, context) => {
+
+                return await Comment.findAll(
                     {
                         where: {
                             // use the ID from the session
-                            post_id: context.post.id
+                            post_id
                           },
+                    
                           attributes: [
                             'id',
                             'comment_text'
                           ],
+                          include:{
+                              model:User,
+                              attributes:['username']
+                          }
 
                     }
                 )
-            }
+            
 
         },
        

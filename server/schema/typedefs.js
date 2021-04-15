@@ -114,7 +114,7 @@ const typeDefs = gql`
         questions(username: String): [Question]
         question(_id: ID!): Question
         posts: [Post] #done
-        commentsByPost: [Comment] #done
+        commentsByPost(post_id: Int!): [Comment] #done
         getPostById: [Post] #done
     }
 

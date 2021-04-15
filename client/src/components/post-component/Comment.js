@@ -1,11 +1,12 @@
 import React from "react";
 
-const Comment = (c) => {
+const Comment = ({c}) => {
+  console.log(c)
   return (
     <div className="comment_content">
       <div className="comment_username">
         {
-          c.username
+          c.user.username
         }
       </div>
       <div className="comment_date">

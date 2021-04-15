@@ -8,12 +8,14 @@ import {useQuery,useMutation} from '@apollo/react-hooks';
 import {COMMENT_BY_POST, GET_POSTS} from  '../../utils/queries';
 import {ADD_LIKE, REMOVE_LIKE, DELETE_POST, UPDATE_POST, CREATE_COMMENT} from '../../utils/mutations';
 import Auth from '../../utils/auth';
+import styled from 'styled-components';
 
 import { useParams, Link, useHistory } from 'react-router-dom';
 
 
 
 function Post({post, posts}){
+    const [isLiked, setIsLiked] = useState({})
     
     
     const user = Auth.getProfile();
@@ -27,7 +29,10 @@ function Post({post, posts}){
     
 
     //queries and mutations
-    const {loading, data} = useQuery(COMMENT_BY_POST);
+
+    const {loading, commentError, data } = useQuery(COMMENT_BY_POST,{
+        variables:{post_id: parseInt(post.id)}
+    });
     // const {loadingPosts, posts} = useQuery(GET_POSTS);
     
     const { user_id, post_id } = useParams();
@@ -48,30 +53,27 @@ function Post({post, posts}){
         }]
     });
     const [updatePost,{updatePostErr}]= useMutation(UPDATE_POST);
-    const [createComment,{createCommentErr}]= useMutation(CREATE_COMMENT);
+    const [createComment,{createCommentErr}]= useMutation(CREATE_COMMENT, {
+        refetchQueries: [{
+            query: GET_POSTS
+        }]
+    });
 
     const [message, setMessage] = useState('')
-    const [liked, setLiked] = useState(false)
-    
- 
-    useEffect(() => {
-        console.log('liked');
-    }, [liked])
 
-    if(loading) {
-        return (
-            <>
-                <p>Comments Loading...</p>
-                <div className="loader"></div>
-            </>
-        )
-    }
+    useEffect(() => {
+        let likedObj = {};
+        posts.forEach(post => {
+            if(post.liked_posts.id === user.data.id) {
+                likedObj[post.id] = true;
+            } else {
+                likedObj[post.id] = false;
+            }
+        });
+        setIsLiked(likedObj)
+    }, [])
 
     //Functions
-    console.log(posts)
-
-    
-   
 
 
     const handleDeleteClick = async () => {
@@ -101,7 +103,7 @@ function Post({post, posts}){
       const handleAddLike = async (id) => {
         
         const postId = parseInt(id)
-        console.log('we adding a like')
+        
         try {
             await addLike({
                 variables: { post_id: postId }
@@ -115,7 +117,7 @@ function Post({post, posts}){
 
       const handleRemoveLike = async (id) => {
         const postId = parseInt(id)
-        console.log('we deleteing')
+      
         
         try {
             await removeLike({
@@ -128,21 +130,19 @@ function Post({post, posts}){
           }
       };
 
-      const handleReplyClick = async event => {
+      const handleReplyClick = async(event) => {
+        
         event.preventDefault();      
         try {
           // add comment to database
           await createComment({
-            variables: {comment_text: message }
+            variables: {comment_text: message, post_id:parseInt(post.id)}
           });
-      
-          
         } catch (e) {
           console.error(e);
         }
       };
       
-
       const handleMessageChange = event => {
         setMessage(event.target.value);
       };
@@ -171,42 +171,72 @@ function Post({post, posts}){
           }else {  handleAddLike(id);}       
       }
 
+     if(loading) {
+        return (
+            <>
+                <p>Comments Loading...</p>
+                <div className="loader"></div>
+            </>
+        )
+    }
+
     return(
-        <div className="post">
+        <StyledPost className="post">
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
-                        <span className="postUsername">{post.user.username}</span>
+                        <p className="postUsername">{post.user.username}</p>
                         <span className="postDate">{}</span>
                     </div>
                 </div>
                 <div className="postCenter">{post.post_content}</div>
                 <div className="postBottom">
-                    {liked && <span>liked</span>}
+                    
                     <div onClick={() => toggleLike(post.id)}  className="postBottomLeft">
-                        {/* <likeButton  user ={user}post ={post}/> */}
+                        
                         {like}
                     </div>
                     <div className="postBottomRight">
-                        {/* { data.comments.map((comment) => (
-                             <Comment key = {comment.id} comment={c}/>
-                         ))} */}
-                         <span className="comments">{commentSymbol}</span>
+                     
+                         <span className="comments">{post.comments.length}{commentSymbol}</span>
                          <span onClick = {handleEditClick} className="editPost" >{editPost}</span>
                          <span onClick ={handleDeleteClick} className="deletePost">{deletePostIcon}</span>
                     </div>
                 </div>
             </div>
-            <div className="commentsByPost">
+            <div className="commentInput">
                 <input onChange={(e) => handleMessageChange(e)} type="text" className="reply" placeholder="Reply"/>
                 <span onClick = {handleReplyClick} className="replyIcon">{replyIcon}</span>
 
             </div>
+          
+             <div className="comments-by-post">
+                  {
+                    data.commentsByPost.map((c)=>(
+                        <Comment key = {c.id} c={c} /> 
+                    ))
+                 }
+            </div>
+
+            
            
                 
-        </div>
+        </StyledPost>
         
     )
 }
+
+const StyledPost = styled.div`
+p {
+    font-size:1.5rem;
+}
+    .commentInput {
+        input {
+            width: 5rem;
+        }
+
+    }
+    
+`
 
 export default Post;

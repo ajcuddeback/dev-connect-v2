@@ -152,10 +152,13 @@ query {
 }
 `
 export const COMMENT_BY_POST = gql`
-    query {
-        commentsByPost {
+    query commentsByPost($post_id: Int!){
+        commentsByPost(post_id:$post_id) {
             id
             comment_text
+            user {
+                username
+            }
         }
     }
 `
