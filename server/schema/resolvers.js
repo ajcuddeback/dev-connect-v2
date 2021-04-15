@@ -49,7 +49,7 @@ const resolvers = {
                         },
                         {
                             model: Question,
-                            attributes: ["id", "question_text"]
+                            attributes: ["id", "question_text", "createdAt"]
                         }
                     ]
                 })
@@ -64,7 +64,7 @@ const resolvers = {
                include: [
                     {
                         model: Question,
-                        attributes: ["id","question_text"]
+                        attributes: ["id", "question_text"]
                     },
                     {
                         model: User,

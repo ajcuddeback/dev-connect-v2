@@ -16,7 +16,7 @@ const AskDevsHome = () => {
         <main className="container">
             <div className="titleDiv">
                 <h1 className="askDevsHeader">AskDevs Home!</h1>
-                <p>Ask or answer an outstanding question:</p>
+                <p>Ask, or answer an outstanding question:</p>
             </div>
             <div>
             {loggedIn && (

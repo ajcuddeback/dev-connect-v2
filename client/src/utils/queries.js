@@ -118,6 +118,7 @@ export const GET_ME_QUESTIONS = gql`
                 answers {
                     id
                     answer_text
+                    createdAt
                     user_id
                     user{
                         id
