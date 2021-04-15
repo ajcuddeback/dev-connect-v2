@@ -532,8 +532,8 @@ const resolvers = {
           },
         ],
 
-        success_url: `http://localhost:3000/success`,
-        cancel_url: "https://dev-connect-ac.herokuapp.com/shop",
+        success_url: `https://dev-connect-v2.herokuapp.com/success`,
+        cancel_url: "https://dev-connect-v2.herokuapp.com/shop",
       });
 
       return { session: session.id };
