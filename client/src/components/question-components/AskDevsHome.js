@@ -9,25 +9,25 @@ import QuestionList from '../question-components/QuestionList';
 const AskDevsHome = () => {
     const { loading, data } = useQuery(GET_QUESTIONS);
     
-    // const { data: userData } = useQuery(QUERY_ME_BASIC);
     const questions = data?.questions || [];
     const loggedIn = Auth.loggedIn();
 
     return(
-        <main class="container">
-            <div className="flex-row justify-space-between">
-                <h1 className="text-center">Ask Devs Home!</h1>
+        <main className="container">
+            <div className="titleDiv">
+                <h1 className="askDevsHeader">AskDevs Home!</h1>
+                <p>Ask or answer an outstanding question:</p>
             </div>
-            <div className="flex-row justify-space-between">
+            <div>
             {loggedIn && (
-            <div className="col-12 mb-3">
+            <div className="questionForm">
                 <QuestionForm />
             </div>
             )}
             </div>
-            <div className={`col-12 mb-3 ${loggedIn && 'col-lg-8'}`}></div>
-                <div className='flex-row justify-space-between'>
-                <div className={`col-12 mb-3 ${loggedIn && 'col-lg-8'}`}>
+            <div className={` questionList ${loggedIn}`}></div>
+                <div>
+                <div className={`${loggedIn}`}>
                     {loading ? (
                     <div>Loading...</div>
                     ) : (

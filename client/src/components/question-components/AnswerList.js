@@ -1,19 +1,13 @@
 import React from 'react';
 
-const AnswerList = ({ answers }) => {
+const AnswerList = ({ answer, answerCount }) => {
+
   return (
-    <div className="card mb-3">
-        <div className="card-header">
-            <span className="text-light">Answers from other Devs: </span>
-        </div>
-        <div className="card-body">
-            {answers &&
-            answers.map(answer => (
-                <p className="pill mb-3" key={answer.id}>
-                {answer.answer_text} {'// '}
-                </p>
-            ))}
-        </div>
+    <div className="eachAnswer">
+      <div className="answerInfoWrapper">
+        <h3>{answer.user.username} wrote: </h3>
+        <p>{answer.answer_text}</p>
+      </div>
     </div>
   );
 };
