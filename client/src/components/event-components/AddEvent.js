@@ -18,7 +18,6 @@ const AddEvent = () => {
 
     // gql
     const { groupName } = useParams();
-    console.log(groupName)
     const { loading, data } = useQuery(GET_GROUP, {
         variables: { group_url: groupName }
     });
@@ -39,15 +38,16 @@ const AddEvent = () => {
         
         if(data && userData) {
             const myGroups = userData.data.myGroups;
-            myGroups.map(group => {
+            return myGroups.map(group => {
                 if(group.id === data.group.id) {
                     setIsAdmin(true);
                     return group;
                 }
+                return false;
             });
 
         }
-    }, [data, userData]);
+    }, [data, userData, loading]);
 
     // Functions
     const setFormData = (e) => {
@@ -71,7 +71,7 @@ const AddEvent = () => {
 
 
         try {
-            const data = await createEvent({
+            await createEvent({
                 variables: {input: input}
             })
             history.push(`/meet/admin/${groupName}`)

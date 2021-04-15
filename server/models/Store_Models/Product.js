@@ -25,6 +25,18 @@ Product.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    // quantity: {
+    //   type: DataTypes.INTEGER,
+    //   defaultValue: 0,
+    // },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "category",
+        key: "id",
+      },
+    },
   },
 
   {

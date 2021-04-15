@@ -117,37 +117,23 @@ export const ADD_EVENT = gql`
 // Question and Answer Mutations
 
 export const ADD_QUESTION = gql`
-  mutation addQuestion(
-    $question_id: Int!
-    $question_text: String!
-    $username: String!
-  ) {
-    addQuestion(
-      question_id: $question_id
-      username: $username
-      question_text: $question_text
-    ) {
-      id
-      username
-      question_text
+
+    mutation addQuestion($question_text: String!) {
+        addQuestion(question_text: $question_text) {
+            id
+            question_text
+
     }
   }
 `;
 
 export const UPDATE_QUESTION = gql`
-  mutation updateQuestion(
-    $question_id: Int!
-    $question_text: String!
-    $username: String!
-  ) {
-    updateQuestion(
-      question_id: $question_id
-      username: $username
-      question_text: $question_text
-    ) {
-      id
-      username
-      question_text
+
+    mutation updateQuestion($question_id: Int!, $question_text: String!) {
+        updateQuestion(question_id: $question_id, question_text: $question_text) {
+            id
+            username
+            question_text
     }
   }
 `;
@@ -157,8 +143,21 @@ export const DELETE_QUESTION = gql`
     updateQuestion(question_id: $question_id) {
       id
     }
-  }
-`;
+}
+`
+
+export const ADD_ANSWER = gql`
+    mutation addAnswer($question_id: ID!, $answer_text: String!) {
+        addAnswer(question_id: $question_id, answer_text: $answer_text) {
+            id
+            answers {
+                id
+                answer_text
+            }
+    }
+}
+`
+
 
 // Friend Mutations
 
@@ -242,8 +241,10 @@ export const DELETE_COMMENT = gql`
         post_content
       }
     }
+
   }
 `;
+
 //Like Mutations
 export const ADD_LIKE = gql`
    mutation addLike($post_id:Int!){
@@ -283,6 +284,14 @@ export const REMOVE_LIKE = gql`
         id
         username
       }
+
+}
+`
+export const DELETE_PRODUCT = gql`
+  mutation deleteProduct($id: Int!) {
+    deleteProduct(id: $id) {
+      id
+
     }
   }
 `;

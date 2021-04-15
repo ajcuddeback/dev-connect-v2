@@ -1,9 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 // fonts
-import HindMadurai from '../fonts/HindMadurai-Regular.ttf';
-import Philosopher from '../fonts/Philosopher-Regular.ttf';
-import orientalTiles from '../images/oriental-tiles.png'
+import HindMadurai from "../fonts/HindMadurai-Regular.ttf";
+import Philosopher from "../fonts/Philosopher-Regular.ttf";
+import orientalTiles from "../images/oriental-tiles.png";
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -114,6 +114,85 @@ const GlobalStyle = createGlobalStyle`
         top: 3px;
     }
 
+
+
+    .container {
+        text-align: center;
+        padding: 4px;
+    }
+
+    textarea.form-input {
+        margin-top: 10px;
+        height: 50px;
+        width: 300px;
+    }
+
+    .questionFormContainer {
+        margin: 0 auto;
+        padding: 10px 15px;
+        max-width: 500px;
+    }
+
+    .questionCardContainer {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin: 0 auto 10px;
+        border: none;
+        border-radius: 5px;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(5px);
+        padding: 10px 15px;
+        max-width: 80%;
+        min-height: 25px;
+    }
+
+    .questionList {
+        margin-top: 25px;
+    }
+
+    .questionHeaderDiv {
+        margin: 5px auto;
+    }
+
+    .questionDiv {
+        margin: 0 auto;
+    }
+
+    .answerDiv {
+        margin: 0 auto;
+    }
+
+    .questionListTitle {
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .eachAnswer {
+        margin: 0 auto 10px;
+        padding: 10px 15px;
+        max-width: 70%;
+        border: none;
+        border-radius: 5px;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(5px);
+    }
+
+    .answerInfoWrapper {
+
+    }
+
+    .characterCount {
+        margin-top: 25px;
+    }
+
+    .questionBtn {
+        display: flex;
+        margin-left: 42%;
+    }
+    
+
+
     .disabled {
         opacity: 0;
         pointer-events: none;
@@ -140,6 +219,6 @@ const GlobalStyle = createGlobalStyle`
     100% { transform: rotate(360deg); }
     }
     
-`
+`;
 
 export default GlobalStyle;

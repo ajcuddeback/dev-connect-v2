@@ -23,7 +23,7 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
 
     // gql
     const [ createGroup, {err} ] = useMutation(CREATE_GROUP);
-
+    console.log(err)
     // useHistory
     const history = useHistory();
 
@@ -62,7 +62,7 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
     const findGroupHandler = (e, j) => {
         j.preventDefault();
 
-        setZipCode(e.zipCode)
+        setZipCode(e.zipCode);
 
         history.push('/meet/groups')
     };

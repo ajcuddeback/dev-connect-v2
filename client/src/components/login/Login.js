@@ -8,13 +8,19 @@ import { useMutation } from '@apollo/react-hooks';
 import { LOGIN_USER, SIGNUP_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
+import { useForm } from 'react-hook-form';
+
 // styled comp
 import styled from 'styled-components';
 
 function Login() {
+
+    const { register, handleSubmit, watch, formState: {errors} } = useForm();
+
     // GraphQL
     const [login, {error}] = useMutation(LOGIN_USER);
     const [addUser, {err}] = useMutation(SIGNUP_USER);
+    console.log(error, err);
 
     // State
     const [userLoginData, setUserLoginData] = useState({username: '', password: ''});
@@ -33,8 +39,8 @@ function Login() {
         setSignupData({ ...signupData, [name]: value });
     };
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+    const handleLogin = async (e, j) => {
+        j.preventDefault();
 
         try {
             const { data } = await login({
@@ -52,8 +58,8 @@ function Login() {
         };
     };
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
+    const handleSignup = async (e, j) => {
+        j.preventDefault();
 
         try {
             const { data } = await addUser({
@@ -78,11 +84,12 @@ function Login() {
                     <img src={logo} alt="dev-connect logo" className="logo" width="500px"/>
                 </div>
                 <h2 className="tagname">The Social Media App for Developers</h2>
-                <form className="login-form glass-background" onSubmit={handleLogin} >
+                <form className="login-form glass-background" onSubmit={handleSubmit(handleLogin)} >
                     <h2>Login</h2>
                     <input className="glass-background" type="text" name="username" id="username" placeholder="Username" onChange={handleLoginChange} required />
                     <br/>
-                    <input className="glass-background" type="password" name="password" id="password" placeholder="Password"onChange={handleLoginChange} required />
+                    <input className="glass-background" aria-label="password" {...register('password', {minLength: 8})} type="password" id="password" placeholder="Password"onChange={handleLoginChange} required />
+                    {errors.password && "Password must be at least 8 characters long"}
                     <br/>
                     <p className="errorP">{errorP}</p>
                     <button className="glass-button" type="submit">Login</button>
@@ -98,9 +105,10 @@ function Login() {
                 </div>
                 <h2 className="tagname">The Social Media App for Developers</h2>
 
-                <form className="login-form glass-background" onSubmit={handleSignup} >
+                <form className="login-form glass-background" onSubmit={handleSubmit(handleSignup)} >
                     <h2>Signup</h2>
-                    <input className="glass-background" type="text" name="username" id="username" placeholder="Username" onChange={handleSignupChange} required />
+                    <input className="glass-background" type="text" {...register('username', {minLength: 5})} id="username" placeholder="Username" onChange={handleSignupChange} required />
+                    {errors.username && "Username must be at least 5 characters long"}
                     <br/>
                     <input className="glass-background" type="email" name="email" id="email" placeholder="example@example.com" onChange={handleSignupChange} required />
                     <br/>
@@ -108,7 +116,8 @@ function Login() {
                     <br/>
                     <input className="glass-background" type="text" name="last_name" id="lastName" placeholder="Last Name" onChange={handleSignupChange} required />
                     <br/>
-                    <input className="glass-background" type="password" name="password" id="password" placeholder="Password" onChange={handleSignupChange} required />
+                    <input className="glass-background" type="password" {...register('password', {minLength: 8})} id="password" placeholder="Password" onChange={handleSignupChange} required />
+                    {errors.password && "Password must be at least 8 characters long"}
                     <br/>
                     <p className="errorP">{errorP}</p>
                     <button className="glass-button" type="submit">Signup</button>

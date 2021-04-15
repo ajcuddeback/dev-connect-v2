@@ -12,10 +12,8 @@ const Post = require("./Social_Models/Post");
 const Comment = require("./Social_Models/Comment");
 const Product = require("./Store_Models/Product");
 const Category = require("./Store_Models/Category");
-const TagItem = require("./Store_Models/Tag");
-const ProductTag = require("./Store_Models/ProductTag");
-const Items = require("./Store_Models/Items");
-const Like = require("./Social_Models/Like")
+const Order = require("./Store_Models/Order");
+const Like = require("./Social_Models/Like");
 
 // User to Group Associations
 User.hasMany(Group, {
@@ -163,48 +161,41 @@ User.hasMany(Comment);
 
 Post.hasMany(Comment);
 
-
 User.belongsToMany(Post, {
   through: Like,
-  as: 'liked_posts',
+  as: "liked_posts",
 
-  foreignKey: 'user_id',
-  
+  foreignKey: "user_id",
 });
 
 Post.belongsToMany(User, {
   through: Like,
-  as: 'liked_posts',
-  foreignKey: 'post_id',
-  
+  as: "liked_posts",
+  foreignKey: "post_id",
 });
 
 Like.belongsTo(User, {
-  foreignKey: 'user_id',
-  
+  foreignKey: "user_id",
 });
 
 Like.belongsTo(Post, {
-  foreignKey: 'post_id',
-  
+  foreignKey: "post_id",
 });
 
 User.hasMany(Like, {
-  foreignKey: 'user_id'
+  foreignKey: "user_id",
 });
 
 Post.hasMany(Like, {
-  foreignKey: 'post_id'
+  foreignKey: "post_id",
 });
 
 Comment.belongsTo(User, {
-  foreignKey: 'user_id',
-  
+  foreignKey: "user_id",
 });
 
 Comment.belongsTo(Post, {
-  foreignKey: 'post_id',
-  
+  foreignKey: "post_id",
 });
 //End of Posts and Likes associations
 
@@ -216,31 +207,37 @@ Product.belongsTo(Category, {
 Category.hasMany(Product, {
   foreignKey: "category_id",
 });
-// Products belongToMany Tags (through ProductTag)
-Product.belongsToMany(Tag, {
-  through: ProductTag,
-  as: "product_tags",
+
+Product.belongsToMany(User, {
+  through: Order,
+  as: "user_order",
   foreignKey: "product_id",
 });
-// Tags belongToMany Products (through ProductTag)
-Tag.belongsToMany(Product, {
-  through: ProductTag,
-  as: "product_tags",
-  foreignKey: "tag_id",
+User.belongsToMany(Product, {
+  through: Order,
+  as: "user_order",
+  foreignKey: "user_id",
 });
-User.hasMany(Items, {
+User.hasMany(Product, {
   foreignKey: "user_id",
 });
 
-Product.hasMany(Items, {
+Product.belongsTo(User, {
+  foreignKey: "user_id",
+});
+
+Order.belongsTo(Product, {
   foreignKey: "product_id",
 });
 
-Items.belongsTo(Product, {
-  foreignKey: "product_id",
+User.hasMany(Order, {
+  foreignKey: "user_id",
 });
 
-Items.belongsTo(User, {
+Product.hasMany(Order, {
+  foreignKey: "product_id",
+});
+Order.belongsTo(User, {
   foreignKey: "user_id",
 });
 
@@ -254,12 +251,14 @@ module.exports = {
   Event_Users,
   Product,
   Category,
-  TagItem,
-  ProductTag,
-  Items,
+  Order,
   Question,
   Answer,
   QuestionTag,
   Tag,
+
   User_Friends, Like
 };
+
+
+
