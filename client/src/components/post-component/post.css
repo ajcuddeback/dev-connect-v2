@@ -59,7 +59,8 @@
     display:flex;
     justify-content: space-between;
 }
-.postBottomLeft, .postBottomRight{
+.postBottomLeft, .postBottomRight, .replyIcon{
     cursor: pointer;
 }
+
  

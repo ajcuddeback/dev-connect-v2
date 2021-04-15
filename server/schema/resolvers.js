@@ -676,11 +676,10 @@ const resolvers = {
                if (user && post) {
                    console.log(post)
                     post.liked_posts.push(user)
-                    post.save(done);
+                
                }
 
-               //return po
-                
+                               
             }
             throw new AuthenticationError("No post to be liked")
         },

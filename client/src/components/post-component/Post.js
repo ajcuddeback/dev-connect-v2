@@ -3,10 +3,10 @@ import Comment from './Comment';
 import ReactDOM from 'react-dom';
 import './post.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faHeart, faComment, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faHeart, faComment, faEdit, faTrash, faReply} from '@fortawesome/free-solid-svg-icons';
 import {useQuery,useMutation} from '@apollo/react-hooks';
 import {COMMENT_BY_POST, GET_POSTS} from  '../../utils/queries';
-import {ADD_LIKE, REMOVE_LIKE, DELETE_POST} from '../../utils/mutations';
+import {ADD_LIKE, REMOVE_LIKE, DELETE_POST, UPDATE_POST, CREATE_COMMENT} from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 import { useParams, Link, useHistory } from 'react-router-dom';
@@ -21,6 +21,7 @@ function Post({post}){
     const commentSymbol = <FontAwesomeIcon icon ={faComment} />
     const editPost = <FontAwesomeIcon icon ={faEdit} />
     const deletePostIcon = <FontAwesomeIcon icon ={faTrash} />
+    const replyIcon = <FontAwesomeIcon icon = {faReply} />
     
 
     //queries and mutations
@@ -32,16 +33,13 @@ function Post({post}){
    
     const [removeLike, {error}] = useMutation(REMOVE_LIKE);   
     const [deletePost,{deletePostErr}]= useMutation(DELETE_POST);
+    const [updatePost,{updatePostErr}]= useMutation(UPDATE_POST);
+    const [createComment,{createCommentErr}]= useMutation(CREATE_COMMENT);
 
+    const [message, setMessage] = useState('')
     const [liked, setLiked] = useState(false)
     
-    // useEffect(()=>{
-        
-    //     console.log(user)
-    //     if (liked_posts.username===user.username){
-    //         setLiked(true);
-    //     }else setLiked(false);
-    // }, []);
+ 
     useEffect(() => {
         console.log('liked');
     }, [liked])
@@ -68,9 +66,10 @@ function Post({post}){
       };
 
       const handleEditClick = async () => {
+        const postId = parseInt(post.id);
         try {
-          await deletePost({
-            variables: { id: post.id }
+          await updatePost({
+            variables: { post_id: postId }
           });
         } catch (e) {
           console.error(e);
@@ -96,6 +95,26 @@ function Post({post}){
             console.error(e);
           }
       }
+
+      const handleReplyClick = async event => {
+        event.preventDefault();      
+        try {
+          // add comment to database
+          await createComment({
+            variables: {comment_text: message }
+          });
+      
+          
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      
+
+      const handleMessageChange = event => {
+        setMessage(event.target.value);
+      }
+      console.log(message)
     
     
 
@@ -130,7 +149,8 @@ function Post({post}){
                 </div>
             </div>
             <div className="commentsByPost">
-                <input type="text" className="reply" placeholder="Reply"/>
+                <input onChange={(e) => handleMessageChange(e)} type="text" className="reply" placeholder="Reply"/>
+                <span onClick = {handleReplyClick} className="replyIcon">{replyIcon}</span>
 
             </div>
            

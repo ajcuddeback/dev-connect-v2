@@ -15,17 +15,13 @@ function PostForm (){
 
     //functions
     const handleAddPost = async event => {
-        event.preventDefault();
-
-        console.log(message)
-      
+        event.preventDefault();      
         try {
           // add post to database
           await createPost({
             variables: { post_content: message }
           });
       
-          // clear form value
           
         } catch (e) {
           console.error(e);
