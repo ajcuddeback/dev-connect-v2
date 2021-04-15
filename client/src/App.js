@@ -24,6 +24,7 @@ import Home from "./components/store-components/Home";
 import Detail from "./components/store-components/Detail";
 import Success from "./components/store-components/Success";
 import AskDevsHome from "./components/question-components/AskDevsHome";
+import MyQuestions from './components/question-components/MyQuestions';
 // Styled Component
 import GlobalStyle from "./components/GlobalStyles";
 import styled from "styled-components";
@@ -118,6 +119,7 @@ function App() {
               ></Route>
               <Route exact path="/products/:id" component={Detail} />
               <Route exact path="/success" component={Success} />
+              <Route exact path='/myquestions' component={MyQuestions} />
             </Switch>
           </Router>
         </>
