@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-<<<<<<< HEAD
-=======
+
 import 'bootstrap/dist/css/bootstrap.min.css';
->>>>>>> parent of a317e46... Merge pull request #4 from ajcuddeback/store/GraphQL
+
 
 // Apollo
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -25,6 +24,7 @@ import MyEvents from './components/event-components/MyEvents';
 
 // Question Components
 import AskDevsHome from './components/question-components/AskDevsHome';
+import MyQuestions from './components/question-components/MyQuestions';
 
 // Styled Component
 import GlobalStyle from './components/GlobalStyles';
@@ -69,6 +69,7 @@ function App() {
               )}  ></Route>
               <Route exact path='/meet/dashboard' component={MeetDashboard}></Route>
               <Route exact path='/askDevs' component={AskDevsHome}></Route>
+              <Route exact path='/myquestions' component={MyQuestions}></Route>
               <Route exact path='/meet/my-groups' component={MyGroups}></Route>
               <Route exact path='/meet/my-events' component={MyEvents}></Route>
               <Route exact path='/meet/groups/:groupName' render={() => (

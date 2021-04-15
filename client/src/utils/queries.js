@@ -78,16 +78,23 @@ export const GET_ME_GROUPS = gql`
 // question and answer queries
 export const GET_QUESTIONS = gql`
     query questions($username: String) {
-        questions {
+        questions (username: $username) {
             id
             question_text
-            username
             createdAt
+            user_id
+            user{
+                id
+                username
+            }
             answers {
                 id
                 answer_text
-                username
                 createdAt
+                user{
+                    id
+                    username
+                }
             }
         }
     }
@@ -98,16 +105,24 @@ export const GET_ME_QUESTIONS = gql`
     query {
         me {
             id
+            username
             questions {
                 id
                 question_text
-                username
                 createdAt
+                user_id
+                user{
+                    id
+                    username
+                }
                 answers {
                     id
                     answer_text
-                    username
-                    createdAt
+                    user_id
+                    user{
+                        id
+                        username
+                    }
                 }
             }
         }
@@ -122,6 +137,7 @@ export const GET_ME_FRIENDS = gql`
             username
             friends {
                 id
+                user_id
                 username
             }
         }
