@@ -12,8 +12,6 @@ const Post = require("./Social_Models/Post");
 const Comment = require("./Social_Models/Comment");
 const Product = require("./Store_Models/Product");
 const Category = require("./Store_Models/Category");
-// const TagItem = require("./Store_Models/Tag");
-// const ProductTag = require("./Store_Models/ProductTag");
 const Order = require("./Store_Models/Order");
 const Like = require("./Social_Models/Like");
 
@@ -254,9 +252,6 @@ module.exports = {
   Product,
   Category,
   Order,
-  // TagItem,
-  // ProductTag,
-  // Items,
   Question,
   Answer,
   QuestionTag,

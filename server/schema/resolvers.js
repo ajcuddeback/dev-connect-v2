@@ -53,6 +53,10 @@ const resolvers = {
               as: "friends",
             },
             {
+              model: Question,
+              attributes: ['id', 'username']
+            },
+            {
               model: Product,
               attributes: ["id", "product_name", "price", "imgPath"],
               through: Order,
@@ -60,7 +64,6 @@ const resolvers = {
             },
           ],
         });
-        console.log(userData.get({ plain: true }));
         return userData.get({ plain: true });
       }
 
@@ -294,27 +297,55 @@ const resolvers = {
       throw new AuthenticationError("You must be logged in!");
     },
 
-    // Question queries
-    questions: async (parent, args, context) => {
-      if (context.user.id) {
-        const questions = await Question.findAll({
-          include: [
-            {
-              model: Answer,
-              attributes: ["id", "answer_text"],
-            },
-          ],
-        });
+     // Question queries
+     questions: async (parent, args, context) => {
+      if(context.user.id) {
+          const questions = await Question.findAll({
+              include: [
+                  {
+                      model: Answer,
+                      attributes: ["id","answer_text"],
+                      include: {
+                          model: User,
+                          attributes: ["id", "username"]
+                      }
+                  },
+                  {
+                      model: User,
+                      attributes: ["id", "username"]
+                  }
+              ]
+          })
 
-        return questions.map((item) => item.get({ plain: true }));
+          return questions.map(item => item.get({plain: true}));
       }
 
-      throw new AuthenticationError("You must be logged in!");
-    },
+      throw new AuthenticationError('You must be logged in!')
+  },
 
-    question: async (parent, { _id }) => {
-      return Question.findOne({ _id });
-    },
+  question: async (parent, { question_id }, context) => {
+      if(context.user.id) {
+          const data = await Question.findOne({
+              where: {
+                  id: question_id
+              },
+              include: [
+                  {
+                      model: Answer,
+                      attributes: ["id","answer_text"]
+                  },
+                  {
+                      model: User,
+                      attributes: ["id", "username"]
+                  }
+              ]
+          })
+
+          return data;
+      }
+
+      throw new AuthenticationError('You must be logged in!')
+  },
 
     // ############################# Product Queries #############################
     categories: async (parent, args, context) => {

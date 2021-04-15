@@ -128,56 +128,58 @@ export const QUERY_USER = gql`
 
 // question and answer queries
 export const GET_QUESTIONS = gql`
-  query questions($username: String) {
-    questions(username: $username) {
-      id
-      question_text
-      createdAt
-      user_id
-      user {
-        id
-        username
-      }
-      answers {
-        id
-        answer_text
-        createdAt
-        user {
-          id
-          username
+    query questions($username: String) {
+        questions (username: $username) {
+            id
+            question_text
+            createdAt
+            user_id
+            user{
+                id
+                username
+            }
+            answers {
+                id
+                answer_text
+                createdAt
+                user{
+                    id
+                    username
+                }
+            }
         }
-      }
     }
-  }
-`;
+    
+`
 
 export const GET_ME_QUESTIONS = gql`
-  query {
-    me {
-      id
-      username
-      questions {
-        id
-        question_text
-        createdAt
-        user_id
-        user {
-          id
-          username
-        }
-        answers {
-          id
-          answer_text
-          user_id
-          user {
+    query {
+        me {
             id
             username
-          }
+            questions {
+                id
+                question_text
+                createdAt
+                user_id
+                user{
+                    id
+                    username
+                }
+                answers {
+                    id
+                    answer_text
+                    createdAt
+                    user_id
+                    user{
+                        id
+                        username
+                    }
+                }
+            }
         }
-      }
     }
-  }
-`;
+`
 
 // friend queries
 export const GET_ME_FRIENDS = gql`
@@ -192,8 +194,7 @@ export const GET_ME_FRIENDS = gql`
             }
         }
     }
-  
-`;
+`
 
 export const QUERY_PRODUCT = gql`
   query($id: Int!) {
