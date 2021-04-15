@@ -1,51 +1,53 @@
-import React, { useState } from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // Apollo
-import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from "@apollo/react-hooks";
+import ApolloClient from "apollo-boost";
 
 // Components
 // Events
-import Login from './components/login/Login';
-import Nav from './components/layout-components/Nav';
-import MeetHome from './components/event-components/MeetHome';
-import ZipGroups from './components/event-components/zipGroups';
-import GroupHome from './components/event-components/GroupHome';
-import GroupAdmin from './components/event-components/GroupAdmin';
-import EditEvent from './components/event-components/EditEvent';
-import AddEvent from './components/event-components/AddEvent';
-import MeetDashboard from './components/event-components/MeetDashboard';
-import MyGroups from './components/event-components/MyGroups';
-import MyEvents from './components/event-components/MyEvents';
-
+import Login from "./components/login/Login";
+import Nav from "./components/layout-components/Nav";
+import MeetHome from "./components/event-components/MeetHome";
+import ZipGroups from "./components/event-components/zipGroups";
+import GroupHome from "./components/event-components/GroupHome";
+import GroupAdmin from "./components/event-components/GroupAdmin";
+import EditEvent from "./components/event-components/EditEvent";
+import AddEvent from "./components/event-components/AddEvent";
+import MeetDashboard from "./components/event-components/MeetDashboard";
+import MyGroups from "./components/event-components/MyGroups";
+import MyEvents from "./components/event-components/MyEvents";
+import { loadStripe } from "@stripe/stripe-js";
 // Question Components
-import AskDevsHome from './components/question-components/AskDevsHome';
-import MyQuestions from './components/question-components/MyQuestions';
+import AskDevsHome from "./components/question-components/AskDevsHome";
+import MyQuestions from "./components/question-components/MyQuestions";
+import Home from "./components/store-components/Home";
+import Detail from "./components/store-components/Detail";
+import Success from "./components/store-components/Success";
 
 // Styled Component
-import GlobalStyle from './components/GlobalStyles';
-import styled from 'styled-components';
+import GlobalStyle from "./components/GlobalStyles";
+import styled from "styled-components";
 
 // Utils
-import Auth from './utils/auth'
+import Auth from "./utils/auth";
 
 // Client
 const client = new ApolloClient({
-  request: operation => {
-    const token = localStorage.getItem('id_token');
+  request: (operation) => {
+    const token = localStorage.getItem("id_token");
 
     operation.setContext({
       headers: {
-        authorization: token ? `Bearer ${token}`: ''
-      }
-    })
-  }, 
-  uri: '/graphql'
-})
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  uri: "/graphql",
+});
 
 function App() {
   // State
@@ -61,28 +63,68 @@ function App() {
           <Router>
             <Nav navOpen={navOpen} setNavOpen={setNavOpen} />
             <Switch>
-              <Route exact path='/meet' render={() => (
-                <MeetHome miles={miles} setMiles={setMiles} zipCode={zipCode} setZipCode={setZipCode} navOpen={navOpen} />
-              )}></Route>
-              <Route exact path='/meet/groups' render={() => (
-                <ZipGroups miles={miles} zipCode={zipCode} navOpen={navOpen} />
-              )}  ></Route>
-              <Route exact path='/meet/dashboard' component={MeetDashboard}></Route>
-              <Route exact path='/askDevs' component={AskDevsHome}></Route>
-              <Route exact path='/myquestions' component={MyQuestions}></Route>
-              <Route exact path='/meet/my-groups' component={MyGroups}></Route>
-              <Route exact path='/meet/my-events' component={MyEvents}></Route>
-              <Route exact path='/meet/groups/:groupName' render={() => (
-                <GroupHome navOpen={navOpen} />
-              )} ></Route>
-              <Route exact path='/meet/edit-event/:groupName/:eventId' component={EditEvent}></Route>
-              <Route exact path='/meet/add-event/:groupName' component={AddEvent}></Route>
-              <Route exact path='/meet/admin/:groupName' render={() => (
-                <GroupAdmin navOpen={navOpen} />
-              )}></Route>
+              <Route
+                exact
+                path="/meet"
+                render={() => (
+                  <MeetHome
+                    miles={miles}
+                    setMiles={setMiles}
+                    zipCode={zipCode}
+                    setZipCode={setZipCode}
+                    navOpen={navOpen}
+                  />
+                )}
+              ></Route>
+              <Route
+                exact
+                path="/meet/groups"
+                render={() => (
+                  <ZipGroups
+                    miles={miles}
+                    zipCode={zipCode}
+                    navOpen={navOpen}
+                  />
+                )}
+              ></Route>
+              <Route
+                exact
+                path="/meet/dashboard"
+                component={MeetDashboard}
+              ></Route>
+              <Route exact path="/askDevs" component={AskDevsHome}></Route>
+              <Route exact path="/myquestions" component={MyQuestions}></Route>
+              <Route exact path="/meet/my-groups" component={MyGroups}></Route>
+              <Route exact path="/meet/my-events" component={MyEvents}></Route>
+              <Route
+                exact
+                path="/meet/groups/:groupName"
+                render={() => <GroupHome navOpen={navOpen} />}
+              ></Route>
+              <Route
+                exact
+                path="/meet/edit-event/:groupName/:eventId"
+                component={EditEvent}
+              ></Route>
+              <Route
+                exact
+                path="/meet/add-event/:groupName"
+                component={AddEvent}
+              ></Route>
+              <Route
+                exact
+                path="/meet/admin/:groupName"
+                render={() => <GroupAdmin navOpen={navOpen} />}
+              ></Route>
+              <Route
+                exact
+                path="/shop"
+                render={() => <Home navOpen={navOpen} />}
+              ></Route>
+              <Route exact path="/products/:id" component={Detail} />
+              <Route exact path="/success" component={Success} />
             </Switch>
           </Router>
-            
         </>
       ) : (
         <StyledLoginBack>
@@ -96,7 +138,7 @@ function App() {
 
 const StyledLoginBack = styled.div`
   min-height: 100vh;
-  background: linear-gradient( #090718,  #28bad6);
-`
+  background: linear-gradient(#090718, #28bad6);
+`;
 
 export default App;
