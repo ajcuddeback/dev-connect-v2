@@ -35,7 +35,6 @@ function Nav({ navOpen, setNavOpen }) {
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/dashboard`}>Meet Up Dashboard</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-groups`}>My Groups</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-events`}>My Events</Link></li>
-                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>My Posts</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/myquestions`}>My Questions</Link></li>
                     </ul>
                     

@@ -284,7 +284,7 @@ export const REMOVE_LIKE = gql`
         id
         username
       }
-
+    }
 }
 `
 export const DELETE_PRODUCT = gql`

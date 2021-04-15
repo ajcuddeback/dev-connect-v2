@@ -57,8 +57,9 @@ const resolvers = {
                             through: User_Friends,
                             as: "friends"
                         },
+                        {
                           model: Question,
-                            attributes: ["id", "question_text", "createdAt"]
+                            attributes: ["id", "question_text"]
 
                         },
                         {
@@ -71,7 +72,7 @@ const resolvers = {
                     ]
                 })
 
-                return questions.map(item => item.get({plain: true}));
+                return userData.get({plain: true});
             }
 
             throw new AuthenticationError('You must be logged in!')
@@ -664,7 +665,7 @@ const resolvers = {
                    })
             }
             throw new AuthenticationError("No post to be unliked")
-        }
+        },
 
     // ############################# Group mutations #############################
     createGroup: async (
@@ -945,4 +946,3 @@ const resolvers = {
 };
 
 module.exports = resolvers;
-
