@@ -27,48 +27,49 @@ const resolvers = {
   Query: {
     // ############################# User queries #############################
     me: async (parent, args, context) => {
-      console.log(context.user);
-      if (context.user) {
-        const userData = await User.findOne({
-          where: {
-            id: context.user.id,
-          },
-          include: [
-            {
-              model: Group,
-              attributes: ["id", "group_title", "group_url"],
-              through: Group_Users,
-              as: "group_user",
-            },
-            {
-              model: Event,
-              attributes: ["id", "event_title"],
-              through: Event_Users,
-              as: "event_user",
-            },
-            {
-              model: User,
-              attributes: ["id", "username"],
-              through: User_Friends,
-              as: "friends",
-            },
-            {
-              model: Question,
-              attributes: ['id', 'username']
-            },
-            {
-              model: Product,
-              attributes: ["id", "product_name", "price", "imgPath"],
-              through: Order,
-              as: "user_order",
-            },
-          ],
-        });
-        return userData.get({ plain: true });
-      }
+            console.log(context.user)
+            if(context.user) {
+                const userData = await User.findOne({
+                    where: {
+                        id: context.user.id
+                    },
+                    include: [
+                        {
+                            model: Group,
+                            attributes: ["id","group_title", "group_url"],
+                            through: Group_Users,
+                            as: "group_user",
+                        }, 
+                        {
+                            model: Event,
+                            attributes: ["id","event_title"],
+                            through: Event_Users,
+                            as: "event_user"
+                        },
+                        {
+                            model: User,
+                            attributes: ["id","username"],
+                            through: User_Friends,
+                            as: "friends"
+                        },
+                        {
+                            model: Question,
+                            attributes: ["id", "question_text", "createdAt"]
+                        },
+                        {
+                          model: Product,
+                          attributes: ["id", "product_name", "price", "imgPath"],
+                          through: Order,
+                          as: "user_order",
+                        },
+                    ]
+                })
 
-      throw new AuthenticationError("You need to be logged in!");
-    },
+                return userData.get({plain: true});
+            }
+
+            throw new AuthenticationError('You need to be logged in!')
+        },
     users: async () => {
       return User.findAll({
         include: [
