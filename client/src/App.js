@@ -22,6 +22,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import Home from "./components/store-components/Home";
 import Detail from "./components/store-components/Detail";
+import Success from "./components/store-components/Success";
 import AskDevsHome from "./components/question-components/AskDevsHome";
 // Styled Component
 import GlobalStyle from "./components/GlobalStyles";
@@ -116,6 +117,7 @@ function App() {
                 render={() => <Home navOpen={navOpen} />}
               ></Route>
               <Route exact path="/products/:id" component={Detail} />
+              <Route exact path="/success" component={Success} />
             </Switch>
           </Router>
         </>

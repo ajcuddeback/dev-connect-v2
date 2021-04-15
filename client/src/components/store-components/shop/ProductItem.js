@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { pluralize } from "../../../utils/helpers";
-
+import Detail from "../Detail";
 import "gestalt/dist/gestalt.css";
 import { Box, Image, Text, Card, Button, ButtonGroup } from "gestalt";
 
