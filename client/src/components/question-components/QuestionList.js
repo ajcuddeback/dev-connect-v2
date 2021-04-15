@@ -14,7 +14,7 @@ const QuestionList = ({ questions }) => {
         })
 
         setAnswersOpen(questionsObject)
-    },[questions])
+    },[])
 
     const handleAnswerClick = (id) => {
         let questionObject = {...answerOpen};
