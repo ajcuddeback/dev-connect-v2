@@ -98,40 +98,24 @@ Group.hasMany(Event, {
 });
 
 // Question and Answer Associations
-User.hasMany(Question, {
-  foreignKey: "user_id",
-});
+User.hasMany(Question);
 
-Question.belongsTo(User, {
-  foreignKey: "user_id",
-});
+Question.belongsTo(User);
 
-Question.belongsToMany(Tag, {
-  through: QuestionTag,
-  as: "question_tags",
-  foreignKey: "question_id",
-});
+Answer.belongsTo(User);
 
-Tag.belongsToMany(Question, {
-  through: QuestionTag,
-  as: "question_tags",
-  foreignKey: "tag_id",
-});
+Answer.belongsTo(Question);
+
+User.hasMany(Answer);
+
+Question.hasMany(Answer);
 
 Answer.belongsTo(User, {
-  foreignKey: "user_id",
+  foreignKey: 'user_id',
 });
 
 Answer.belongsTo(Question, {
-  foreignKey: "question_id",
-});
-
-User.hasMany(Answer, {
-  foreignKey: "user_id",
-});
-
-Question.hasMany(Answer, {
-  foreignKey: "question_id",
+  foreignKey: 'question_id',
 });
 
 // Friend Associations

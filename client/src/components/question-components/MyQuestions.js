@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_ME_QUESTIONS } from '../../utils/queries';
-import { UPDATE_QUESTION, DELETE_QUESTION } from '../../utils/mutations'
+import { DELETE_QUESTION } from '../../utils/mutations'
 import Auth from '../../utils/auth';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -29,19 +29,17 @@ const MyQuestions = () => {
     }
   }, [data, loading])
 
-  const handleQuestionDelete = async () => {
-    const setQuestionId = data.me.questions.question
-    const questionId = parseInt(setQuestionId.id);
+  // const handleQuestionDelete = async (id) => {
+  //   const questionId = parseInt(id);
 
-    await deleteQuestion({
-        variables: { question_id: questionId },
-        refetchQueries: [{
-          query: GET_ME_QUESTIONS,
-          variables: { question_text: data.me.question.question_text }
-        }],
-    });
-  }
-  console.log(data.me)
+  //   await deleteQuestion({
+  //       variables: { question_id: questionId },
+  //       refetchQueries: [{
+  //         query: GET_ME_QUESTIONS,
+  //       }],
+  //   });
+  // }
+  // console.log()
 
   // JSX
   if(loading) {
@@ -79,7 +77,7 @@ const MyQuestions = () => {
                       </div>
                   </div>
                   <div className="manage-event-buttons">
-                      <button onClick={handleQuestionDelete} className="delete-event-button glass-button">Delete Question</button>
+                      {/* <button onClick={()=>handleQuestionDelete(question.id)} className="delete-event-button glass-button">Delete Question</button> */}
                       {/* <Link className="glass-button" to={`/meet/edit-event/${groupName}/${event.id}`}>Edit Question</Link> */}
                   </div>
               </div>

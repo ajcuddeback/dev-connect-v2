@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AnswerList from '../question-components/AnswerList';
-import AnswerForm from './AnswerForm'
+import AnswerForm from './AnswerForm';
 import { FaComment } from "react-icons/fa";
 
 const QuestionList = ({ questions }) => {
