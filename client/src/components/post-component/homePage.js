@@ -8,7 +8,7 @@ import Post from './Post';
 function Home(){
 
     const {loading, data} = useQuery(GET_POSTS);
-    console.log(data)
+    
 
     if(loading) {
         return (

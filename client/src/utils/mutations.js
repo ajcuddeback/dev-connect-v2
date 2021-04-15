@@ -246,8 +246,8 @@ export const DELETE_COMMENT = gql`
 `;
 //Like Mutations
 export const ADD_LIKE = gql`
-   mutation addLike($user_id: Int, $post_id:Int){
-        addLike(user_id:$user_id, post_id:$post_id){
+   mutation addLike($post_id:Int!){
+        addLike(post_id:$post_id){
             id
     				post_content
     				user{

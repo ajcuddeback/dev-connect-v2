@@ -140,7 +140,7 @@ const typeDefs = gql`
         deletePost(post_id:Int): Post! #done
         createComment(comment_text: String!, post_id: Int!): Comment! #done
         deleteComment(comment_id: Int!): Comment! #done
-        addLike(user_id: Int!, post_id: Int!): Post #done
+        addLike(post_id: Int!): Post #done
         removeLike(user_id: Int, post_id: Int): Post #done
    
     }

@@ -654,12 +654,33 @@ const resolvers = {
             throw new AuthenticationError("No comment found with this id")
 
         },
-        addLike: async (parent, {post_id, user_id}, context) => {
+        addLike: async (parent, {post_id}, context) => {
+            
             if (context.user.id){
-                return Like.create({
-                     post_id,
-                     user_id
-                  })
+            
+               const post = await Post.findOne(
+                   {where: {
+                       id: post_id
+                   }
+
+                }
+                   
+               )
+
+               const user = await User.findOne(
+                    {where: {
+                        id: context.user.id
+                    }}
+               )
+
+               if (user && post) {
+                   console.log(post)
+                    post.liked_posts.push(user)
+                    post.save(done);
+               }
+
+               //return po
+                
             }
             throw new AuthenticationError("No post to be liked")
         },

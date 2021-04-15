@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './post.css';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,24 +11,30 @@ import { useMutation } from '@apollo/client';
 function PostForm (){
     //mutation
     const [createPost, {error}] = useMutation(CREATE_POST);
+    const [message, setMessage] = useState('')
 
     //functions
     const handleAddPost = async event => {
         event.preventDefault();
+
+        console.log(message)
       
         try {
           // add post to database
           await createPost({
-            variables: { post_content }
+            variables: { post_content: message }
           });
       
           // clear form value
-          setText('');
-          setCharacterCount(0);
+          
         } catch (e) {
           console.error(e);
         }
       };
+
+      const handleMessageChange = event => {
+        setMessage(event.target.value);
+      }
 
 
 
@@ -37,7 +43,7 @@ function PostForm (){
     const send = <FontAwesomeIcon icon={faPaperPlane} />
     return (
             <form className= "new-post-form ">
-                 <input type="text" placeholder="Write a post..." name="post"/>
+                 <input onChange={(e) => handleMessageChange(e)} type="text" placeholder="Write a post..." name="post"/>
                  <button onClick = {handleAddPost} type="submit">{send}</button>
             </form>
 
