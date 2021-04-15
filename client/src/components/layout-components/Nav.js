@@ -14,83 +14,7 @@ function Nav({ navOpen, setNavOpen }) {
     Auth.logout();
   };
 
-  return (
-    <StyledHead>
-      <div
-        onClick={() => setNavOpen(!navOpen)}
-        className={`toggleNav disabled ${navOpen ? "nav-open" : ""}`}
-      >
-        <div className={`line1 ${navOpen ? "nav-open1" : "nav-close1"}`}></div>
-        <div className={`line2 ${navOpen ? "nav-open2" : "nav-close2"}`}></div>
-        <div className={`line3 ${navOpen ? "nav-open3" : "nav-close3"}`}></div>
-      </div>
-      <StyledNav>
-        <section className={`${navOpen ? "" : "active-nav"} `}>
-          <div className="img-wrapper">
-            <img
-              src={logo}
-              alt="dev-connect logo"
-              className="logo"
-              width="500px"
-            />
-          </div>
-          <ul>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/`}>
-                Feed
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/meet`}>
-                Meet
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/askDevs`}>
-                AskDevs
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/shop`}>
-                Shop
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/meet/dashboard`}>
-                Meet Up Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-groups`}>
-                My Groups
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-events`}>
-                My Events
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/`}>
-                My Posts
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setNavOpen(!navOpen)} to={`/`}>
-                My Questions
-              </Link>
-            </li>
-          </ul>
-
-<<<<<<< HEAD
-          <button className="glass-button" onClick={handleLogout}>
-            Logout
-          </button>
-        </section>
-      </StyledNav>
-    </StyledHead>
-  );
-=======
+  
     return (
         <StyledHead>
             <div onClick={() => setNavOpen(!navOpen)} className={`toggleNav disabled ${navOpen ? 'nav-open' : ''}`}>
@@ -107,7 +31,7 @@ function Nav({ navOpen, setNavOpen }) {
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>Feed</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet`}>Meet</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/askDevs`}>AskDevs</Link></li>
-                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/`}>Shop</Link></li>
+                        <li><Link onClick={() => setNavOpen(!navOpen)} to={`/shop`}>Shop</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/dashboard`}>Meet Up Dashboard</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-groups`}>My Groups</Link></li>
                         <li><Link onClick={() => setNavOpen(!navOpen)} to={`/meet/my-events`}>My Events</Link></li>
@@ -120,7 +44,6 @@ function Nav({ navOpen, setNavOpen }) {
             </StyledNav>
         </StyledHead>
     )
->>>>>>> 6379b646f6978ed62bfb38c51990d32d14a9dace
 }
 
 const StyledHead = styled.header`

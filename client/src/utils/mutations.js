@@ -117,7 +117,6 @@ export const ADD_EVENT = gql`
 // Question and Answer Mutations
 
 export const ADD_QUESTION = gql`
-<<<<<<< HEAD
   mutation addQuestion(
     $question_id: Int!
     $question_text: String!
@@ -131,18 +130,11 @@ export const ADD_QUESTION = gql`
       id
       username
       question_text
-=======
-    mutation addQuestion($question_text: String!) {
-        addQuestion(question_text: $question_text) {
-            id
-            question_text
->>>>>>> 6379b646f6978ed62bfb38c51990d32d14a9dace
     }
   }
 `;
 
 export const UPDATE_QUESTION = gql`
-<<<<<<< HEAD
   mutation updateQuestion(
     $question_id: Int!
     $question_text: String!
@@ -156,13 +148,6 @@ export const UPDATE_QUESTION = gql`
       id
       username
       question_text
-=======
-    mutation updateQuestion($question_id: Int!, $question_text: String!) {
-        updateQuestion(question_id: $question_id, question_text: $question_text) {
-            id
-            username
-            question_text
->>>>>>> 6379b646f6978ed62bfb38c51990d32d14a9dace
     }
   }
 `;

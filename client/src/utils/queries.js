@@ -192,7 +192,7 @@ export const GET_ME_FRIENDS = gql`
             }
         }
     }
-  }
+  
 `;
 
 export const QUERY_PRODUCT = gql`

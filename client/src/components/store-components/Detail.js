@@ -4,7 +4,6 @@ import { useQuery } from "@apollo/react-hooks";
 import { Button, Box, Text, Heading, Image } from "gestalt";
 
 import { QUERY_PRODUCTS } from "../../utils/queries";
-import spinner from "../../assets/spinner.gif";
 
 const Detail = () => {
   const { id } = useParams();
@@ -38,7 +37,7 @@ const Detail = () => {
           />
         </Box>
       ) : null}
-      {loading ? <img src={spinner} alt="loading" /> : null}
+      {loading ? <div className="loader"></div> : null}
     </>
   );
 };
