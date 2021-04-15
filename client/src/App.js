@@ -77,7 +77,7 @@ function App() {
                 <GroupAdmin navOpen={navOpen} />
               )}></Route>
               <Route exact path='/' component={HomePage}></Route>
-              <Route exact path='profile/userId' component={SingleUser}></Route>
+              <Route exact path='/username' component={SingleUser}></Route>
               
             </Switch>
           </Router>

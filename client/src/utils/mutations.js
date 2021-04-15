@@ -267,8 +267,8 @@ export const ADD_LIKE = gql`
     }
 `;
 export const REMOVE_LIKE = gql`
-  mutation removeLike($user_id: Int!, $post_id: Int) {
-    removeLike(user_id: $user_id, post_id: $post_id) {
+  mutation removeLike($post_id: Int) {
+    removeLike(post_id: $post_id) {
       id
       post_content
       user {

@@ -13,7 +13,9 @@ import { useParams, Link, useHistory } from 'react-router-dom';
 
 
 
-function Post({post}){
+function Post({post, posts}){
+    
+    
     const user = Auth.getProfile();
 
     // Font Awesome
@@ -29,10 +31,22 @@ function Post({post}){
     // const {loadingPosts, posts} = useQuery(GET_POSTS);
     
     const { user_id, post_id } = useParams();
-     const [addLike, {err}] = useMutation(ADD_LIKE);
+     const [addLike, {err}] = useMutation(ADD_LIKE, {
+        refetchQueries: [{
+            query: GET_POSTS
+        }]
+    });
    
-    const [removeLike, {error}] = useMutation(REMOVE_LIKE);   
-    const [deletePost,{deletePostErr}]= useMutation(DELETE_POST);
+    const [removeLike, {error}] = useMutation(REMOVE_LIKE, {
+        refetchQueries: [{
+            query: GET_POSTS
+        }]
+    });   
+    const [deletePost,{deletePostErr}]= useMutation(DELETE_POST,{
+        refetchQueries: [{
+            query: GET_POSTS
+        }]
+    });
     const [updatePost,{updatePostErr}]= useMutation(UPDATE_POST);
     const [createComment,{createCommentErr}]= useMutation(CREATE_COMMENT);
 
@@ -54,6 +68,12 @@ function Post({post}){
     }
 
     //Functions
+    console.log(posts)
+
+    
+   
+
+
     const handleDeleteClick = async () => {
         const postId = parseInt(post.id);
         try {
@@ -76,25 +96,37 @@ function Post({post}){
         }
       };
 
-      post.liked_posts.forEach((likedPost) => {
-          if (likedPost.username === user.username) {
-              setLiked(true)
-          } 
-      })
+     
 
-      const handleAddLike = async () => {
-        const postId = parseInt(post.id);
+      const handleAddLike = async (id) => {
         
+        const postId = parseInt(id)
+        console.log('we adding a like')
         try {
             await addLike({
                 variables: { post_id: postId }
             });
 
-            setLiked(true)
+            
           } catch (e) {
             console.error(e);
           }
-      }
+      };
+
+      const handleRemoveLike = async (id) => {
+        const postId = parseInt(id)
+        console.log('we deleteing')
+        
+        try {
+            await removeLike({
+                variables: { post_id: postId }
+            });
+
+            
+          } catch (e) {
+            console.error(e);
+          }
+      };
 
       const handleReplyClick = async event => {
         event.preventDefault();      
@@ -113,10 +145,31 @@ function Post({post}){
 
       const handleMessageChange = event => {
         setMessage(event.target.value);
+      };
+
+      const toggleLike = (id)=>{
+          const currentPost = posts.filter(post => post.id === id);
+          const usersLiked = currentPost[0].liked_posts;
+          console.log(usersLiked)
+          let isLiked =  false;
+          if(usersLiked) {
+              
+          usersLiked.forEach(like => {
+             
+            if(parseInt(like.id) === user.data.id) {
+                console.log('we changing to true ')
+                isLiked = true;
+                
+            } else {
+                isLiked = false
+            }
+            
+          })
+        } 
+            if (isLiked === true){
+                handleRemoveLike(id)
+          }else {  handleAddLike(id);}       
       }
-      console.log(message)
-    
-    
 
     return(
         <div className="post">
@@ -130,7 +183,7 @@ function Post({post}){
                 <div className="postCenter">{post.post_content}</div>
                 <div className="postBottom">
                     {liked && <span>liked</span>}
-                    <div onClick={handleAddLike}  className="postBottomLeft">
+                    <div onClick={() => toggleLike(post.id)}  className="postBottomLeft">
                         {/* <likeButton  user ={user}post ={post}/> */}
                         {like}
                     </div>
@@ -141,10 +194,6 @@ function Post({post}){
                          <span className="comments">{commentSymbol}</span>
                          <span onClick = {handleEditClick} className="editPost" >{editPost}</span>
                          <span onClick ={handleDeleteClick} className="deletePost">{deletePostIcon}</span>
-                                
-                             
-
-                         
                     </div>
                 </div>
             </div>

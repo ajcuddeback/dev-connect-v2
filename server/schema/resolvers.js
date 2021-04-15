@@ -657,38 +657,22 @@ const resolvers = {
         addLike: async (parent, {post_id}, context) => {
             
             if (context.user.id){
-            
-               const post = await Post.findOne(
-                   {where: {
-                       id: post_id
-                   }
-
-                }
-                   
-               )
-
-               const user = await User.findOne(
-                    {where: {
-                        id: context.user.id
-                    }}
-               )
-
-               if (user && post) {
-                   console.log(post)
-                    post.liked_posts.push(user)
-                
-               }
+                return Like.create({
+                    user_id:context.user.id,
+                    post_id:post_id
+                })
+        
 
                                
             }
             throw new AuthenticationError("No post to be liked")
         },
-        removeLike: async (parent, {user_id, post_id}, context) => {
+        removeLike: async (parent, {post_id}, context) => {
             if (context.user.id){
                 return Like.destroy({
                     where: {
-                      user_id, 
-                      post_id
+                      user_id:context.user.id,
+                      post_id:post_id
                     },
                     
                    })

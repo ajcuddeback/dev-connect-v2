@@ -1,14 +1,21 @@
 import REACT from 'react';
-import Post from './Post';
-import {useQuery} from '@apollo/react-hooks';
 import {GET_POST_BY_ID} from  '../../utils/queries';
-
-
+import {useQuery} from '@apollo/react-hooks';
 
  function SingleUser(post){
 
-    const {loading, data: {getPostByID, posts}} = useQuery(GET_POST_BY_ID);
-    console.log(posts, getPostByID);
+    const {loading, data} = useQuery(GET_POST_BY_ID);
+    console.log(data)
+
+    if(loading) {
+        return (
+            <>
+                <p>Posts Loading...</p>
+                <div className="loader"></div>
+            </>
+        )
+    }
+    
    
     return(
         <div className="post">
