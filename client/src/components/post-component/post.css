@@ -1,0 +1,109 @@
+.new-post-form{
+    width:60%;
+    margin:50px auto;
+    
+    }
+    form.new-post-form input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+      }
+      
+      form.new-post-form button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+      }
+      
+      form.new-post-form button:hover {
+        background: #4765ab;
+      }
+      
+      form.new-post-form::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+.input-and-btn{
+    display: flex;
+}
+.post{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    width:650px;
+    max-width:650px;
+    margin:auto;
+    padding: 3rem;
+    background: rgba(255,255,255,0.2);
+    color: #e8e8e8;
+    border-radius: 5px;  
+    margin-bottom:10px; 
+  }
+  .postWrapper{
+      margin-bottom: 20px;
+  }
+
+.postBottom{
+    display:flex;
+    justify-content: space-between;
+}
+.postBottomLeft, .postBottomRight, .replyIcon{
+    cursor: pointer;
+}
+
+.postCenter{
+  width:100%;
+  font-size: 1rem;
+}
+
+/* comments styling */
+.comment_content{
+  margin: 1rem 0;
+  min-width: 30rem;
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px #4765ab;
+}
+.name-date{
+  margin: 1rem 0;
+  color: #4765ab;
+}
+
+
+
+
+
+
+@media  screen and (max-width: 630px) {
+  .comments-by-post, .commentInput{
+    width:80%;
+    
+  }
+  .postWrapper{
+    width:80%;
+  }
+  
+}
+
+@media creen and (min-width:630px){
+  .comments-by-post, .commentInput{
+    width:70%;
+    font-size:.8rem
+  }
+
+}
+
+
+ 

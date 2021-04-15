@@ -196,6 +196,53 @@ export const GET_ME_FRIENDS = gql`
     }
 `
 
+export const GET_POSTS = gql`
+query {
+        posts {
+            id
+            post_content
+            user{
+              id
+              username
+            }
+            comments{
+                id
+                comment_text
+            }
+            
+            liked_posts{
+                	
+                  id 
+                  username
+                                
+            }
+        }
+}
+`
+export const COMMENT_BY_POST = gql`
+    query commentsByPost($post_id: Int!){
+        commentsByPost(post_id:$post_id) {
+            id
+            comment_text
+            user {
+                username
+            }
+        }
+    }
+`
+
+export const GET_POST_BY_ID = gql`
+    query {
+        getPostById {
+            id 
+            post_content
+        }
+    }
+
+
+`
+
+
 export const QUERY_PRODUCT = gql`
   query($id: Int!) {
     product(id: $id) {
@@ -210,3 +257,4 @@ export const QUERY_PRODUCT = gql`
     }
   }
 `;
+

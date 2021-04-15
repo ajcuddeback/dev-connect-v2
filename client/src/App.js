@@ -7,6 +7,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Components
 // Events
+
+
+import HomePage from './components/post-component/homePage';
+import SingleUser from './components/post-component/Dashboard';
+
+
 import Login from "./components/login/Login";
 import Nav from "./components/layout-components/Nav";
 import MeetHome from "./components/event-components/MeetHome";
@@ -19,6 +25,7 @@ import MeetDashboard from "./components/event-components/MeetDashboard";
 import MyGroups from "./components/event-components/MyGroups";
 import MyEvents from "./components/event-components/MyEvents";
 import { loadStripe } from "@stripe/stripe-js";
+
 
 import Home from "./components/store-components/Home";
 import Detail from "./components/store-components/Detail";
@@ -60,6 +67,7 @@ function App() {
           <Router>
             <Nav navOpen={navOpen} setNavOpen={setNavOpen} />
             <Switch>
+
               <Route
                 exact
                 path="/meet"
@@ -120,6 +128,9 @@ function App() {
               <Route exact path="/products/:id" component={Detail} />
               <Route exact path="/success" component={Success} />
               <Route exact path='/myquestions' component={MyQuestions} />
+  <Route exact path='/' component={HomePage}></Route>
+              <Route exact path='/username' component={SingleUser}></Route>
+
             </Switch>
           </Router>
         </>

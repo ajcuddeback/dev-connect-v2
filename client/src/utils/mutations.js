@@ -117,28 +117,31 @@ export const ADD_EVENT = gql`
 // Question and Answer Mutations
 
 export const ADD_QUESTION = gql`
+
     mutation addQuestion($question_text: String!) {
         addQuestion(question_text: $question_text) {
             id
             question_text
+
     }
-}
-`
+  }
+`;
 
 export const UPDATE_QUESTION = gql`
+
     mutation updateQuestion($question_id: Int!, $question_text: String!) {
         updateQuestion(question_id: $question_id, question_text: $question_text) {
             id
             username
             question_text
     }
-}
-`
+  }
+`;
 
 export const DELETE_QUESTION = gql`
-    mutation deleteQuestion($question_id: Int!) {
-        updateQuestion(question_id: $question_id) {
-            id
+  mutation deleteQuestion($question_id: Int!) {
+    updateQuestion(question_id: $question_id) {
+      id
     }
 }
 `
@@ -155,19 +158,140 @@ export const ADD_ANSWER = gql`
 }
 `
 
+
 // Friend Mutations
 
 export const ADD_FRIEND = gql`
-    mutation addFriend($friend_id: Int!) {
-        addFriend(friend_id: $friend_id) {
-            id
+  mutation addFriend($friend_id: Int!) {
+    addFriend(friend_id: $friend_id) {
+      id
     }
+  }
+`;
+
+//Post Mutations
+
+export const CREATE_POST = gql`
+  mutation createPost($post_content: String!) {
+    createPost(post_content: $post_content) {
+      id
+      post_content
+    }
+  }
+`;
+export const UPDATE_POST = gql`
+    mutation updatePost($post_content:String!, $post_id: Int){
+        updatePost(post_content:$post_content, post_id: $post_id){
+            id
+            post_content
+        }
+
+    }
+`;
+export const DELETE_POST = gql`
+  mutation deletePost($post_id: Int) {
+    deletePost(post_id: $post_id) {
+      id
+      post_content
+      user {
+        id
+        username
+      }
+      comments {
+        id
+        comment_text
+      }
+      liked_posts {
+        id
+        username
+      }
+    }
+  }
+`;
+//Comment Mutations
+
+export const CREATE_COMMENT = gql`
+ mutation createComment($comment_text : String!, $post_id:Int!){
+        createComment(comment_text:$comment_text, post_id:$post_id){
+            id
+            comment_text
+    				user{
+              id
+              username
+            }
+    				posts{
+              id
+              post_content
+            }
+            }
+    				
+        }
+`;
+export const DELETE_COMMENT = gql`
+  mutation deleteComment($comment_id: Int) {
+    deleteComment(comment_id: $comment_id) {
+      id
+      comment_text
+      user {
+        id
+        username
+      }
+      posts {
+        id
+        post_content
+      }
+    }
+
+  }
+`;
+
+//Like Mutations
+export const ADD_LIKE = gql`
+   mutation addLike($post_id:Int!){
+        addLike(post_id:$post_id){
+            id
+    				post_content
+    				user{
+              id
+              username
+            }
+    				comments{
+              id
+              comment_text
+            }
+    				liked_posts{
+              id
+              username
+            }
+
+        }
+    }
+`;
+export const REMOVE_LIKE = gql`
+  mutation removeLike($post_id: Int) {
+    removeLike(post_id: $post_id) {
+      id
+      post_content
+      user {
+        id
+        username
+      }
+      comments {
+        id
+        comment_text
+      }
+      liked_posts {
+        id
+        username
+      }
+
 }
 `
 export const DELETE_PRODUCT = gql`
   mutation deleteProduct($id: Int!) {
     deleteProduct(id: $id) {
       id
+
     }
   }
 `;

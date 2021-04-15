@@ -1,4 +1,5 @@
 // resolvers
+
 const sequelize = require("../config/connection");
 const Sequelize = require("sequelize");
 require("dotenv").config();
@@ -19,8 +20,12 @@ const {
   Product,
   Order,
   Category,
+  Post,
+    Like,
+    Comment
 } = require("../models");
 const { response } = require("express");
+
 
 const resolvers = {
   // create, update, delete requests
@@ -52,9 +57,9 @@ const resolvers = {
                             through: User_Friends,
                             as: "friends"
                         },
-                        {
-                            model: Question,
+                          model: Question,
                             attributes: ["id", "question_text", "createdAt"]
+
                         },
                         {
                           model: Product,
@@ -62,13 +67,104 @@ const resolvers = {
                           through: Order,
                           as: "user_order",
                         },
+                       
                     ]
                 })
 
-                return userData.get({plain: true});
+                return questions.map(item => item.get({plain: true}));
             }
 
-            throw new AuthenticationError('You need to be logged in!')
+            throw new AuthenticationError('You must be logged in!')
+        },
+
+      
+
+        posts: async () => {
+            const postData = await Post.findAll({
+                
+                include: [
+                    {
+                      model: Comment,
+                      attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                      include: {
+                        model: User,
+                        attributes: ['id', 'username']
+                      }
+                    },
+                    {
+                      model: User,
+                      attributes: ['id','username'],
+                      as: 'user'
+                    },
+                    {
+                        model: User,
+                        attributes: ["id", "username"],
+                        through: Like,
+                        as: "liked_posts"
+                    }
+                  ]
+            })
+
+            return postData.map(data => data.get({plain: true}))
+           
+          },
+        getPostById: async(parent, args, context) =>{
+            if (context.user.id) {
+                return Post.findAll({
+                    where: {
+                      // use the ID from the session
+                      user_id: context.user.id
+                    },
+                    attributes: [
+                      'id',
+                      'created_at',
+                      'post_content'
+                    ],
+                    include: [
+                      {
+                        model: Comment,
+                        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                        include: {
+                          model: User,
+                          attributes: ['username']
+                        }
+                      },
+                      {
+                        model: User,
+                        attributes: ['username']
+                      },
+                      {
+                        model: Like,
+                        attributes: ['user_id', 'post_id']
+                      }
+                    ]
+                  })
+            }
+            throw new AuthenticationError('You must be logged in!')
+        },
+       
+        commentsByPost: async (parent, {post_id}, context) => {
+
+                return await Comment.findAll(
+                    {
+                        where: {
+                            // use the ID from the session
+                            post_id
+                          },
+                    
+                          attributes: [
+                            'id',
+                            'comment_text'
+                          ],
+                          include:{
+                              model:User,
+                              attributes:['username']
+                          }
+
+                    }
+                )
+            
+
         },
     users: async () => {
       return User.findAll({
@@ -476,6 +572,100 @@ const resolvers = {
       return { token, user };
     },
 
+       
+
+        ////////////////////////////////// Post /////////////////////////
+      
+          createPost: async (parent,  { post_content }, context) => {
+            if (context.user.id){
+                const postData = await Post.create({
+                    post_content: post_content,
+                    user_id: context.user.id
+                })
+
+                return postData.get({plain: true})
+            }
+
+            throw new AuthenticationError('You must be logged in')
+
+        },
+        updatePost: async (parent, {post_id, post_content}, context) => {
+            if (context.user.id){
+                return  Post.update(
+                    {
+                        post_content
+                    },
+                   
+                   {
+                    where: {
+                        id: post_id
+                      },
+
+                   }
+                  )
+            }
+            throw new AuthenticationError('You must be logged in')
+        },
+        deletePost: async (parent, {post_id}, context) => {
+            if (context.user.id) {
+                return  Post.destroy({
+                    where: {
+                      id: post_id
+                    }
+                  })
+            }
+        },
+        createComment: async (parent, {comment_text, post_id}, context) =>
+        {
+           if (context.user.id) {
+            return Comment.create({
+                comment_text,
+                post_id,
+                user_id: context.user.id
+               
+                
+              })
+           }
+           throw new AuthenticationError("No post found")
+
+        },
+        deleteComment: async (parent, {comment_id}, context) =>{
+            if(context.user.id){
+                return Comment.destroy({
+                    where: {
+                      id: comment_id
+                    }
+                  })
+            }
+            throw new AuthenticationError("No comment found with this id")
+
+        },
+        addLike: async (parent, {post_id}, context) => {
+            
+            if (context.user.id){
+                return Like.create({
+                    user_id:context.user.id,
+                    post_id:post_id
+                })
+        
+
+                               
+            }
+            throw new AuthenticationError("No post to be liked")
+        },
+        removeLike: async (parent, {post_id}, context) => {
+            if (context.user.id){
+                return Like.destroy({
+                    where: {
+                      user_id:context.user.id,
+                      post_id:post_id
+                    },
+                    
+                   })
+            }
+            throw new AuthenticationError("No post to be unliked")
+        }
+
     // ############################# Group mutations #############################
     createGroup: async (
       parent,
@@ -755,3 +945,4 @@ const resolvers = {
 };
 
 module.exports = resolvers;
+

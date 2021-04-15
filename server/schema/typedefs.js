@@ -113,6 +113,22 @@ const typeDefs = gql`
     product_id: Int
     product: Product
   }
+################# Post Query #######################
+    type Post {
+        id: ID
+        post_content: String
+        user: User
+        comments: [Comment]
+        liked_posts: [User]
+    }
+
+    ################# Comment Query ###################
+    type Comment {
+        id: ID
+        comment_text: String
+        user: User
+        posts: Post
+    }
 
   type Query {
     me: User #done
@@ -131,6 +147,9 @@ const typeDefs = gql`
     orders: [Order]
     allProducts: [Product]
     checkout(amount: Int): Checkout
+    posts: [Post] #done
+        commentsByPost(post_id: Int!): [Comment] #done
+        getPostById: [Post] #done
   }
 
   type Mutation {
@@ -174,6 +193,13 @@ const typeDefs = gql`
     addOrder(product_id: Int!): Order
     updateProduct(id: Int!, quantity: Int!): Product
     deleteProduct(id: Int!): Product
+createPost(post_content: String!): Post! #done
+        updatePost(post_content:String!, post_id: Int): Post #done
+        deletePost(post_id:Int): Post! #done
+        createComment(comment_text: String!, post_id: Int!): Comment! #done
+        deleteComment(comment_id: Int!): Comment! #done
+        addLike(post_id: Int!): Post #done
+        removeLike(post_id: Int): Post #done
   }
 `;
 

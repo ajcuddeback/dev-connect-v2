@@ -256,5 +256,9 @@ module.exports = {
   Answer,
   QuestionTag,
   Tag,
-  User_Friends
+
+  User_Friends, Like
 };
+
+
+
