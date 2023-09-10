@@ -27,7 +27,7 @@ app.use('/', httpsRedirect());
 app.use(function (req, res, next) {
   res.setHeader(
     'Content-Security-Policy',
-    "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self' 'unsafe-inline' 'script-src-elem' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; frame-src 'self'"
+    "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; frame-src 'self'"
   );
   next();
 });
