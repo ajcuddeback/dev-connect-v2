@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // Apollo
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from "apollo-boost";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Components
 // Events
@@ -66,7 +66,7 @@ function App() {
         <>
           <Router>
             <Nav navOpen={navOpen} setNavOpen={setNavOpen} />
-            <Switch>
+            <Routes>
 
               <Route
                 exact
@@ -131,7 +131,7 @@ function App() {
   <Route exact path='/' component={HomePage}></Route>
               <Route exact path='/username' component={SingleUser}></Route>
 
-            </Switch>
+            </Routes>
           </Router>
         </>
       ) : (

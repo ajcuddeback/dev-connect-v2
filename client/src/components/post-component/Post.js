@@ -10,7 +10,7 @@ import {ADD_LIKE, REMOVE_LIKE, DELETE_POST, UPDATE_POST, CREATE_COMMENT} from '.
 import Auth from '../../utils/auth';
 import styled from 'styled-components';
 
-import { useParams, Link, useHistory } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 
 

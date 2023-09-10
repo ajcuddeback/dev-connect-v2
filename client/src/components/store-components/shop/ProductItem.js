@@ -66,8 +66,7 @@ function ProductItem({
       direction="column"
     >
       <Box key={id} margin={2} width={200}>
-        <Card
-          image={
+        
             <Box height={200} width={200}>
               <Image
                 alt={product_name}
@@ -76,8 +75,8 @@ function ProductItem({
                 src={`/images/${image}`}
               />
             </Box>
-          }
-        >
+          
+        
           <Box
             display="flex"
             alignItems="center"
@@ -128,7 +127,6 @@ function ProductItem({
               </Box>
             </Box>
           </Box>
-        </Card>
       </Box>
     </Box>
   );

@@ -6,7 +6,7 @@ import { GET_GROUP, OWNER_GROUPS } from '../../utils/queries';
 import { ADD_EVENT } from '../../utils/mutations';
 
 // Router
-import { useParams, Link, useHistory } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 // styled comp
 import styled from 'styled-components';
@@ -56,7 +56,7 @@ const AddEvent = () => {
         setEventData({...eventData, [name]: value})
     }
 
-    const history = useHistory();
+    const history = useNavigate();
 
     const addEventHandler = async (e) => {
         e.preventDefault();

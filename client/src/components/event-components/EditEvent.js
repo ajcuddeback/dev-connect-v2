@@ -6,7 +6,7 @@ import { GET_GROUP, OWNER_GROUPS } from '../../utils/queries';
 import { EDIT_EVENT } from '../../utils/mutations';
 
 // Router
-import { useParams, Link, useHistory } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 // styled comp
 import styled from 'styled-components';
@@ -61,7 +61,7 @@ const EditEvent = () => {
         setEventData({...eventData, [name]: value})
     }
 
-    const history = useHistory();
+    const history = useNavigate();
 
     const editEventHandler = async (e) => {
         e.preventDefault();

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Router
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -24,8 +24,8 @@ const MeetHome = ({ miles, setMiles, setZipCode }) => {
     // gql
     const [ createGroup, {err} ] = useMutation(CREATE_GROUP);
     console.log(err)
-    // useHistory
-    const history = useHistory();
+    // useNavigate
+    const history = useNavigate();
 
     // Functions for creating a group
     const createGroupHandler = async (e) => {

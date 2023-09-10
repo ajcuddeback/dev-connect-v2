@@ -5,14 +5,14 @@ import { useMutation } from '@apollo/react-hooks';
 import { GET_ME_GROUPS } from '../../../utils/queries';
 import { ADD_USER_GROUP } from '../../../utils/mutations';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const EachGroup = ({ group, setGroupFetchSuccess }) => {
     // gql
     const [addUserGroup, {err}] = useMutation(ADD_USER_GROUP);
     console.log(err);
 
-    const history = useHistory();
+    const history = useNavigate();
 
     // Functions
     const joinGroupHandler = async (e) => {
