@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 // Apollo
-import { ApolloProvider } from "@apollo/react-hooks";
-import ApolloClient from "apollo-boost";
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Components
@@ -51,6 +50,7 @@ const client = new ApolloClient({
     });
   },
   uri: "/graphql",
+  cache: new InMemoryCache(),
 });
 
 function App() {
@@ -70,8 +70,8 @@ function App() {
 
               <Route
                 exact
-                path="/meet"
-                render={() => (
+                path="meet"
+                element={
                   <MeetHome
                     miles={miles}
                     setMiles={setMiles}
@@ -79,57 +79,57 @@ function App() {
                     setZipCode={setZipCode}
                     navOpen={navOpen}
                   />
-                )}
+                }
               ></Route>
               <Route
                 exact
-                path="/meet/groups"
-                render={() => (
+                path="meet/groups"
+                element={
                   <ZipGroups
                     miles={miles}
                     zipCode={zipCode}
                     navOpen={navOpen}
                   />
-                )}
+                }
               ></Route>
               <Route
                 exact
-                path="/meet/dashboard"
-                component={MeetDashboard}
+                path="meet/dashboard"
+                element={<MeetDashboard></MeetDashboard>}
               ></Route>
-              <Route exact path="/askDevs" component={AskDevsHome}></Route>
-              <Route exact path="/meet/my-groups" component={MyGroups}></Route>
-              <Route exact path="/meet/my-events" component={MyEvents}></Route>
+              <Route exact path="askDevs" element={<AskDevsHome></AskDevsHome>}></Route>
+              <Route exact path="meet/my-groups" element={<MyGroups></MyGroups>}></Route>
+              <Route exact path="meet/my-events" element={<MyEvents></MyEvents>}></Route>
               <Route
                 exact
-                path="/meet/groups/:groupName"
-                render={() => <GroupHome navOpen={navOpen} />}
+                path="meet/groups/:groupName"
+                element={<GroupHome navOpen={navOpen} />}
               ></Route>
               <Route
                 exact
                 path="/meet/edit-event/:groupName/:eventId"
-                component={EditEvent}
+                element={<EditEvent></EditEvent>}
               ></Route>
               <Route
                 exact
-                path="/meet/add-event/:groupName"
-                component={AddEvent}
+                path="meet/add-event/:groupName"
+                element={<AddEvent></AddEvent>}
               ></Route>
               <Route
                 exact
-                path="/meet/admin/:groupName"
-                render={() => <GroupAdmin navOpen={navOpen} />}
+                path="meet/admin/:groupName"
+                element={<GroupAdmin navOpen={navOpen} />}
               ></Route>
               <Route
                 exact
-                path="/shop"
-                render={() => <Home navOpen={navOpen} />}
+                path="shop"
+                element={<Home navOpen={navOpen} />}
               ></Route>
-              <Route exact path="/products/:id" component={Detail} />
-              <Route exact path="/success" component={Success} />
-              <Route exact path='/myquestions' component={MyQuestions} />
-  <Route exact path='/' component={HomePage}></Route>
-              <Route exact path='/username' component={SingleUser}></Route>
+              <Route exact path="products/:id" element={<Detail></Detail>} />
+              <Route exact path="success" element={<Success></Success>} />
+              <Route exact path='myquestions' element={<MyQuestions></MyQuestions>} />
+  <Route exact path='/' element={<HomePage></HomePage>}></Route>
+              <Route exact path='username' element={<SingleUser></SingleUser>}></Route>
 
             </Routes>
           </Router>

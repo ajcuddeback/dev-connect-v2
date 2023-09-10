@@ -21,7 +21,7 @@ const MyQuestions = () => {
     if(loading) {
       return;
     }
-    if(!data.me.questions.length) {
+    if(!data?.me.questions.length) {
       setQuestionData(false)
       return;
     } else {

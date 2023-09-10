@@ -29,7 +29,7 @@ const MyGroups = () => {
         if(loading) {
           return;
         }
-        if(!data.me.group_user.length) {
+        if(!data?.me.group_user.length) {
           setGroupData(false)
           return;
         } else {

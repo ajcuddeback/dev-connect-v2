@@ -27,7 +27,7 @@ function MeetDashboard() {
     if(loading) {
       return;
     }
-    if(!data.myGroups.length) {
+    if(!data?.myGroups.length) {
       setGroupData(false)
       return;
     } else {

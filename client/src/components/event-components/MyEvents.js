@@ -29,7 +29,7 @@ const MyEvents = () => {
         if(loading) {
           return;
         }
-        if(!data.me.event_user.length) {
+        if(!data?.me.event_user.length) {
           seteventData(false)
           return;
         } else {
