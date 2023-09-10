@@ -1,7 +1,5 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-
-// import styled from "styled-components";
 import "gestalt/dist/gestalt.css";
 import { Box, Heading } from "gestalt";
 
